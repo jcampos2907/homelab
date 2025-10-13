@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: vault-issuer
+  namespace: default
+spec:
+  vault:
+    server: http://vault.hashicorp.svc.cluster.local:8200
+    path: pki/sign/lan
+    auth:
+      kubernetes:
+        mountPath: /v1/auth/kubernetes
+        role: issuer
+        secretRef:
+          name: issuer-token-lmzpj
+          key: token

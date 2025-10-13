@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homelab-init-scripts
+  namespace: homelab-pg
+data:
+  init-homelab.sql: |
+    -- Create the homelab schema
+    CREATE SCHEMA IF NOT EXISTS homelab AUTHORIZATION homelab;
+
+    -- Create the TimescaleDB extension
+    CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;
+
+    CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+    CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+    
+
+
+    
+
+    
+    
+
+
+
+

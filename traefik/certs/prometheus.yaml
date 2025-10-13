@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: prometheus-ingressroute-certificate # <-- Replace with your certificate name
+  namespace: monitoring  # <-- Replace with your namespace
+spec:
+  secretName: prometheus-certificate-secret  # <-- Replace with your secret name
+  issuerRef:
+    name: cloudflare-clusterissuer  # <-- Replace with your issuer name
+    kind: ClusterIssuer
+  dnsNames:
+    - prometheus.famcr.org  # <-- Replace with your hostname

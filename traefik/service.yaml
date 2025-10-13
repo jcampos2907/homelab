@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik
+  namespace: traefik          # <-- adjust to your Traefik namespace
+  annotations:
+    tailscale.com/proxy-group: ingress-proxies
+    tailscale.com/hostname: traefik       # => traefik.<tailnet>.ts.net
+    # optional per-service ACL tag:
+    # tailscale.com/tags: '["tag:ingress-web"]'
+spec:
+  type: LoadBalancer
+  loadBalancerClass: tailscale
+  selector:
+    app.kubernetes.io/name: traefik       # <-- match your Traefik labels
+  ports:
+    - name: http
+      port: 80
+      targetPort: 'web'
+      protocol: TCP
+    - name: https
+      port: 443
+      targetPort: 'websecure'
+      protocol: TCP

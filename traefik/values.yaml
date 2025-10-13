@@ -1,0 +1,57 @@
+deployment:
+  replicas: 2
+service:
+  enabled: false
+ports:
+  # metrics:
+  #   port: 9100
+  #   expose:
+  #     default: true           # exposes on Traefik Service
+  #   exposedPort: 9100
+  #   protocol: TCP
+  web:
+    redirections:
+      entryPoint:
+        to: websecure
+        scheme: https
+        permanent: true
+entryPoints:
+  web:
+    forwardedHeaders:
+      trustedIPs:
+        - "10.42.0.0/16"
+  websecure:
+    forwardedHeaders:
+      trustedIPs:
+        - "10.42.0.0/16"
+
+metrics:
+#   addInternals: false
+  prometheus:
+    enabled: true
+#     entryPoint: metrics
+#     addEntryPointsLabels: true
+#     addRoutersLabels: true
+#     addServicesLabels: true
+#     buckets: ""     # keep default unless you need custom histogram buckets
+
+#     # Create a dedicated metrics Service
+#     service:
+#       enabled: true
+#       labels:
+#         release: kube-prometheus-stack   # <-- label Prometheus looks for
+#       annotations: {}
+
+#     # Create a ServiceMonitor for Prometheus Operator
+#     serviceMonitor:
+#       enabled: true
+#       apiVersion: monitoring.coreos.com/v1
+#       additionalLabels:
+#         release: kube-prometheus-stack   # <-- must match Prom selector
+#       # If Prometheus runs in a different namespace, set this to that ns
+#       namespace: observability
+#       # Optional tuning
+#       interval: 30s
+#       scrapeTimeout: 10s
+#       honorLabels: false
+#       enableHttp2: false

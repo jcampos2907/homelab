@@ -1,0 +1,81 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: homelabcluster
+  namespace: homelab-pg
+spec:
+  plugins:
+  - name: barman-cloud.cloudnative-pg.io
+    isWALArchiver: true
+    parameters:
+      barmanObjectName: minio-store
+  # backup:
+  #   barmanObjectStore:
+  #     destinationPath: s3://db-backups/backups
+  #     endpointURL: http://minio.minio-homelab.svc.cluster.local:9000
+  #     s3Credentials:
+  #       accessKeyId:
+  #         name: s3-creds
+  #         key: ACCESS_KEY_ID
+  #       secretAccessKey:
+  #         name: s3-creds
+  #         key: ACCESS_SECRET_KEY
+  monitoring:
+    enablePodMonitor: true
+  imageName: jicamposr/postgres:17.0
+  imagePullPolicy: Always
+  imagePullSecrets:
+    - name: regcred
+  postgresql:
+    parameters:
+      pgaudit.log: "all, -misc"
+      pgaudit.log_catalog: "off"
+      pgaudit.log_parameter: "on"
+      pgaudit.log_relation: "on"
+      pg_stat_statements.max: "10000"
+      pg_stat_statements.track: all
+    shared_preload_libraries: 
+    - "timescaledb"
+  bootstrap:
+    initdb:
+      database: homelab
+      owner: homelab
+      secret:
+        name: homelabcluster-user-homelab
+      postInitApplicationSQLRefs:
+        configMapRefs:
+          - name: homelab-init-scripts
+            key: init-homelab.sql
+      #     # - name: homelab-init-clientes
+      #     #   key: init-clientes.sql
+      #     # - name: homelab-init-hypertables
+      #     #   key: init-hypertables.sql
+  instances: 2
+  storage:
+    size: 20Gi
+  affinity:
+    podAntiAffinityType: required
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          preference:
+            matchExpressions:
+              - key: node-role.kubernetes.io/pg_main
+                operator: Exists
+    # additionalPodAntiAffinity:
+    #   preferredDuringSchedulingIgnoredDuringExecution:
+    #       - weight: 100
+    #         podAffinityTerm:
+    #           labelSelector:
+    #             matchExpressions:
+    #               - key: app.kubernetes.io/name
+    #                 operator: In
+    #                 values:
+    #                   - redis
+    #           topologyKey: kubernetes.io/hostname
+    tolerations:
+    - key: "postgres-db"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
+

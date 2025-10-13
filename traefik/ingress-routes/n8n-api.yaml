@@ -1,0 +1,41 @@
+# (a) Rate limit + optional IP allowlist
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: webhook-guard
+  namespace: n8n
+spec:
+  rateLimit:
+    average: 5
+    burst: 10
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: webhook-allow
+  namespace: n8n
+spec:
+  ipWhiteList:
+    sourceRange:
+      - "3.216.0.0/13"   # EXAMPLE: replace with Strava’s current ranges if you choose to maintain them
+      - "52.70.0.0/15"   # (or just add your own IP for testing)
+# (b) IngressRoute that exposes only the webhook + oauth callback on a PUBLIC entrypoint
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: n8n-public
+  namespace: n8n
+spec:
+  entryPoints:
+    - websecure-public            # <- your public EP (not the tailscale-only one)
+  routes:
+    - match: Host(`n8n.famcr.org`) && (PathPrefix(`/webhook`) || Path(`/rest/oauth2-credential/callback`))
+      kind: Rule
+      middlewares:
+        - name: webhook-guard
+        # - name: webhook-allow    # enable if you decide to maintain IP allowlist
+      services:
+        - name: n8n
+          port: 5678
+  tls: {}

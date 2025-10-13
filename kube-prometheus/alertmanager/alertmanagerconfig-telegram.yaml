@@ -1,0 +1,31 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: alert-config-telegram
+  namespace: monitoring
+  labels:
+    release: kube-stack # the release label should be the exact label of the prometheus helm release label
+    alertmanagerConfig: alertmanager-telegram # custom label and also set this label to alertmanager in the prometheus-stack values.yaml
+spec:
+  route:
+    groupBy: ["alertname","job","namespace"] # it could be other labels to be grouped by
+    groupWait: 30s
+    groupInterval: 5m
+    repeatInterval: 1h
+    receiver: "telegram"
+    routes:
+    - receiver: "telegram"
+      matchers:
+        - name: severity
+          matchType: "=~"
+          value: "warning|critical"
+  receivers:
+    - name: telegram
+      telegramConfigs:
+        - botToken:
+            name: telegram-bot-token-secret # refer to the secret name has been created before
+            key: bot-token # bot-token data in the secret
+          chatID: 45232518
+          parseMode: 'MarkdownV2' # The template I provide is in Markdown Mode
+          disableNotifications: false
+          sendResolved: true
