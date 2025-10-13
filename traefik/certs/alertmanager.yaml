@@ -1,0 +1,13 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: alertmanager-ingressroute-certificate # <-- Replace with your certificate name
+  namespace: monitoring  # <-- Replace with your namespace
+spec:
+  secretName: alertmanager-certificate-secret  # <-- Replace with your secret name
+  issuerRef:
+    name: cloudflare-clusterissuer  # <-- Replace with your issuer name
+    kind: ClusterIssuer
+  dnsNames:
+    - alertmanager.famcr.org  # <-- Replace with your hostname

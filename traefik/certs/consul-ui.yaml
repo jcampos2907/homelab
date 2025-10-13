@@ -1,0 +1,13 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: consul-ui-ingressroute-certificate # <-- Replace with your certificate name
+  namespace: consul  # <-- Replace with your namespace
+spec:
+  secretName: consul-ui-certificate-secret  # <-- Replace with your secret name
+  issuerRef:
+    name: cloudflare-clusterissuer  # <-- Replace with your issuer name
+    kind: ClusterIssuer
+  dnsNames:
+    - consul-ui.famcr.org  # <-- Replace with your hostname

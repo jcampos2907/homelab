@@ -1,0 +1,62 @@
+---
+
+apiVersion: postgresql.cnpg.io/v1
+kind: Pooler
+metadata:
+  name: homelabcluster-pooler-rw
+  namespace: homelab-pg
+spec:
+  template:
+    spec:
+      containers: []
+      tolerations:
+      - key: "postgres-db"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: node-role.kubernetes.io/pg_main
+                    operator: Exists
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: cnpg.io/podRole
+                      operator: In
+                      values:
+                        - instance
+                topologyKey: kubernetes.io/hostname
+
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: cnpg.io/poolerName
+                operator: In
+                values:
+                - homelabcluster-pooler-rw
+            topologyKey: "kubernetes.io/hostname"
+  cluster:
+    name: homelabcluster
+  instances: 3
+  type: rw
+  pgbouncer:
+    poolMode: session
+    parameters:
+      max_client_conn: "1000"
+      default_pool_size: "10"
+  serviceTemplate:
+    metadata:
+        annotations:
+              tailscale.com/proxy-group: ingress-proxies
+              tailscale.com/hostname: homelab-pgbouncer-rw
+    spec:
+      type: LoadBalancer
+      loadBalancerClass: "tailscale"

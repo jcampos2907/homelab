@@ -1,0 +1,66 @@
+main:
+  deploymentAnnotations:
+    reloader.stakater.com/auto: "true"
+  extraEnv:
+    - name: N8N_PROXY_HOPS
+      value: "1"
+    # - name: N8N_HOST
+    #   value: "n8n.famcr.org"
+    - name: N8N_EDITOR_BASE_URL
+      value: "https://n8n.famcr.org/"
+    # - name: N8N_PORT
+    #   value: "5678"
+    # - name: N8N_PROTOCOL
+    #   value: "https"
+    - name: N8N_ENDPOINT_REST
+      value: "rest"
+    # - name: N8N_ENDPOINT_WEBHOOK
+    #   value: "webhook"
+    # - name: N8N_ENDPOINT_WEBHOOK_TEST
+    #   value: "webhook-test"
+    - name: N8N_WEBHOOK_TUNNEL_URL
+      value: "https://n8n.famcr.org/"
+    - name: WEBHOOK_URL
+      value: "https://n8n.famcr.org/"
+    - name: DB_POSTGRESDB_USER
+      valueFrom:
+        secretKeyRef:
+          name: n8n-user
+          key: username
+    - name: N8N_ENCRYPTION_KEY
+      valueFrom:
+        secretKeyRef:
+          name: n8n-encryption-key
+          key: encryption_key
+    - name: DB_POSTGRESDB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: n8n-user
+          key: password
+  config:
+    db:
+      type: "postgresdb"
+      postgresdb:
+        host: 'homelabcluster-rw.homelab-pg.svc.cluster.local'
+        port: 5432
+        database: "n8n"
+  persistence:
+    enabled: true
+    size: 10Gi
+  #   storageClass: "longhorn"
+  # extraEnv:
+  #   - name: VUE_APP_URL_BASE_API
+  #     value: "n8n.famcr.org"
+# ingress:
+#   enabled: true
+#   className: "traefik"
+#   annotations:
+#     kubernetes.io/ingress.class: "traefik"
+#   hosts:
+#     - host: n8n.famcr.org
+#       paths:
+#         - /
+#   tls:
+#     - secretName: n8n-certificate-secret
+#       hosts:
+#         - n8n.famcr.org

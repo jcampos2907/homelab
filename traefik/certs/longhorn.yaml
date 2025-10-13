@@ -1,0 +1,13 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: longhorn-ingressroute-certificate # <-- Replace with your certificate name
+  namespace: longhorn-system  # <-- Replace with your namespace
+spec:
+  secretName: longhorn-certificate-secret  # <-- Replace with your secret name
+  issuerRef:
+    name: cloudflare-clusterissuer  # <-- Replace with your issuer name
+    kind: ClusterIssuer
+  dnsNames:
+    - longhorn.famcr.org  # <-- Replace with your hostname

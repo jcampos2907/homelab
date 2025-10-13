@@ -1,0 +1,30 @@
+server:
+
+  ha:
+    enabled: true
+    replicas: 2
+    # config: |
+    #   ui = true
+
+    #   listener "tcp" {
+    #     tls_disable = 1
+    #     address = "[::]:8200"
+    #     cluster_address = "[::]:8201"
+    #   }
+    #   storage "consul" {
+    #     path = "vault"
+    #     address = "consul.consul.svc.cluster.local:8500"
+    #   }
+    raft:
+      enabled: true
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - host: vault.famcr.org
+        paths:
+          - /
+    tls:
+      - secretName: vault-certificate-secret
+        hosts:
+          - vault.famcr.org

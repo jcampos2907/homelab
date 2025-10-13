@@ -1,0 +1,154 @@
+
+apiVersion: minio.min.io/v2
+kind: Tenant
+metadata:
+  annotations:
+    prometheus.io/path: /minio/v2/metrics/cluster
+    prometheus.io/port: "9000"
+    prometheus.io/scrape: "true"
+  labels:
+    app: minio
+  name: miniohomelab
+  namespace: minio-homelab
+spec:
+  certConfig: {}
+  configuration:
+    name: storage-configuration
+  env: []
+  externalCaCertSecret: []
+  externalCertSecret: []
+  externalClientCertSecrets: []
+  features:
+    bucketDNS: false
+    domains: {}
+  image: quay.io/minio/minio:RELEASE.2025-04-08T15-41-24Z
+  imagePullSecret: {}
+  mountPath: /export
+  podManagementPolicy: Parallel
+  pools:
+  - affinity:
+      nodeAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            preference:
+              matchExpressions:
+                - key: node-role/minio
+                  operator: In
+                  values:
+                    - "true"
+      podAffinity: {}
+      podAntiAffinity: {}
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      runAsGroup: 1000
+      runAsNonRoot: true
+      runAsUser: 1000
+      seccompProfile:
+        type: RuntimeDefault
+    name: pool-0
+    nodeSelector: {}
+    resources: {}
+    securityContext:
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+      runAsGroup: 1000
+      runAsNonRoot: true
+      runAsUser: 1000
+    servers: 2
+    tolerations: []
+    topologySpreadConstraints: []
+    volumeClaimTemplate:
+      apiVersion: v1
+      kind: persistentvolumeclaims
+      metadata: {}
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: longhorn
+      status: {}
+    volumesPerServer: 2
+  priorityClassName: ""
+  requestAutoCert: false
+  serviceAccountName: ""
+  serviceMetadata:
+    consoleServiceAnnotations: {}
+    consoleServiceLabels: {}
+    minioServiceAnnotations: {}
+    minioServiceLabels: {}
+  subPath: ""
+  users:
+  - name: storage-user
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: s3-ingressroute-certificate # <-- Replace with your certificate name
+  namespace: minio-homelab  # <-- Replace with your namespace
+spec:
+  secretName: s3-certificate-secret  # <-- Replace with your secret name
+  issuerRef:
+    name: cloudflare-clusterissuer  # <-- Replace with your issuer name
+    kind: ClusterIssuer
+  dnsNames:
+    - s3.famcr.org  # <-- Replace with your hostname
+---
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: minio-ingressroute-certificate # <-- Replace with your certificate name
+  namespace: minio-homelab  # <-- Replace with your namespace
+spec:
+  secretName: minio-certificate-secret  # <-- Replace with your secret name
+  issuerRef:
+    name: cloudflare-clusterissuer  # <-- Replace with your issuer name
+    kind: ClusterIssuer
+  dnsNames:
+    - minio.famcr.org  # <-- Replace with your hostname
+
+---
+
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: s3-ingressroute  # <-- Replace with your IngressRoute name
+  namespace: minio-homelab  # <-- Replace with your namespace
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`s3.famcr.org`)  # <-- Replace with your FQDN
+      kind: Rule
+      services:
+        - name: minio  # <-- Replace with your service name
+          port: 80
+  tls:
+   secretName: s3-certificate-secret
+
+---
+
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: minio-ingressroute  # <-- Replace with your IngressRoute name
+  namespace: minio-homelab  # <-- Replace with your namespace
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`minio.famcr.org`)  # <-- Replace with your FQDN
+      kind: Rule
+      services:
+        - name: miniohomelab-console  # <-- Replace with your service name
+          port: 9090
+  tls:
+   secretName: minio-certificate-secret

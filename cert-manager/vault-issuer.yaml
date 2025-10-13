@@ -1,0 +1,16 @@
+# cert-manager.yaml
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: cert-manager
+  namespace: cert-manager
+spec:
+  vault:
+    path: pki_int/sign/cert-manager
+    server: https://vault.specialized.co.cr
+    auth:
+      kubernetes:
+        role: cert-manager
+        mountPath: /v1/auth/kubernetes
+        serviceAccountRef:
+          name: cert-manager

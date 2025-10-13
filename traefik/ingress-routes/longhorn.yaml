@@ -1,0 +1,19 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: longhorn-ingressroute  # <-- Replace with your IngressRoute name
+  namespace: longhorn-system   # <-- Replace with your namespace
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`longhorn.famcr.org`)  # <-- Replace with your FQDN
+      kind: Rule
+      # middlewares:                    # [5]
+      # - name: longhorn-middleware             # [6]
+      services:
+        - name: longhorn-frontend  # <-- Replace with your service name
+          port: 80
+  tls:
+   secretName: longhorn-certificate-secret

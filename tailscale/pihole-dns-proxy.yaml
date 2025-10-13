@@ -1,0 +1,24 @@
+# pihole-dns-proxy.yaml
+apiVersion: tailscale.com/v1alpha1
+kind: Proxy
+metadata:
+  name: pihole-dns-udp
+  namespace: pihole
+spec:
+  mode: network
+  service:
+    name: pihole-dns-udp
+    port: 53
+    protocol: UDP
+---
+apiVersion: tailscale.com/v1alpha1
+kind: Proxy
+metadata:
+  name: pihole-dns-tcp
+  namespace: pihole
+spec:
+  mode: network
+  service:
+    name: pihole-dns-tcp
+    port: 53
+    protocol: TCP

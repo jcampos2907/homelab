@@ -1,0 +1,10 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: eventosdb
+  namespace: ccmservices
+spec:
+  cluster: 
+    name: ccmcluster
+  name: eventos
+  owner: eventos

@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: pihole-default-alerts
+  namespace: monitoring
+  labels:
+    release: kube-stack
+spec:
+  groups:
+  - name: pihole-default.rules
+    rules:
+    - alert: DNSServiceDown
+      annotations:
+        description: Pod {{ $labels.pod }} is down, DNS resolution may fail.
+      expr: |-
+        pihole_status != 1
+      for: 1m
+      labels:
+        severity: critical
+    
