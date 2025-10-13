@@ -30,6 +30,34 @@ As was the philosophy of this homelab the paramount priorities were data integri
 > <p align="center">
 >   <img src="./IngressProxies.png" alt="Cloudnative PG Architecture" width="80%" style="padding:20px;border-radius:10px;" /></p>
 
+## 📄 Backups
+
+Backups are entirely handled by **CloudNativePG’s Barman Cloud Plugin**.  
+As stated in their documentation, it uses the `barman-cloud` tool from the Barman project to generate and store backups in supported Object Storage providers.
+
+As part of the self-hosted philosophy of this homelab, I wanted to host my own S3-compatible service instead of relying on external storage. This led me to **MinIO**, which I already had experience with from previous jobs.
+
+The plugin manifests live in the [`./barmancloudplugin`](./barmancloudplugin) folder and consist of the following files:
+
+| File                                                       | Description                                                                              |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| [`deployment.yaml`](./barmancloudplugin/deployment.yaml)   | Deploys the Cloud Plugin itself. This file is unchanged from the official documentation. |
+| [`objectStore.yaml`](./barmancloudplugin/objectStore.yaml) | Defines the connection details to the S3 endpoint and the necessary access keys.         |
+| [`backup.yaml`](./barmancloudplugin/backup.yaml)           | Initiates backups for the cluster according to the defined schedule.                     |
+
+Additionally, a small change was made to [`./cluster/cluster.yaml`](./cluster/cluster.yaml) to **enable the Barman plugin** in the `plugins` section.
+
+## 📈 Monitoring
+
+Monitoring is handled through an implemented **PodMonitor** solution.  
+The **Prometheus Operator** automatically discovers this PodMonitor, enabling seamless metrics collection from the PostgreSQL cluster.
+
+Using the official 📊 [CloudNativePG Grafana Dashboard](https://grafana.com/grafana/dashboards/20417-cloudnativepg/), visualization and monitoring are straightforward, providing clear insights into cluster health, replication status, and performance.
+
+⚠️ Custom alert rules were also implemented, as seen in [prometheusrule.yaml](./prometheus/prometheusrule.yaml), leveraging the **PrometheusRule** CRD exposed by the Prometheus Operator.
+
+🔗 More information about the monitoring setup in this homelab can be found at [Monitoring with the Kube-Prometheus-Stack](../kube-prometheus/README.md).
+
 ## 📄 Contents
 
 Each file path contains the necessary documentation on the manifests used, as well as how the service plays in relation to other services.
