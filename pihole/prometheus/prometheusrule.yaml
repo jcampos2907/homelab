@@ -1,3 +1,4 @@
+# monitoring/pihole-default-alerts.yaml
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
@@ -12,9 +13,8 @@ spec:
     - alert: DNSServiceDown
       annotations:
         description: Pod {{ $labels.pod }} is down, DNS resolution may fail.
-      expr: |-
-        pihole_status != 1
-      for: 1m
+      # fire if status != 1 OR the series is absent
+      expr: (pihole_status{namespace="pihole"} != 1) OR absent(pihole_status{namespace="pihole"})
+      for: 15s
       labels:
         severity: critical
-    

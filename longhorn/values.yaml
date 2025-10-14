@@ -1,0 +1,23 @@
+longhornUI:
+  replicas: 1
+persistence:
+  defaultClassReplicaCount: 2
+  defaultDataLocality: 'best-effort'
+  reclaimPolicy: Retain
+  migratable: true
+
+metrics:
+  serviceMonitor:
+    enabled: true
+# longhornManager:
+#   tolerations:
+#   - key: "postgres-db"
+#     operator: "Equal"
+#     value: "true"
+#     effect: "NoSchedule"
+# longhornDriver:
+#   tolerations:
+#   - key: "postgres-db"
+#     operator: "Equal"
+#     value: "true"
+#     effect: "NoSchedule"

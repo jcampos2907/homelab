@@ -10,7 +10,7 @@ spec:
   route:
     groupBy: ["alertname","job","namespace"] # it could be other labels to be grouped by
     groupWait: 30s
-    groupInterval: 5m
+    groupInterval: 1m
     repeatInterval: 1h
     receiver: "telegram"
     routes:
