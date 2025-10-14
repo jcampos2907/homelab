@@ -30,7 +30,7 @@ DNS2: 8.8.8.8
 
 adminPassword: "yourStrongPassword"
 
-replicaCount: 2
+replicaCount: 1
 # Optional: set a static web password env var if desired
 extraEnvVars:
   TZ: "America/Costa_Rica"
@@ -49,3 +49,6 @@ ingress:
 
 persistentVolumeClaim:
   enabled: true
+  accessModes:
+    - ReadWriteMany 
+  size: 1Gi
