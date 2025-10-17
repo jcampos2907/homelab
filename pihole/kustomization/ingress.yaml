@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pihole-ui
+  namespace: pihole
+  annotations:
+    kubernetes.io/ingress.class: "traefik"  # backward-compat, optional
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  ingressClassName: traefik
+  tls:
+    - secretName: pihole-certificate-secret
+      hosts:
+        - pihole.famcr.org
+  rules:
+    - host: pihole.famcr.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pihole-admin
+                port:
+                  number: 80

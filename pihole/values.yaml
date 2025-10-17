@@ -1,3 +1,17 @@
+# dnsmasq:
+#   customDnsEntries:
+#     - address=/pihole.famcr.org/100.91.10.38
+#   additionalHostsEntries:
+#     - 100.91.10.38    longhorn.famcr.org     longhorn
+#     # - 100.91.10.38    pihole.famcr.org     pihole
+#     - 100.91.10.38    proxmox.famcr.org     proxmox
+#     - 100.91.10.38    vault.famcr.org     vault
+#     - 100.91.10.38    keycloak.famcr.org     keycloak
+#     - 100.91.10.38    grafana.famcr.org     grafana
+#     - 100.91.10.38    prometheus.famcr.org     prometheus
+
+
+
 serviceWeb:
   type: ClusterIP
   port: 80
@@ -13,6 +27,9 @@ doh:
     podMonitor:
       enabled: true
 
+extraEnvVars:
+  TZ: "America/Costa_Rica"
+  
 serviceDns:
   mixedService: true
   type: LoadBalancer
@@ -32,8 +49,8 @@ adminPassword: "yourStrongPassword"
 
 replicaCount: 1
 # Optional: set a static web password env var if desired
-extraEnvVars:
-  TZ: "America/Costa_Rica"
+
+# Create this ConfigMap separately (example below)
 
 ingress:
   enabled: true
