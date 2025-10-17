@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pihole-dnsmasq-d
+  namespace: pihole
+data:
+  101-custom-dns.conf: |
+    100.91.10.38 grafana.famcr.org grafana
+    address=/grafana.famcr.org/100.91.10.38
+    address=/longhorn.famcr.org/100.91.10.38
+    address=/pihole-dns.famcr.org/100.91.10.38
