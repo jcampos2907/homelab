@@ -51,6 +51,13 @@ spec:
       #     # - name: homelab-init-hypertables
       #     #   key: init-hypertables.sql
   instances: 2
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 2Gi
   storage:
     size: 20Gi
   affinity:

@@ -1,5 +1,9 @@
 server:
-
+  extraSecretEnvironmentVars:
+      - envName: VAULT_TOKEN              # used by the seal "transit"
+        secretName: transit-autounseal
+        secretKey: VAULT_TOKEN
+      
   ha:
     enabled: true
     replicas: 2
@@ -17,6 +21,37 @@ server:
     #   }
     raft:
       enabled: true
+      config: |
+          ui = true
+          disable_mlock = true
+
+          storage "raft" {
+            path    = "/vault/data"
+          }
+          telemetry {
+            prometheus_retention_time = "12h"
+            disable_hostname = true
+          }
+
+          listener "tcp" {
+            tls_disable = 1
+            address = "[::]:8200"
+            cluster_address = "[::]:8201"
+            telemetry {
+              unauthenticated_metrics_access = "true"
+            }
+          }
+
+          # Transit auto-unseal (PROVIDER = vault.specialized.co.cr)
+          seal "transit" {
+            address          = "https://vault.specialized.co.cr"
+            key_name         = "autounseal"
+            mount_path       = "transit/"
+            disable_renewal  = "false"
+            tls_skip_verify  = "true"   # see step 3 for CA
+            # token is read from VAULT_TOKEN env
+          }
+          service_registration "kubernetes" {}
   ingress:
     enabled: true
     ingressClassName: traefik
@@ -28,3 +63,20 @@ server:
       - secretName: vault-certificate-secret
         hosts:
           - vault.famcr.org
+
+serverTelemetry:
+  prometheusRules:
+    enabled: true
+    rules:
+      - name: vault-SealedAlert
+        annotations:
+          message: "Vault has been sealed for more than 10 minutes."
+        expr: vault_core_unsealed == 0
+        for: 10m
+        labels:
+          severity: critical
+  serviceMonitor:
+    enabled: true
+    # metricRelabelings:
+    #   - sourceLabels: [__meta_kubernetes_pod_node_name]
+    #     targetLabel: instance
