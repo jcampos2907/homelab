@@ -90,3 +90,24 @@ grafana:
       - secretName: grafana-certificate-secret
         hosts:
           - grafana.famcr.org
+
+prometheus-node-exporter:
+  prometheus:
+    monitor:
+      # Add these:
+      relabelings:
+        # Set instance to the Kubernetes node name (hostname)
+        - sourceLabels: [__meta_kubernetes_pod_node_name]
+          targetLabel: instance
+          action: replace
+
+        # (nice-to-have) also keep a 'node' label
+        - sourceLabels: [__meta_kubernetes_pod_node_name]
+          targetLabel: node
+          action: replace
+#   extraArgs:
+#     - --collector.hwmon
+#     - --collector.thermal_zone
+#     - --collector.cpufreq
+#     - --collector.powersupplyclass
+#     - --collector.nvme
