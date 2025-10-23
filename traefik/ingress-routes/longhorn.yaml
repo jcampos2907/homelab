@@ -1,19 +1,41 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: longhorn-ingressroute  # <-- Replace with your IngressRoute name
-  namespace: longhorn-system   # <-- Replace with your namespace
+  name: longhorn-auth
+  namespace: longhorn-system
 spec:
   entryPoints:
-    - web
     - websecure
   routes:
-    - match: Host(`longhorn.famcr.org`)  # <-- Replace with your FQDN
-      kind: Rule
-      # middlewares:                    # [5]
-      # - name: longhorn-middleware             # [6]
+    # Expose oauth2-proxy endpoints on the SAME host so rd is correct.
+    # - kind: Rule
+    #   match: Host(`longhorn.famcr.org`) && PathPrefix(`/oauth2/`)
+    #   priority: 1000
+    #   services:
+    #     - name: oauth2-oauth2-proxy
+    #       namespace: oauth2
+    #       port: 80
+    #       passHostHeader: true
+
+    # Guard everything else with the oauth-chain
+    - kind: Rule
+      match: Host(`longhorn.famcr.org`) && PathPrefix(`/`)
+      middlewares:
+        - name: oauth-auth-redirect
+          namespace: traefik
       services:
-        - name: longhorn-frontend  # <-- Replace with your service name
+        - name: longhorn-frontend
           port: 80
+
+    - kind: Rule
+      match: Host(`longhorn.famcr.org`) && PathPrefix(`/no-auto-redirect`)
+      middlewares:
+        - name: oauth-auth-wo-redirect
+          namespace: traefik
+      services:
+        - name: longhorn-frontend
+          port: 80
+
+          
   tls:
-   secretName: longhorn-certificate-secret
+    secretName: longhorn-certificate-secret
