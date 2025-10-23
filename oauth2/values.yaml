@@ -1,0 +1,29 @@
+envFrom:
+  - secretRef:
+      name: oauth2-secrets
+
+proxyVarsAsSecrets: false
+# ingress:
+#   enabled: true
+#   ingressClassName: traefik
+#   hosts:
+#     - oauth2.famcr.org
+#   tls:
+#     - secretName: oauth2-certificate-secret
+#       hosts:
+#         - oauth2.famcr.org
+
+deploymentAnnotations: 
+  reloader.stakater.com/auto: "true"
+
+
+redis:
+  enabled: true
+  architecture: standalone
+  usePassword: false
+  replicas: 2
+
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true

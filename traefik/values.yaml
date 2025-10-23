@@ -15,16 +15,25 @@ ports:
         to: websecure
         scheme: https
         permanent: true
-entryPoints:
-  web:
-    forwardedHeaders:
-      trustedIPs:
-        - "10.42.0.0/16"
-  websecure:
-    forwardedHeaders:
-      trustedIPs:
-        - "10.42.0.0/16"
 
+experimental:
+  plugins:
+    redirecterrors:
+      moduleName: "github.com/packruler/redirect-errors"
+      version: "v0.3.2"   # or latest
+# entryPoints:
+#   web:
+#     forwardedHeaders:
+#       trustedIPs:
+#         - "10.42.0.0/16"
+#   websecure:
+#     forwardedHeaders:
+#       trustedIPs:
+#         - "10.42.0.0/16"
+
+providers:
+  kubernetesCRD:
+    allowCrossNamespace: true
 metrics:
 #   addInternals: false
   prometheus:

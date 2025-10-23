@@ -1,0 +1,29 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: pihole-auth
+  namespace: pihole
+spec:
+  entryPoints:
+    - websecure
+  routes:
+
+    - kind: Rule
+      match: Host(`pihole.famcr.org`) && PathPrefix(`/`)
+      middlewares:
+        - name: oauth-auth-redirect
+          namespace: traefik
+      services:
+        - name: pihole-web
+          port: 80
+
+    - kind: Rule
+      match: Host(`pihole.famcr.org`) && PathPrefix(`/no-auto-redirect`)
+      middlewares:
+        - name: oauth-auth-wo-redirect
+          namespace: traefik
+      services:
+        - name: pihole-web
+          port: 80
+  tls:
+    secretName: pihole-certificate-secret
