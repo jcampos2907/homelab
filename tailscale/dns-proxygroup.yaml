@@ -4,4 +4,5 @@ metadata:
   name: ingress-proxies
   # namespace: pihole
 spec:
+  tags: ["tag:k8s"]
   type: ingress

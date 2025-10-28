@@ -2,6 +2,7 @@ envFrom:
   - secretRef:
       name: oauth2-secrets
 
+replicaCount: 2
 proxyVarsAsSecrets: false
 # ingress:
 #   enabled: true
@@ -16,12 +17,34 @@ proxyVarsAsSecrets: false
 deploymentAnnotations: 
   reloader.stakater.com/auto: "true"
 
+sessionStorage:
+  type: redis
+  redis:
+    sentinel:
+      existingSecret: oauth2-redis-secret
+      passwordKey: 'sentinel-password'
+      masterName: "homelabredis"
+      connectionUrls:
+        - "redis://oauth2-redis-announce-0.oauth2.svc.cluster.local:26379"
+        - "redis://oauth2-redis-announce-1.oauth2.svc.cluster.local:26379"
+    clientType: sentinel
+   
 
 redis:
+  redis:
+    masterGroupName: "homelabredis"
+  existingSecret: oauth2-redis-secret
   enabled: true
-  architecture: standalone
-  usePassword: false
+  # architecture: standalone
+  # usePassword: false
+  sentinel:
+    auth: true
+    existingSecret: oauth2-redis-secret
+
   replicas: 2
+  persistentVolume:
+    enabled: true
+    storageClass: "longhorn"
 
 metrics:
   enabled: true

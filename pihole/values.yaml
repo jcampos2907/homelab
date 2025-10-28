@@ -38,6 +38,7 @@ serviceDns:
   annotations:
     tailscale.com/proxy-group: ingress-proxies
     tailscale.com/hostname: pihole-dns
+    tailscale.com/tags: 'tag:ingress-web'
     # metallb.universe.tf/address-pool: default   # if you use MetalLB
   # port: 53
   # protocol: UDP
