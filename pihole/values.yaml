@@ -51,12 +51,15 @@ serviceDns:
 DNS1: "1.1.1.1"
 DNS2: "8.8.8.8"
 
+nebulaSync:
+  enabled: true
+  password: ''
 
-
+  
 admin:
   enabled: false
 
-replicaCount: 1
+replicaCount: 2
 # Optional: set a static web password env var if desired
 
 # Create this ConfigMap separately (example below)
@@ -75,4 +78,3 @@ replicaCount: 1
 
 persistentVolumeClaim:
   enabled: true
-  existingClaim: pihole-data-existing

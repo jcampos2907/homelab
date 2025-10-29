@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "pihole.fullname" . }}-web-primary
+  labels:
+    app: {{ template "pihole.name" . }}
+    app.kubernetes.io/name: {{ template "pihole.name" . }}
+    chart: {{ template "pihole.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: ClusterIP
+  # Optional but helpful for startup race; safe to include
+  publishNotReadyAddresses: true
+  selector:
+    # This targets ONLY the ordinal 0 pod of the StatefulSet
+    statefulset.kubernetes.io/pod-name: {{ include "pihole.fullname" . }}-0
+  ports:
+    - name: http
+      port: {{ .Values.serviceWeb.http.port | default 80 }}
+      targetPort: http
+      protocol: TCP
+    {{- if .Values.serviceWeb.https.enabled }}
+    - name: https
+      port: {{ .Values.serviceWeb.https.port | default 443 }}
+      targetPort: https
+      protocol: TCP
+    {{- end }}
