@@ -1,9 +1,30 @@
 # Default values for pihole.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+nebulaSync:
+  waitTimeout: 10m
+  enabled: true
+  image: ghcr.io/lovelaze/nebula-sync:latest
+  replicas: 1
+  password: ''                   # <- required unless allowEmptyPassword=true
+  allowEmptyPassword: true     # <- permits blank
+  imagePullPolicy: IfNotPresent
+  cron: "*/15 * * * *"
+  # Port Pi-hole admin listens on (for host:port). Default 80.
+  primary:
+    port: 80
+  # If your nebula-sync needs Pi-hole password/token:
+  fullSync: false            # <— REQUIRED by the image
+  runGravity: false          # optional but common
+  # Additional envs to drive its internal scheduler:
+  env:
+    - name: LOG_LEVEL
+      value: "info"
+
+
 
 # -- The number of replicas
-replicaCount: 1
+replicaCount: 2
 
 # -- The `spec.strategyTpye` for updates
 strategyType: RollingUpdate
