@@ -9,8 +9,11 @@
 #     - 100.91.10.38    keycloak.famcr.org     keycloak
 #     - 100.91.10.38    grafana.famcr.org     grafana
 #     - 100.91.10.38    prometheus.famcr.org     prometheus
-
-
+dnsmasq:
+  enableCustomDnsMasq: false
+# dnsmasq:
+#   upstreamServers: 
+#     - 127.0.0.1#5335   # ensure this is empty
 
 serviceWeb:
   type: ClusterIP
@@ -19,16 +22,18 @@ serviceWeb:
 monitoring:
   podMonitor:
     enabled: true
-  sidecar:
-    enabled: true
+  # sidecar:
+  #   enabled: true
 doh:
   enabled: true
-  monitoring:
-    podMonitor:
-      enabled: true
+  # monitoring:
+  #   podMonitor:
+  #     enabled: true
 
 extraEnvVars:
   TZ: "America/Costa_Rica"
+  # FTLCONF_dns_upstreams: '10.43.219.49#5335'
+
   
 serviceDns:
   mixedService: true
@@ -38,13 +43,15 @@ serviceDns:
   annotations:
     tailscale.com/proxy-group: ingress-proxies
     tailscale.com/hostname: pihole-dns
-    tailscale.com/tags: 'tag:ingress-web'
+    # tailscale.com/tags: 'tag:ingress-web'
     # metallb.universe.tf/address-pool: default   # if you use MetalLB
   # port: 53
   # protocol: UDP
 
-DNS1: 1.1.1.1
-DNS2: 8.8.8.8
+DNS1: "1.1.1.1"
+DNS2: "8.8.8.8"
+
+
 
 admin:
   enabled: false
@@ -68,6 +75,4 @@ replicaCount: 1
 
 persistentVolumeClaim:
   enabled: true
-  accessModes:
-    - ReadWriteMany 
-  size: 1Gi
+  existingClaim: pihole-data-existing

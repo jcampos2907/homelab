@@ -57,7 +57,7 @@ spec:
         annotations:
               tailscale.com/proxy-group: ingress-proxies
               tailscale.com/hostname: homelab-pgbouncer-rw
-              tailscale.com/tags: 'tag:ingress-web'
+              # tailscale.com/tags: 'tag:ingress-web'
     spec:
       type: LoadBalancer
       loadBalancerClass: "tailscale"

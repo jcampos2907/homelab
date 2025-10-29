@@ -1,0 +1,92 @@
+# Example configuration for Loki with S3 storage
+
+loki:
+  schemaConfig:
+    configs:
+      - from: 2024-04-01
+        store: tsdb
+        object_store: s3
+        schema: v13
+        index:
+          prefix: loki_index_
+          period: 24h
+  ingester:
+      chunk_encoding: snappy
+  pattern_ingester:
+      enabled: true
+  limits_config:
+    allow_structured_metadata: true
+    volume_enabled: true
+    retention_period: 672h # 28 days retention
+  querier:
+      max_concurrent: 4
+
+  storage:
+    type: s3
+    bucketNames:
+        chunks: chunkz
+        ruler: rulerz
+        admin: adminz
+    s3:
+      # s3 URL can be used to specify the endpoint, access key, secret key, and bucket name this works well for S3 compatible storage or if you are hosting Loki on-premises and want to use S3 as the storage backend. Either use the s3 URL or the individual fields below (AWS endpoint, region, secret).
+      # s3: s3://access_key:secret_access_key@custom_endpoint/bucket_name
+      # AWS endpoint URL
+      endpoint: http://minio.minio-homelab.svc.cluster.local:80
+      # AWS region where the S3 bucket is located
+      # region: <your-region>
+      # AWS secret access key
+      secretAccessKey: REDACTED
+      # AWS access key ID
+      accessKeyId: D1lphUVaYd6qjxtoYGbS2Sp1l9W8eoKqrpyLrcIY
+      # AWS signature version (e.g., v2 or v4)
+      # signatureVersion: <your-signature-version>
+      # Forces the path style for S3 (true/false)
+      s3ForcePathStyle: false
+      # Allows insecure (HTTP) connections (true/false)
+      insecure: true
+      # HTTP configuration settings
+      http_config: {}
+
+  deploymentMode: Distributed
+
+  # Disable minio storage
+  minio:
+      enabled: false
+
+  ingester:
+    replicas: 3
+    zoneAwareReplication:
+      enabled: false
+  querier:
+    replicas: 3
+    maxUnavailable: 2
+  queryFrontend:
+    replicas: 2
+    maxUnavailable: 1
+  queryScheduler:
+    replicas: 2
+  distributor:
+    replicas: 3
+    maxUnavailable: 2
+  compactor:
+    replicas: 1
+  indexGateway:
+    replicas: 2
+    maxUnavailable: 1
+
+  bloomPlanner:
+    replicas: 0
+  bloomBuilder:
+    replicas: 0
+  bloomGateway:
+    replicas: 0
+
+  backend:
+    replicas: 0
+  read:
+    replicas: 0
+  write:
+    replicas: 0
+
+  singleBinary:
+    replicas: 0
