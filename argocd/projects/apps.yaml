@@ -10,6 +10,7 @@ spec:
     - https://github.com/jcampos2907/homelab.git
     - https://helm.n8n.io
     - https://charts.bitnami.com/bitnami
+    - https://charts.jenkins.io
 
   destinations:
     - server: https://kubernetes.default.svc
