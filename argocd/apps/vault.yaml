@@ -4,7 +4,7 @@ metadata:
   name: vault
   namespace: argocd
 spec:
-  project: monitoring
+  project: data-services
 
   destination:
     server: https://kubernetes.default.svc
