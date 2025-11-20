@@ -30,7 +30,7 @@ spec:
         exclude: "{excluded/**}"
 
   # Start manual so nothing is changed until you click Sync
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+  syncPolicy: {}
+    # automated:
+    #   prune: true
+    #   selfHeal: true
