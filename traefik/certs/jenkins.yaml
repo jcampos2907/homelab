@@ -1,0 +1,13 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: jenkins-ingressroute-certificate # <-- Replace with your certificate name
+  namespace: jenkins  # <-- Replace with your namespace
+spec:
+  secretName: jenkins-certificate-secret  # <-- Replace with your secret name
+  issuerRef:
+    name: cloudflare-clusterissuer  # <-- Replace with your issuer name
+    kind: ClusterIssuer
+  dnsNames:
+    - jenkins.famcr.org  # <-- Replace with your hostname

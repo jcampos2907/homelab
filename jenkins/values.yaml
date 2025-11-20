@@ -1,0 +1,11 @@
+controller:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: traefik
+    hosts:
+      - jenkins.famcr.org
+    tls:
+      - secretName: jenkins-certificate-secret
+        hosts:
+          - jenkins.famcr.org
