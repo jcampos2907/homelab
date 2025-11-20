@@ -18,7 +18,7 @@ spec:
       targetRevision: 0.30.0      # <- set this to the chart version you used
       helm:
         valueFiles:
-          - $values/vault/values.yaml   # values.yaml from your repo
+          - $values/hashicorp/vault/values.yaml   # values.yaml from your repo
 
     # 2) Your repo with extra manifests + the values file
     - repoURL: https://github.com/jcampos2907/homelab.git
