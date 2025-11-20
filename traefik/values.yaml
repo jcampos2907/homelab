@@ -1,3 +1,7 @@
+deployment:
+  replicas: 2
+  additionalArguments:
+    - "--providers.kubernetesingress.ingressendpoint.publishedservice=traefik/traefik"
 providers:
   kubernetesCRD:
     allowCrossNamespace: true
@@ -10,8 +14,6 @@ providers:
 ingressClass:
   enabled: true
   isDefaultClass: true  # or true if you want
-deployment:
-  replicas: 2
 service:
   enabled: false
 ports:
