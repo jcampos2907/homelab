@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  project: data-services
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cert-manager
+
+  # Multiple sources combined
+  sources:
+    - repoURL: https://github.com/jcampos2907/homelab.git
+      targetRevision: main
+      ref: values
+      path: cert-manager
+      directory:
+        recurse: true
+        exclude: "{excluded/**}"
+    - repoURL: https://charts.jetstack.io
+      chart: cert-manager
+      targetRevision: 1.19.1      # <- set this to the chart version you used
+      helm:
+        valueFiles:
+          - $values/cert-manager/values.yaml   # values.yaml from your repo
+
+  # Start manual so nothing is changed until you click Sync
+  syncPolicy: 
+     automated:
+      prune: true
+      selfHeal: true
