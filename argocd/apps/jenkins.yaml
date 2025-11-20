@@ -20,7 +20,7 @@ spec:
         recurse: true
         exclude: "{excluded/**}"
     - repoURL: https://charts.jenkins.io
-      chart: jenkins/jenkins
+      chart: jenkins
       targetRevision: 5.8.110 # <- set this to the chart version you used
       helm:
         valueFiles:
