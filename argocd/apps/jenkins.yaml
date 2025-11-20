@@ -27,7 +27,9 @@ spec:
           - $values/jenkins/values.yaml   # values.yaml from your repo
 
   # Start manual so nothing is changed until you click Sync
-  syncPolicy: 
-     automated:
+  syncPolicy:
+    automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
