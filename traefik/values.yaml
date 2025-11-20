@@ -6,7 +6,7 @@ providers:
     publishedService:
       enabled: true
       # namespace/name of the Traefik Service that’s exposed via Tailscale LB
-      path: "traefik/traefik"
+      pathOverride: "traefik/traefik"
 ingressClass:
   enabled: true
   isDefaultClass: true  # or true if you want
