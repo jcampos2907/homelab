@@ -1,3 +1,15 @@
+providers:
+  kubernetesCRD:
+    allowCrossNamespace: true
+  kubernetesIngress:
+    enabled: true
+    publishedService:
+      enabled: true
+      # namespace/name of the Traefik Service that’s exposed via Tailscale LB
+      path: "traefik/traefik"
+ingressClass:
+  enabled: true
+  isDefaultClass: true  # or true if you want
 deployment:
   replicas: 2
 service:
@@ -30,10 +42,6 @@ experimental:
 #     forwardedHeaders:
 #       trustedIPs:
 #         - "10.42.0.0/16"
-
-providers:
-  kubernetesCRD:
-    allowCrossNamespace: true
 metrics:
 #   addInternals: false
   prometheus:
