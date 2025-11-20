@@ -1,7 +1,7 @@
 deployment:
   replicas: 2
-  additionalArguments:
-    - "--providers.kubernetesingress.ingressendpoint.publishedservice=traefik/traefik"
+additionalArguments:
+  - "--providers.kubernetesingress.ingressendpoint.publishedservice=traefik/traefik"
 providers:
   kubernetesCRD:
     allowCrossNamespace: true
