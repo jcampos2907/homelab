@@ -68,7 +68,7 @@ serverTelemetry:
   prometheusRules:
     enabled: true
     rules:
-      - name: vault-SealedAlert
+      - alert: vault-SealedAlert
         annotations:
           message: "Vault has been sealed for more than 10 minutes."
         expr: vault_core_unsealed == 0
