@@ -24,7 +24,7 @@ spec:
     - repoURL: https://github.com/jcampos2907/homelab.git
       targetRevision: main
       ref: values
-      path: vault
+      path: hashicorp
       directory:
         recurse: true
         exclude: "{excluded/**}"
