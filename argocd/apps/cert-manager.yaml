@@ -27,7 +27,7 @@ spec:
           - $values/cert-manager/values.yaml   # values.yaml from your repo
 
   # Start manual so nothing is changed until you click Sync
-  syncPolicy: {}
-     # automated:
-    #   prune: true
-    #   selfHeal: true
+  syncPolicy: 
+     automated:
+      prune: true
+      selfHeal: true
