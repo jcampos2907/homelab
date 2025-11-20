@@ -8,9 +8,9 @@ spec:
   source:
     repoURL: https://github.com/jcampos2907/homelab.git
     targetRevision: main
-    path: argocd              # <- important: this points to the argocd/ folder
+    path: argocd
     directory:
-      recurse: true
+      recurse: true      # <-- add this
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
