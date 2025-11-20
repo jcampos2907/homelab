@@ -8,14 +8,14 @@
 
 #   destination:
 #     server: https://kubernetes.default.svc
-#     namespace: traefik
+#     namespace: monitoring
 
 #   # Multiple sources combined
 #   sources:
 #     # 1) Traefik Helm chart from Helm repo
 #     - repoURL: https://traefik.github.io/charts
 #       chart: traefik
-#       targetRevision: 27.0.2      # <- set this to the chart version you used
+#       targetRevision: 37.3.0      # <- set this to the chart version you used
 #       helm:
 #         valueFiles:
 #           - $values/traefik/values.yaml   # values.yaml from your repo
@@ -26,7 +26,12 @@
 #       ref: values
 #       path: traefik
 #       directory:
-#         recurse: true              # picks up certs/, ingress-routes/, etc.
+#         recurse: true
+#         exclude:
+#           - "excluded/**"
 
 #   # Start manual so nothing is changed until you click Sync
-#   syncPolicy: {}
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
