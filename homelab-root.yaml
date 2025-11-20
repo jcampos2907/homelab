@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: homelab-root
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/jcampos2907/homelab.git
+    targetRevision: main
+    path: argocd              # <- important: this points to the argocd/ folder
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

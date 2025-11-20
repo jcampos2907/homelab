@@ -79,7 +79,12 @@ grafana:
     - name: Loki
       type: loki
       access: proxy
-      url: http://loki.monitoring.svc.cluster.local:3100
+      url: http://loki-gateway.monitoring.svc.cluster.local
+      jsonData:
+        httpHeaderName1: X-Scope-OrgID
+      secureJsonData:
+        httpHeaderValue1: fake
+      isDefault: false
   env:
     GF_SERVER_ROOT_URL: https://grafana.famcr.org
   persistence:

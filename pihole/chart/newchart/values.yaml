@@ -2,7 +2,8 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 nebulaSync:
-  waitTimeout: 10m
+  wait:
+    waitForWeb: true
   enabled: true
   image: ghcr.io/lovelaze/nebula-sync:latest
   replicas: 1

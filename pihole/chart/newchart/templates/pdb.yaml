@@ -18,4 +18,5 @@ spec:
   selector:
     matchLabels:
       app: {{ template "pihole.name" . }}
+      release: {{ .Release.Name }}
 {{- end }}

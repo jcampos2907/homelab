@@ -1,85 +1,32 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: alloy-config
-  namespace: monitoring
-data:
-  config.alloy: |
-    loki.write "to_loki" {
-      endpoint { url = "http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push" }
-    }
+alloy:
+  # DaemonSet is fine; each node tails its pods via the API
+  mounts:
+    varlog: false
 
-    # Tail Kubernetes pod logs
-    loki.source.kubernetes "pods" {
-      # omit 'namespaces' to read all; or restrict like: namespaces = ["monitoring","oauth2"]
-    }
+  configMap:
+    create: true
+    content: |-
+      // --- Discover pods
+      discovery.kubernetes "pods" {
+        role = "pod"
+      }
 
-    # Trim noisy/high-cardinality labels
-    loki.relabel "sanitize" {
-      forward_to = [loki.write.to_loki.receiver]
-      rule { action = "labeldrop" regex = "pod_template_hash|controller_revision_hash" }
-    }
----
-apiVersion: apps/v1
-kind: DaemonSet
-metadata:
-  name: alloy-logs
-  namespace: monitoring
-spec:
-  selector: { matchLabels: { app: alloy-logs } }
-  template:
-    metadata: { labels: { app: alloy-logs } }
-    spec:
-      serviceAccountName: alloy
-      containers:
-        - name: alloy
-          image: grafana/alloy:latest
-          args: ["run","/etc/alloy/config.alloy","--server.http.listen-addr=0.0.0.0:12345"]
-          volumeMounts:
-            - { name: cfg,  mountPath: /etc/alloy }
-            - { name: varlog, mountPath: /var/log }
-            - { name: pods,   mountPath: /var/log/pods, readOnly: true }
-          ports: [{ name: http-metrics, containerPort: 12345 }]
-      volumes:
-        - name: cfg  ; configMap: { name: alloy-config }
-        - name: varlog ; hostPath: { path: /var/log }
-        - name: pods ; hostPath: { path: /var/log/pods }
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: alloy-logs
-  namespace: monitoring
-  labels: { app: alloy-logs }
-spec:
-  selector: { app: alloy-logs }
-  ports: [{ name: http-metrics, port: 12345, targetPort: http-metrics }]
----
-apiVersion: monitoring.coreos.com/v1
-kind: PodMonitor
-metadata:
-  name: alloy-logs
-  namespace: monitoring
-  labels: { release: kube-prometheus-stack }  # match your Prometheus selector
-spec:
-  namespaceSelector: { matchNames: ["monitoring"] }
-  selector: { matchLabels: { app: alloy-logs } }
-  podMetricsEndpoints: [{ port: "http-metrics", path: "/metrics", interval: "30s" }]
----
-apiVersion: v1
-kind: ServiceAccount
-metadata: { name: alloy, namespace: monitoring }
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata: { name: alloy-logs }
-rules:
-  - apiGroups: [""]
-    resources: ["pods","namespaces","nodes"]
-    verbs: ["get","list","watch"]
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata: { name: alloy-logs }
-roleRef: { apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: alloy-logs }
-subjects: [{ kind: ServiceAccount, name: alloy, namespace: monitoring }]
+      // --- Read pod logs from the K8s API and push directly to Loki
+      loki.source.kubernetes "pods" {
+        targets    = discovery.kubernetes.pods.targets
+        forward_to = [loki.write.to_loki.receiver]
+      }
+
+      // --- Loki write target (matches your Grafana datasource tenant + URL)
+      loki.write "to_loki" {
+        endpoint {
+          url = "http://loki-gateway.monitoring.svc.cluster.local/loki/api/v1/push"
+          headers = { "X-Scope-OrgID" = "fake" }
+        }
+      }
+
+controller:
+  type: daemonset
+
+rbac:
+  create: true

@@ -1,0 +1,32 @@
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: traefik
+#   namespace: argocd
+# spec:
+#   project: default
+
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: traefik
+
+#   # Multiple sources combined
+#   sources:
+#     # 1) Traefik Helm chart from Helm repo
+#     - repoURL: https://traefik.github.io/charts
+#       chart: traefik
+#       targetRevision: 27.0.2      # <- set this to the chart version you used
+#       helm:
+#         valueFiles:
+#           - $values/traefik/values.yaml   # values.yaml from your repo
+
+#     # 2) Your repo with extra manifests + the values file
+#     - repoURL: https://github.com/jcampos2907/homelab.git
+#       targetRevision: main
+#       ref: values
+#       path: traefik
+#       directory:
+#         recurse: true              # picks up certs/, ingress-routes/, etc.
+
+#   # Start manual so nothing is changed until you click Sync
+#   syncPolicy: {}

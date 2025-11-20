@@ -15,6 +15,8 @@ metadata:
 spec:
   serviceName: {{ template "pihole.fullname" . }}-hl
   replicas: {{ .Values.replicaCount }}
+
+  # === NEW: keep per-pod PVCs across delete/scale so re-installs reuse Longhorn volumes
   selector:
     matchLabels:
       app: {{ template "pihole.name" . }}
@@ -36,29 +38,32 @@ spec:
         app.kubernetes.io/name: {{ template "pihole.name" . }}
         release: {{ .Release.Name }}
     spec:
-      {{- if .Values.antiaff.enabled }}
+      # === REPLACED: enforce hard anti-affinity so replicas never share a node
       affinity:
         podAntiAffinity:
-        {{- if .Values.antiaff.strict }}
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
-        {{- else }}
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-        {{- end }}
                 matchExpressions:
-                - key: release
-                  operator: In
-                  values:
-                  - {{ .Values.antiaff.avoidRelease }}
-        {{- if .Values.antiaff.namespaces}}
-              namespaces:
-              {{- toYaml .Values.antiaff.namespaces | nindent 14 }}
-        {{- end }}
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - {{ template "pihole.name" . }}
+                  - key: release
+                    operator: In
+                    values:
+                      - {{ .Release.Name }}
               topologyKey: "kubernetes.io/hostname"
-      {{- end }}
+
+      # === NEW: help scheduler keep things balanced across nodes
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: "kubernetes.io/hostname"
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: {{ template "pihole.name" . }}
+              release: {{ .Release.Name }}
+
       {{- if .Values.podDnsConfig.enabled }}
       dnsPolicy: {{ .Values.podDnsConfig.policy }}
       dnsConfig:
@@ -308,7 +313,7 @@ spec:
           resources:
 {{ toYaml .Values.resources | indent 12 }}
 
-      # NOTE: 'config' volume now comes from the per-pod PVC via volumeClaimTemplates (below).
+      # NOTE: 'config' volume still comes from the per-pod PVC via volumeClaimTemplates (below).
       # Keep the ConfigMap/other volumes as-is.
       volumes:
       - configMap:
@@ -353,6 +358,9 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: config
+        annotations:
+          # === NEW: keep PVCs on uninstall so Helm reuses them next install
+          helm.sh/resource-policy: keep
       spec:
         accessModes: ["ReadWriteOnce"]
         {{- if .Values.persistentVolumeClaim.storageClass }}
