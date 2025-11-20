@@ -30,7 +30,14 @@ spec:
         exclude: "{excluded/**}"
 
   # Start manual so nothing is changed until you click Sync
-  syncPolicy: {}
-    # automated:
-    #   prune: true
-    #   selfHeal: true
+  syncPolicy: 
+    automated:
+      prune: true
+      selfHeal: true
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      kind: MutatingWebhookConfiguration
+      name: vault-agent-injector-cfg
+      jsonPointers:
+        - /webhooks/0/clientConfig/caBundle
+
