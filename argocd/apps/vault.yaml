@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault
+  namespace: argocd
+spec:
+  project: monitoring
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: hashicorp
+
+  # Multiple sources combined
+  sources:
+    # 1) Vault Helm chart from Helm repo
+    - repoURL: https://helm.releases.hashicorp.com
+      chart: vault
+      targetRevision: 0.30.0      # <- set this to the chart version you used
+      helm:
+        valueFiles:
+          - $values/vault/values.yaml   # values.yaml from your repo
+
+    # 2) Your repo with extra manifests + the values file
+    - repoURL: https://github.com/jcampos2907/homelab.git
+      targetRevision: main
+      ref: values
+      path: vault
+      directory:
+        recurse: true
+        exclude: "{excluded/**}"
+
+  # Start manual so nothing is changed until you click Sync
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
