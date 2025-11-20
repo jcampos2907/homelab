@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: networking
+  namespace: argocd
+spec:
+  description: "Ingress, DNS, tunnels and network edge components"
+
+  # Only allow trusted repos
+  sourceRepos:
+    - https://github.com/jcampos2907/homelab.git
+    - https://traefik.github.io/charts
+    - https://helm.tailcale.com           # if you use a helm repo
+    - https://cloudflare.github.io/helm-charts
+    - https://charts.bitnami.com/bitnami   # if any of these come from bitnami
+
+  # Where apps in this project are allowed to deploy
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: '*'   # you can tighten later (e.g. traefik, tailscale, pihole)
+
+  # Cluster-scoped resources they can create (CRDs, ClusterRoles, etc.)
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'

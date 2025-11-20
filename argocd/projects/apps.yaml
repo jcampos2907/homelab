@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: apps
+  namespace: argocd
+spec:
+  description: "Personal workloads and tools"
+
+  sourceRepos:
+    - https://github.com/jcampos2907/homelab.git
+    - https://helm.n8n.io
+    - https://charts.bitnami.com/bitnami
+
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: '*'
+
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'

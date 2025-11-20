@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: storage
+  namespace: argocd
+spec:
+  description: "Storage backends and persistence layer"
+
+  sourceRepos:
+    - https://github.com/jcampos2907/homelab.git
+    - https://charts.longhorn.io
+    - https://charts.min.io/
+
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: '*'
+
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'

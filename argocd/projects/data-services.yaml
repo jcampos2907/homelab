@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: data-services
+  namespace: argocd
+spec:
+  description: "Databases, secrets, identity and supporting backend services"
+
+  sourceRepos:
+    - https://github.com/jcampos2907/homelab.git
+    - https://cloudnative-pg.io/charts/
+    - https://helm.releases.hashicorp.com
+    - https://charts.bitnami.com/bitnami
+
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: '*'
+
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
