@@ -1,0 +1,83 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: core-services
+  namespace: argocd
+spec:
+  # When an app is removed from this list, also delete its resources
+  syncPolicy:
+    preserveResourcesOnDeletion: false
+  generators:
+    - list:
+        elements:
+          - name: jenkins
+            project: apps
+            namespace: jenkins
+            chartRepo: https://charts.jenkins.io
+            chart: jenkins
+            chartVersion: 5.8.110
+            valuesPath: jenkins/values.yaml
+            extraPath: jenkins
+
+          - name: traefik
+            project: networking
+            namespace: traefik
+            chartRepo: https://traefik.github.io/charts
+            chart: traefik
+            chartVersion: 37.3.0
+            valuesPath: traefik/values.yaml
+            extraPath: traefik
+
+          - name: vault
+            project: data-services
+            namespace: hashicorp
+            chartRepo: https://helm.releases.hashicorp.com
+            chart: vault
+            chartVersion: 0.30.0
+            valuesPath: hashicorp/vault/values.yaml
+            extraPath: hashicorp
+
+  template:
+    metadata:
+      name: '{{name}}'
+      namespace: argocd
+    spec:
+      project: '{{project}}'
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+
+      # MULTI-SOURCE, just like your current apps
+      sources:
+        # 1) Your homelab repo with values + extra manifests
+        - repoURL: https://github.com/jcampos2907/homelab.git
+          targetRevision: main
+          ref: values
+          path: '{{extraPath}}'
+          directory:
+            recurse: true
+            exclude: '{excluded/**}'
+
+        # 2) Helm chart from remote repo
+        - repoURL: '{{chartRepo}}'
+          chart: '{{chart}}'
+          targetRevision: '{{chartVersion}}'
+          helm:
+            valueFiles:
+              - $values/{{valuesPath}}
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+
+      # Safe to leave here: it only affects a resource that exists in vault installs
+      ignoreDifferences:
+        - group: admissionregistration.k8s.io
+          kind: MutatingWebhookConfiguration
+          name: vault-agent-injector-cfg
+          jsonPointers:
+            - /webhooks/0/clientConfig/caBundle
