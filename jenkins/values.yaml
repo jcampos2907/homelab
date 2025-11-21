@@ -1,21 +1,81 @@
 agent:
   enabled: true
   namespace: jenkins
-  # jenkinsUrl: "http://jenkins.jenkins.svc.cluster.local:8080"
   customJenkinsLabels:
     - "k8s-agent"
+
 controller:
+  # URL Jenkins advertises to plugins and OIDC
   jenkinsUrl: "https://jenkins.famcr.org"
+
+  # Local admin for escape hatch & API tokens
   admin:
-    password: "adminpassword123"  # Change this to a secure password
+    password: "adminpassword123"   # consider replacing with a secret or disable later
+
   ingress:
     enabled: false
-  # ingress:
-  #   enabled: true
-  #   annotations:
-  #     kubernetes.io/ingress.class: traefik
-  #   hostName:  jenkins.famcr.org
-  #   tls:
-  #     - secretName: jenkins-certificate-secret
-  #       hostName:
-  #         - jenkins.famcr.org
+
+  # Important: ensure persistence so config.xml + JCasC survive restarts
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClass: longhorn  # or whatever storage you're using
+
+  # Disable Helm’s default JCasC to prevent overriding OIDC on restart
+  JCasC:
+    defaultConfig: false
+
+    # ---- Your actual JCasC config ----
+    configScripts:
+      security-realm: |-
+        jenkins:
+          securityRealm:
+            oic:
+              serverConfiguration:
+                wellKnown:
+                  wellKnownOpenIDConfigurationUrl: "https://keycloak.famcr.org/realms/master/.well-known/openid-configuration"
+                  scopesOverride: "openid profile email"
+
+              clientId: "jenkins"
+              clientSecret: "${OIC_CLIENT_SECRET}"
+
+              # Keycloak default claims
+              userNameField: "preferred_username"
+              fullNameFieldName: "name"
+              emailFieldName: "email"
+              groupsFieldName: "groups"
+
+              pkceEnabled: true
+              logoutFromOpenidProvider: true
+
+              # Escape hatch account (to avoid lockout)
+              escapeHatchEnabled: true
+              escapeHatchUsername: "${JENKINS_ESCAPE_USER}"
+              escapeHatchSecret: "${JENKINS_ESCAPE_PASS}"
+
+      # Example: minimal authorization strategy (allow logged-in users)
+      authorization: |-
+        jenkins:
+          authorizationStrategy:
+            loggedInUsersCanDoAnything:
+              allowAnonymousRead: false
+
+  # Provide environment variables for JCasC secrets
+  env:
+    - name: OIC_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: jenkins-oidc
+          key: clientSecret
+
+    - name: JENKINS_ESCAPE_USER
+      valueFrom:
+        secretKeyRef:
+          name: jenkins-oidc
+          key: escapeUser
+
+    - name: JENKINS_ESCAPE_PASS
+      valueFrom:
+        secretKeyRef:
+          name: jenkins-oidc
+          key: escapePass
