@@ -1,35 +1,35 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: jenkins
-#   namespace: argocd
-# spec:
-#   project: apps
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jenkins
+  namespace: argocd
+spec:
+  project: apps
 
-#   destination:
-#     server: https://kubernetes.default.svc
-#     namespace: jenkins
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: jenkins
 
-#   # Multiple sources combined
-#   sources:
-#     - repoURL: https://github.com/jcampos2907/homelab.git
-#       targetRevision: main
-#       ref: values
-#       path: jenkins
-#       directory:
-#         recurse: true
-#         exclude: "{excluded/**}"
-#     - repoURL: https://charts.jenkins.io
-#       chart: jenkins
-#       targetRevision: 5.8.110 # <- set this to the chart version you used
-#       helm:
-#         valueFiles:
-#           - $values/jenkins/values.yaml   # values.yaml from your repo
+  # Multiple sources combined
+  sources:
+    - repoURL: https://github.com/jcampos2907/homelab.git
+      targetRevision: main
+      ref: values
+      path: jenkins
+      directory:
+        recurse: true
+        exclude: "{excluded/**}"
+    - repoURL: https://charts.jenkins.io
+      chart: jenkins
+      targetRevision: 5.8.110 # <- set this to the chart version you used
+      helm:
+        valueFiles:
+          - $values/jenkins/values.yaml   # values.yaml from your repo
 
-#   # Start manual so nothing is changed until you click Sync
-#   syncPolicy:
-#     automated:
-#       prune: true
-#       selfHeal: true
-#     syncOptions:
-#       - CreateNamespace=true
+  # Start manual so nothing is changed until you click Sync
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
