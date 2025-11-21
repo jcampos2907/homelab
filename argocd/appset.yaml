@@ -24,7 +24,6 @@ spec:
             namespace: pihole
             chartRepo: https://jcampos2907.github.io/charts
             chart: pihole
-            chartVersion: 0.1.0
             valuesPath: pihole/values.yaml
             extraPath: pihole
 
