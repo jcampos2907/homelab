@@ -1,3 +1,9 @@
+agent:
+  enabled: true
+  namespace: jenkins
+  jenkinsUrl: "http://jenkins.jenkins.svc.cluster.local:8080"
+  customJenkinsLabels:
+    - "k8s-agent"
 controller:
   admin:
     password: "adminpassword123"  # Change this to a secure password
