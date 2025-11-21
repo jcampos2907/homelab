@@ -2,10 +2,10 @@ agent:
   enabled: true
   namespace: jenkins
   # jenkinsUrl: "http://jenkins.jenkins.svc.cluster.local:8080"
-  jenkinsUrl: "https://jenkins.famcr.org"
   customJenkinsLabels:
     - "k8s-agent"
 controller:
+  jenkinsUrl: "https://jenkins.famcr.org"
   admin:
     password: "adminpassword123"  # Change this to a secure password
   ingress:
