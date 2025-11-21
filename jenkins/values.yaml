@@ -1,4 +1,6 @@
 controller:
+  admin:
+    password: "adminpassword123"  # Change this to a secure password
   ingress:
     enabled: true
     annotations:
