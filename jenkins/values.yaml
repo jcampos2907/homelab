@@ -1,10 +1,19 @@
 controller:
   ingress:
     enabled: true
+
+    # modern clusters → better to use this than only the annotation
+    ingressClassName: traefik
+
     annotations:
-      kubernetes.io/ingress.class: traefik
-    hosts:
-      - jenkins.famcr.org
+      kubernetes.io/ingress.class: "traefik"
+
+    hostName: jenkins.famcr.org
+
+    # optional; [] means "all paths"
+    paths: ["/"]
+    pathType: Prefix
+
     tls:
       - secretName: jenkins-certificate-secret
         hosts:
