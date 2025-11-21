@@ -19,13 +19,13 @@ spec:
             valuesPath: jenkins/values.yaml
             extraPath: jenkins
 
-          - name: pihole
-            project: networking
-            namespace: pihole
-            chartRepo: https://jcampos2907.github.io/charts
-            chart: pihole
-            valuesPath: pihole/values.yaml
-            extraPath: pihole
+          # - name: pihole
+          #   project: networking
+          #   namespace: pihole
+          #   chartRepo: https://jcampos2907.github.io/charts
+          #   chart: pihole
+          #   valuesPath: pihole/values.yaml
+          #   extraPath: pihole
 
           - name: traefik
             project: networking
