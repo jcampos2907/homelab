@@ -12,7 +12,7 @@ spec:
     - https://traefik.github.io/charts
     - https://helm.tailcale.com           # if you use a helm repo
     - https://cloudflare.github.io/helm-charts
-    - https://charts.bitnami.com/bitnami   # if any of these come from bitnami
+    - https://jcampos2907.github.io/charts   # if any of these come from bitnami
 
   # Where apps in this project are allowed to deploy
   destinations:
