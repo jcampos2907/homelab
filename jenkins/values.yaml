@@ -8,11 +8,13 @@ controller:
   admin:
     password: "adminpassword123"  # Change this to a secure password
   ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: traefik
-    hostName:  jenkins.famcr.org
-    tls:
-      - secretName: jenkins-certificate-secret
-        hostName:
-          - jenkins.famcr.org
+    enabled: false
+  # ingress:
+  #   enabled: true
+  #   annotations:
+  #     kubernetes.io/ingress.class: traefik
+  #   hostName:  jenkins.famcr.org
+  #   tls:
+  #     - secretName: jenkins-certificate-secret
+  #       hostName:
+  #         - jenkins.famcr.org
