@@ -48,7 +48,7 @@ controller:
       #         allowAnonymousRead: false
 
   # Provide environment variables for JCasC secrets
-  env:
+  containerEnv:
     - name: OIC_CLIENT_SECRET
       valueFrom:
         secretKeyRef:
