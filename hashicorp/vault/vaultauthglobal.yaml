@@ -5,7 +5,7 @@ metadata:
   name: vault-auth-global
 spec:
   allowedNamespaces:
-  - jenkins
+    - jenkins
   vaultConnectionRef: vault-connection
   defaultAuthMethod: kubernetes
   kubernetes:
