@@ -2,7 +2,7 @@ apiVersion: secrets.hashicorp.com/v1beta1
 kind: VaultAuthGlobal
 metadata:
   namespace: hashicorp
-  name: vault-auth-global
+  name: default
 spec:
   allowedNamespaces:
     - jenkins
