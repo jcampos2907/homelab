@@ -24,8 +24,6 @@ controller:
   # Disable Helm’s default JCasC to prevent overriding OIDC on restart
   JCasC:
     defaultConfig: false
-
-    # ---- Your actual JCasC config ----
     configScripts:
       security-realm: |-
         jenkins:
@@ -33,25 +31,18 @@ controller:
             oic:
               serverConfiguration:
                 wellKnown:
-                  wellKnownOpenIDConfigurationUrl: "https://keycloak.famcr.org/realms/master/.well-known/openid-configuration"
+                  wellKnownOpenIDConfigurationUrl: "https://<KEYCLOAK_HOST>/realms/<REALM>/.well-known/openid-configuration"
                   scopesOverride: "openid profile email"
 
               clientId: "jenkins"
               clientSecret: "${OIC_CLIENT_SECRET}"
 
-              # Keycloak default claims
               userNameField: "preferred_username"
               fullNameFieldName: "name"
               emailFieldName: "email"
               groupsFieldName: "groups"
 
-              pkceEnabled: true
               logoutFromOpenidProvider: true
-
-              # Escape hatch account (to avoid lockout)
-              escapeHatchEnabled: true
-              escapeHatchUsername: "${JENKINS_ESCAPE_USER}"
-              escapeHatchSecret: "${JENKINS_ESCAPE_PASS}"
 
       # Example: minimal authorization strategy (allow logged-in users)
       authorization: |-
