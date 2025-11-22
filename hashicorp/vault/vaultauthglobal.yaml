@@ -6,7 +6,7 @@ metadata:
 spec:
   allowedNamespaces:
     - jenkins
-  vaultConnectionRef: vault-connection
+  # vaultConnectionRef: vault-connection
   defaultAuthMethod: kubernetes
   kubernetes:
     audiences:

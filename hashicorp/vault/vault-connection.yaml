@@ -2,8 +2,8 @@
 apiVersion: secrets.hashicorp.com/v1beta1
 kind: VaultConnection
 metadata:
-  namespace: hashicorp
-  name: vault-connection
+  namespace: default
+  name: vault-secrets-operator-system
 spec:
   # required configuration
   # address to the Vault server.
