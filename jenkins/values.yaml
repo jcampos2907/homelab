@@ -24,34 +24,21 @@ controller:
   # Disable Helm’s default JCasC to prevent overriding OIDC on restart
   JCasC:
     defaultConfig: true
-    # configScripts:
-    #   security-realm: |-
-    #     jenkins:
-    #       securityRealm:
-    #         oic:
-    #           serverConfiguration:
-    #             wellKnown:
-    #               wellKnownOpenIDConfigurationUrl: "https://keycloak.famcr.org/realms/master/.well-known/openid-configuration"
-    #               scopesOverride: "openid profile email"
+    configScripts:
+      security-realm: |-
+        jenkins:
+          securityRealm:
+            oic:
+              serverConfiguration:
+                wellKnown:
+                  wellKnownOpenIDConfigurationUrl: "https://keycloak.famcr.org/realms/master/.well-known/openid-configuration"
+                  scopesOverride: "openid profile email"
+              clientId: "jenkins"
+              clientSecret: "${OIC_CLIENT_SECRET}"
+              userNameField: "preferred_username"
+              fullNameFieldName: "name"
+              emailFieldName: "email"
 
-    #           clientId: "jenkins"
-    #           clientSecret: "${OIC_CLIENT_SECRET}"
-
-    #           userNameField: "preferred_username"
-    #           fullNameFieldName: "name"
-    #           emailFieldName: "email"
-    #           groupsFieldName: "groups"
-
-    #           logoutFromOpenidProvider: false
-
-      # Example: minimal authorization strategy (allow logged-in users)
-      # authorization: |-
-      #   jenkins:
-      #     authorizationStrategy:
-      #       loggedInUsersCanDoAnything:
-      #         allowAnonymousRead: false
-
-  # Provide environment variables for JCasC secrets
   env:
     - name: OIC_CLIENT_SECRET
       valueFrom:
