@@ -10,6 +10,6 @@ spec:
     audiences:
     - vault
     mount: kubernetes
-    role: default
-    serviceAccount: default
+    role: vault-apps
+    serviceAccount: vault-sa
     tokenExpirationSeconds: 600

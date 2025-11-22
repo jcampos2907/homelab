@@ -1,0 +1,9 @@
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultAuth
+metadata:
+  namespace: oauth2
+  name: vault-auth
+spec:
+  vaultAuthGlobalRef:
+    name: vault-auth-global
