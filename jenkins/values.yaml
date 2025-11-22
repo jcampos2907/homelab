@@ -23,7 +23,7 @@ controller:
 
   # Disable Helm’s default JCasC to prevent overriding OIDC on restart
   JCasC:
-    defaultConfig: true
+    defaultConfig: false
     configScripts:
       security-realm: |-
         jenkins:
