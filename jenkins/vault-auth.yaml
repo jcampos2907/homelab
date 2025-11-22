@@ -2,7 +2,7 @@
 apiVersion: secrets.hashicorp.com/v1beta1
 kind: VaultAuth
 metadata:
-  namespace: oauth2
+  namespace: jenkins
   name: vault-auth
 spec:
   vaultAuthGlobalRef:
