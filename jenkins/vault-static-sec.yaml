@@ -2,8 +2,8 @@
 apiVersion: secrets.hashicorp.com/v1beta1
 kind: VaultStaticSecret
 metadata:
-  namespace: oauth2
-  name: vault-oauth2-secrets-static
+  namespace: hashicorp
+  name: vault-jenkins-secrets-static
 spec:
   vaultAuthRef: vault-auth
   mount: kv
