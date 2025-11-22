@@ -64,19 +64,19 @@ server:
         hosts:
           - vault.famcr.org
 
-serverTelemetry:
-  prometheusRules:
-    enabled: true
-    rules:
-      - alert: vault-SealedAlert
-        annotations:
-          message: "Vault has been sealed for more than 10 minutes."
-        expr: vault_core_unsealed == 0
-        for: 10m
-        labels:
-          severity: critical
-  serviceMonitor:
-    enabled: true
-    # metricRelabelings:
-    #   - sourceLabels: [__meta_kubernetes_pod_node_name]
-    #     targetLabel: instance
+# serverTelemetry:
+#   prometheusRules:
+#     enabled: true
+#     rules:
+#       - alert: vault-SealedAlert
+#         annotations:
+#           message: "Vault has been sealed for more than 10 minutes."
+#         expr: vault_core_unsealed == 0
+#         for: 10m
+#         labels:
+#           severity: critical
+#   serviceMonitor:
+#     enabled: true
+#     # metricRelabelings:
+#     #   - sourceLabels: [__meta_kubernetes_pod_node_name]
+#     #     targetLabel: instance
