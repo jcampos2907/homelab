@@ -23,7 +23,7 @@ controller:
 
   # Disable Helm’s default JCasC to prevent overriding OIDC on restart
   JCasC:
-    defaultConfig: false
+    defaultConfig: true
     configScripts:
       security-realm: |-
         jenkins:
@@ -38,7 +38,16 @@ controller:
               userNameField: "preferred_username"
               fullNameFieldName: "name"
               emailFieldName: "email"
+              logoutFromOpenidProvider: false
 
+      # Example: minimal authorization strategy (allow logged-in users)
+      # authorization: |-
+      #   jenkins:
+      #     authorizationStrategy:
+      #       loggedInUsersCanDoAnything:
+      #         allowAnonymousRead: false
+
+  # Provide environment variables for JCasC secrets
   env:
     - name: OIC_CLIENT_SECRET
       valueFrom:
