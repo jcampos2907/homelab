@@ -4,6 +4,8 @@ metadata:
   namespace: hashicorp
   name: vault-auth-global
 spec:
+  allowedNamespaces:
+  - jenkins
   vaultConnectionRef: vault-connection
   defaultAuthMethod: kubernetes
   kubernetes:
