@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: core-services
+  name: core-services-helm
   namespace: argocd
 spec:
   # When an app is removed from this list, also delete its resources
@@ -18,15 +18,6 @@ spec:
             chartVersion: 5.8.110
             valuesPath: jenkins/values.yaml
             extraPath: jenkins
-
-
-          # - name: pihole
-          #   project: networking
-          #   namespace: pihole
-          #   chartRepo: https://jcampos2907.github.io/charts
-          #   chart: pihole
-          #   valuesPath: pihole/values.yaml
-          #   extraPath: pihole
 
           - name: traefik
             project: networking

@@ -1,0 +1,46 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: core-services-kustomize
+  namespace: argocd
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: false
+
+  generators:
+    - list:
+        elements:
+          # CloudNativePG cluster kustomize root
+          - name: cnpg-cluster
+            project: data-services
+            namespace: cloudnativepg
+            path: cloudnativepg/cluster
+
+          # Add more kustomize roots like this:
+          # - name: some-app
+          #   project: apps
+          #   namespace: some-namespace
+          #   path: somefolder/where/kustomization-lives
+
+  template:
+    metadata:
+      name: '{{name}}'
+      namespace: argocd
+    spec:
+      project: '{{project}}'
+
+      source:
+        repoURL: https://github.com/jcampos2907/homelab.git
+        targetRevision: main
+        path: '{{path}}'          # folder containing kustomization.yaml
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
