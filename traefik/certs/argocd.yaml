@@ -1,0 +1,13 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-ingressroute-certificate # <-- Replace with your certificate name
+  namespace: argocd  # <-- Replace with your namespace
+spec:
+  secretName: argocd-certificate-secret  # <-- Replace with your secret name
+  issuerRef:
+    name: cloudflare-clusterissuer  # <-- Replace with your issuer name
+    kind: ClusterIssuer
+  dnsNames:
+    - argocd.famcr.org  # <-- Replace with your hostname
