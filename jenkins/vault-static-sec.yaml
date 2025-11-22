@@ -12,6 +12,6 @@ spec:
   refreshAfter: 60s
   destination:
     create: true
-    name: jenkins-test
+    name: jenkins-oidc
 
     
