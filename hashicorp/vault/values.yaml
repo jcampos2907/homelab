@@ -64,9 +64,9 @@ server:
         hosts:
           - vault.famcr.org
 
-# serverTelemetry:
-#   prometheusRules:
-#     enabled: true
+serverTelemetry:
+  prometheusRules:
+    enabled: false
 #     rules:
 #       - alert: vault-SealedAlert
 #         annotations:
@@ -75,8 +75,8 @@ server:
 #         for: 10m
 #         labels:
 #           severity: critical
-#   serviceMonitor:
-#     enabled: true
+  serviceMonitor:
+    enabled: false
 #     # metricRelabelings:
 #     #   - sourceLabels: [__meta_kubernetes_pod_node_name]
 #     #     targetLabel: instance
