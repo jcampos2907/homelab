@@ -18,6 +18,15 @@ spec:
             chartVersion: 5.8.110
             valuesPath: jenkins/values.yaml
             extraPath: jenkins
+          - name: kube-stack
+            project: observability
+            namespace: monitoring
+            chartRepo: https://prometheus-community.github.io/helm-charts
+            chart: kube-prometheus-stack
+            chartVersion: 5.8.110
+            valuesPath: kube-prometheus/values.yaml
+            extraPath: kube-prometheus
+
 
           # - name: pihole
           #   project: networking
