@@ -6,4 +6,5 @@ metadata:
   name: vault-auth
 spec:
   vaultAuthGlobalRef:
+    namespace: hashicorp
     name: vault-auth-global
