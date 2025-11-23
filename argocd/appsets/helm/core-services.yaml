@@ -92,6 +92,8 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
+          - ServerSideApply=true
+
 
       # Safe to leave here: it only affects a resource that exists in vault installs
       ignoreDifferences:
