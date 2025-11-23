@@ -4,6 +4,6 @@ kind: Kustomization
 namespace: cnpg-system
 
 resources:
-- delpoyment.yaml
+- deployment.yaml
 - objectStore.yaml
 - backup.yaml
