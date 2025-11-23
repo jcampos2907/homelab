@@ -5,6 +5,8 @@ agent:
     - "k8s-agent"
 
 controller:
+  additionalPlugins:
+    - oic-auth:4.609.v9de140f63d01
   # URL Jenkins advertises to plugins and OIDC
   jenkinsUrl: "https://jenkins.famcr.org"
 
