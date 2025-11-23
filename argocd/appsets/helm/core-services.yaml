@@ -19,6 +19,14 @@ spec:
             valuesPath: jenkins/values.yaml
             extraPath: jenkins
 
+          - name: cnpg
+            project: data-services
+            namespace: cnpg-system
+            chartRepo: https://cloudnative-pg.github.io/charts
+            chart: cloudnative-pg
+            valuesPath: cloudnativepg/operator/values.yaml
+            extraPath: cloudnativepg
+
           - name: traefik
             project: networking
             namespace: traefik
