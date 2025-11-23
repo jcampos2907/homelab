@@ -1,0 +1,5 @@
+apiVersion: builtin
+kind: NamespaceTransformer
+metadata:
+  name: keep-explicit-namespaces
+unsetOnly: true
