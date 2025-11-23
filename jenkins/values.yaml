@@ -32,6 +32,17 @@ controller:
   JCasC:
     defaultConfig: true
     configScripts:
+      github-creds: |-
+          credentials:
+            system:
+              domainCredentials:
+                - credentials:
+                  - usernamePassword:
+                      id: "github-pat"
+                      description: "GitHub PAT (used as password) for Jenkins pipelines"
+                      scope: GLOBAL
+                      username: "${github_user}"
+                      password: "${github_pat}"
       security-realm: |-
         jenkins:
           securityRealm:

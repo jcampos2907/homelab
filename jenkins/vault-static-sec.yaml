@@ -8,7 +8,7 @@ spec:
   vaultAuthRef: vault-auth
   mount: kv
   type: kv-v2
-  path: apps/jenkins
+  path: apps/jenkinssources
   refreshAfter: 60s
   destination:
     create: true
