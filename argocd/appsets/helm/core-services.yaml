@@ -23,6 +23,7 @@ spec:
             project: data-services
             namespace: cnpg-system
             chartRepo: https://cloudnative-pg.github.io/charts
+            chartVersion: 0.26.1
             chart: cloudnative-pg
             valuesPath: cloudnativepg/operator/values.yaml
             extraPath: cloudnativepg
