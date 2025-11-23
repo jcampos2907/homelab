@@ -15,7 +15,12 @@ spec:
             project: data-services
             namespace: cloudnativepg
             path: cloudnativepg/cluster
-
+          
+          # BarmanCloudPlugin kustomize root
+          - name: barmancloudplugin
+            project: data-services
+            namespace: cnpg-system
+            path: cloudnativepg/barmancloudplugin
           # Add more kustomize roots like this:
           # - name: some-app
           #   project: apps
