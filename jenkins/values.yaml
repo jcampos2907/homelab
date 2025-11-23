@@ -5,9 +5,13 @@ agent:
     - "k8s-agent"
 
 controller:
+  statefulSetAnnotations:
+    reloader.stakater.com/auto: "true"
   additionalPlugins:
     - github-branch-source:1917.v9ee8a_39b_3d0d
     - oic-auth:4.609.v9de140f63d01
+    - kubernetes-credentials-provider:1.299.v610fa_e76761a_
+    - hashicorp-vault-plugin:371.v884a_4dd60fb_6
   # URL Jenkins advertises to plugins and OIDC
   jenkinsUrl: "https://jenkins.famcr.org"
 
