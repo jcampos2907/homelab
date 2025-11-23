@@ -7,8 +7,3 @@ resources:
 - deployment.yaml
 - objectStore.yaml
 - backup.yaml
-
-
-
-transformers:
-  - namespace-transformer.yaml

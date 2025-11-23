@@ -11,3 +11,5 @@ resources:
 - pooler-rw.yaml
 - pooler-ro.yaml
 - init-db-configmap.yaml
+- objectStore.yaml
+- backup.yaml
