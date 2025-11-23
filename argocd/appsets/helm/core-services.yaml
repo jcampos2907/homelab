@@ -97,6 +97,11 @@ spec:
 
       # Safe to leave here: it only affects a resource that exists in vault installs
       ignoreDifferences:
+        - group: postgresql.cnpg.io
+          kind: Cluster
+          jsonPointers:
+            - /spec/resources/limits/cpu
+            - /spec/plugins/0/enabled
         - group: admissionregistration.k8s.io
           kind: MutatingWebhookConfiguration
           name: vault-agent-injector-cfg
