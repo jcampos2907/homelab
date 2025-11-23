@@ -5,5 +5,3 @@ namespace: cnpg-system
 
 resources:
 - deployment.yaml
-- objectStore.yaml
-- backup.yaml
