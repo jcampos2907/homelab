@@ -28,6 +28,16 @@ spec:
             valuesPath: cloudnativepg/operator/values.yaml
             extraPath: cloudnativepg/operator
 
+          - name: pihole
+            project: networking
+            namespace: pihole
+            chartRepo: https://jcampos2907.github.io/charts
+            chartVersion: 0.1.0
+            chart: pihole
+            valuesPath: pihole/values.yaml
+            extraPath: pihole
+
+
           - name: traefik
             project: networking
             namespace: traefik
