@@ -26,7 +26,7 @@ spec:
             chartVersion: 0.26.1
             chart: cloudnative-pg
             valuesPath: cloudnativepg/operator/values.yaml
-            extraPath: cloudnativepg
+            extraPath: cloudnativepg/operator
 
           - name: traefik
             project: networking
