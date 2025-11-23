@@ -10,7 +10,7 @@ controller:
   additionalPlugins:
     - github-branch-source:1917.v9ee8a_39b_3d0d
     - oic-auth:4.609.v9de140f63d01
-    - kubernetes-credentials-provider:1.299.v610fa_e76761a_
+    # - kubernetes-credentials-provider:1.299.v610fa_e76761a_
     - hashicorp-vault-plugin:371.v884a_4dd60fb_6
   # URL Jenkins advertises to plugins and OIDC
   jenkinsUrl: "https://jenkins.famcr.org"
@@ -56,6 +56,26 @@ controller:
 
   # Provide environment variables for JCasC secrets
   containerEnv:
+    - name: CASC_VAULT_URL
+      valueFrom:
+        secretKeyRef:
+          name: jenkins-oidc
+          key: CASC_VAULT_URL
+    - name: CASC_VAULT_PATHS
+      valueFrom:
+        secretKeyRef:
+          name: jenkins-oidc
+          key: CASC_VAULT_PATHS
+    - name: CASC_VAULT_ENGINE_VERSION
+      valueFrom:
+        secretKeyRef:
+          name: jenkins-oidc
+          key: CASC_VAULT_ENGINE_VERSION
+    - name: CASC_VAULT_KUBERNETES_ROLE
+      valueFrom:
+        secretKeyRef:
+          name: jenkins-oidc
+          key: CASC_VAULT_KUBERNETES_ROLE
     - name: OIC_CLIENT_SECRET
       valueFrom:
         secretKeyRef:
