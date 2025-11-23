@@ -32,10 +32,6 @@ controller:
   JCasC:
     defaultConfig: true
     configScripts:
-      vault-smoke: |-
-          unclassified:
-            location:
-              adminAddress: "${clientSecret}"
       security-realm: |-
         jenkins:
           securityRealm:
@@ -45,20 +41,11 @@ controller:
                   wellKnownOpenIDConfigurationUrl: "https://keycloak.famcr.org/realms/master/.well-known/openid-configuration"
                   scopesOverride: "openid profile email"
               clientId: "jenkins"
-              clientSecret: "${OIC_CLIENT_SECRET}"
+              clientSecret: "${clientSecret}"
               userNameField: "preferred_username"
               fullNameFieldName: "name"
               emailFieldName: "email"
               logoutFromOpenidProvider: false
-
-      # Example: minimal authorization strategy (allow logged-in users)
-      # authorization: |-
-      #   jenkins:
-      #     authorizationStrategy:
-      #       loggedInUsersCanDoAnything:
-      #         allowAnonymousRead: false
-
-  # Provide environment variables for JCasC secrets
   containerEnv:
     - name: CASC_VAULT_URL
       valueFrom:
@@ -80,20 +67,20 @@ controller:
         secretKeyRef:
           name: jenkins-oidc
           key: CASC_VAULT_KUBERNETES_ROLE
-    - name: OIC_CLIENT_SECRET
-      valueFrom:
-        secretKeyRef:
-          name: jenkins-oidc
-          key: clientSecret
+    # - name: OIC_CLIENT_SECRET
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: jenkins-oidc
+    #       key: clientSecret
 
-    - name: JENKINS_ESCAPE_USER
-      valueFrom:
-        secretKeyRef:
-          name: jenkins-oidc
-          key: escapeUser
+    # - name: JENKINS_ESCAPE_USER
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: jenkins-oidc
+    #       key: escapeUser
 
-    - name: JENKINS_ESCAPE_PASS
-      valueFrom:
-        secretKeyRef:
-          name: jenkins-oidc
-          key: escapePass
+    # - name: JENKINS_ESCAPE_PASS
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: jenkins-oidc
+    #       key: escapePass
