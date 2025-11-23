@@ -32,6 +32,10 @@ controller:
   JCasC:
     defaultConfig: true
     configScripts:
+      vault-smoke: |-
+          unclassified:
+            location:
+              adminAddress: "${clientSecret}"
       security-realm: |-
         jenkins:
           securityRealm:
