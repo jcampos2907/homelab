@@ -1,2 +1,6 @@
 monitoring:
   podMonitorEnabled: false
+
+resources:
+  limits:
+    cpu: 1
