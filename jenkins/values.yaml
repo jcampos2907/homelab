@@ -32,12 +32,9 @@ controller:
       authorization: |-
           jenkins:
             authorizationStrategy:
-              globalMatrix:
-                permissions:
-                  - "Overall/Administer:jcampos"
-                  - "Overall/Read:authenticated"
-                  - "Job/Read:authenticated"
-                  - "View/Read:authenticated"
+              loggedInUsersCanDoAnything:
+                allowAnonymousRead: false
+
       vault-runtime: |-
         unclassified:
           hashicorpVault:
