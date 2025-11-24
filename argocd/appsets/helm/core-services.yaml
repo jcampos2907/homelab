@@ -29,14 +29,14 @@ spec:
           #   valuesPath: observability-stack/smartctl/values.yaml
             # extraPath: observability-stack/smartctl
 
-          - name: jenkins
-            project: apps
-            namespace: jenkins
-            chartRepo: https://charts.jenkins.io
-            chart: jenkins
-            chartVersion: 5.8.110
-            valuesPath: jenkins/values.yaml
-            extraPath: jenkins
+          # - name: jenkins
+          #   project: apps
+          #   namespace: jenkins
+          #   chartRepo: https://charts.jenkins.io
+          #   chart: jenkins
+          #   chartVersion: 5.8.110
+          #   valuesPath: jenkins/values.yaml
+          #   extraPath: jenkins
           - name: reloader
             project: core
             namespace: default
