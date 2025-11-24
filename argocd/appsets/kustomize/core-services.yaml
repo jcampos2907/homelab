@@ -21,6 +21,11 @@ spec:
             project: data-services
             namespace: cnpg-system
             path: cloudnativepg/barmancloudplugin
+
+          - name: cloudflare
+            project: networking
+            namespace: cloudflare
+            path: cloudflare/tunnel
           # Add more kustomize roots like this:
           # - name: some-app
           #   project: apps

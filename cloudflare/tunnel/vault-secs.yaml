@@ -1,0 +1,18 @@
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  namespace: cloudflare
+  name: vault-tunnel-token
+spec:
+  vaultAuthRef: vault-auth
+  mount: kv
+  type: kv-v2
+  path: apps/cloudflare
+  refreshAfter: 60s
+  destination:
+    create: true
+    name: tunnel-token
+  
+
+    

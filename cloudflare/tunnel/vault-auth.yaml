@@ -1,0 +1,13 @@
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultAuth
+metadata:
+  namespace: cloudflare
+  name: vault-auth
+spec:
+  # kubernetes:
+  #   role: vault-apps
+  #   serviceAccount: vault-sa
+  vaultAuthGlobalRef:
+    namespace: hashicorp
+    allowDefault: true
