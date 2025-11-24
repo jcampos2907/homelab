@@ -9,17 +9,6 @@ spec:
     isWALArchiver: true
     parameters:
       barmanObjectName: minio-store
-  # backup:
-  #   barmanObjectStore:
-  #     destinationPath: s3://db-backups/backups
-  #     endpointURL: http://minio.minio-homelab.svc.cluster.local:9000
-  #     s3Credentials:
-  #       accessKeyId:
-  #         name: s3-creds
-  #         key: ACCESS_KEY_ID
-  #       secretAccessKey:
-  #         name: s3-creds
-  #         key: ACCESS_SECRET_KEY
   monitoring:
     enablePodMonitor: true
   imageName: jicamposr/postgres:17.0
