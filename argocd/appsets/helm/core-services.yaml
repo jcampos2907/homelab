@@ -10,6 +10,25 @@ spec:
   generators:
     - list:
         elements:
+
+          # - name: kube-stack
+          #   project: observability
+          #   namespace: monitoring
+          #   chartRepo: https://prometheus-community.github.io/helm-charts
+          #   chart: kube-prometheus-stack
+          #   chartVersion: 79.7.1
+          #   valuesPath: observability-stack/kube-prometheus/values.yaml
+          #   extraPath: observability-stack/kube-prometheus
+
+          # - name: smartctl
+          #   project: observability
+          #   namespace: monitoring
+          #   chartRepo: https://prometheus-community.github.io/helm-charts
+          #   chart: prometheus-smartctl-exporter
+          #   chartVersion: 0.16.0
+          #   valuesPath: observability-stack/smartctl/values.yaml
+            # extraPath: observability-stack/smartctl
+
           - name: jenkins
             project: apps
             namespace: jenkins
