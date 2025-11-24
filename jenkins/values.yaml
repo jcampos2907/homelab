@@ -7,42 +7,58 @@ agent:
 controller:
   statefulSetAnnotations:
     reloader.stakater.com/auto: "true"
+
   additionalPlugins:
     - github-branch-source:1917.v9ee8a_39b_3d0d
     - oic-auth:4.609.v9de140f63d01
-    # - kubernetes-credentials-provider:1.299.v610fa_e76761a_
     - hashicorp-vault-plugin:371.v884a_4dd60fb_6
-  # URL Jenkins advertises to plugins and OIDC
+
   jenkinsUrl: "https://jenkins.famcr.org"
 
-  # Local admin for escape hatch & API tokens
   admin:
-    password: "adminpassword123"   # consider replacing with a secret or disable later
+    password: "adminpassword123"
 
   ingress:
     enabled: false
 
-  # Important: ensure persistence so config.xml + JCasC survive restarts
   persistence:
     enabled: true
     size: 10Gi
-    storageClass: longhorn  # or whatever storage you're using
+    storageClass: longhorn
 
-  # Disable Helm’s default JCasC to prevent overriding OIDC on restart
   JCasC:
-    defaultConfig: true
+    defaultConfig: true   # <- recommended
     configScripts:
+
+      vault-runtime: |-
+        unclassified:
+          hashicorpVault:
+            configuration:
+              vaultCredentialId: "vault-k8s"
+              vaultUrl: "${CASC_VAULT_URL}"
+
+        credentials:
+          system:
+            domainCredentials:
+              - credentials:
+                  - vaultKubernetesCredential:
+                      id: "vault-k8s"
+                      description: "Vault k8s auth for runtime"
+                      scope: GLOBAL
+                      role: "${CASC_VAULT_KUBERNETES_ROLE}"
+
       github-creds: |-
-          credentials:
-            system:
-              domainCredentials:
-                - credentials:
+        credentials:
+          system:
+            domainCredentials:
+              - credentials:
                   - usernamePassword:
                       id: "github-pat"
                       description: "GitHub PAT (used as password) for Jenkins pipelines"
                       scope: GLOBAL
                       username: "${github_user}"
                       password: "${github_pat}"
+
       security-realm: |-
         jenkins:
           securityRealm:
@@ -57,41 +73,28 @@ controller:
               fullNameFieldName: "name"
               emailFieldName: "email"
               logoutFromOpenidProvider: false
+
   containerEnv:
     - name: CASC_VAULT_URL
       valueFrom:
         secretKeyRef:
           name: jenkins-oidc
           key: CASC_VAULT_URL
+
     - name: CASC_VAULT_PATHS
       valueFrom:
         secretKeyRef:
           name: jenkins-oidc
           key: CASC_VAULT_PATHS
+
     - name: CASC_VAULT_ENGINE_VERSION
       valueFrom:
         secretKeyRef:
           name: jenkins-oidc
           key: CASC_VAULT_ENGINE_VERSION
+
     - name: CASC_VAULT_KUBERNETES_ROLE
       valueFrom:
         secretKeyRef:
           name: jenkins-oidc
           key: CASC_VAULT_KUBERNETES_ROLE
-    # - name: OIC_CLIENT_SECRET
-    #   valueFrom:
-    #     secretKeyRef:
-    #       name: jenkins-oidc
-    #       key: clientSecret
-
-    # - name: JENKINS_ESCAPE_USER
-    #   valueFrom:
-    #     secretKeyRef:
-    #       name: jenkins-oidc
-    #       key: escapeUser
-
-    # - name: JENKINS_ESCAPE_PASS
-    #   valueFrom:
-    #     secretKeyRef:
-    #       name: jenkins-oidc
-    #       key: escapePass
