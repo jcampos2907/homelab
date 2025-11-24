@@ -7,4 +7,4 @@ resources:
 - sa.yaml
 - vault-auth.yaml
 - vault-secs.yaml
-- deployment.yaml
+- tunnel.yaml
