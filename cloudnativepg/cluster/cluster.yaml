@@ -5,29 +5,31 @@ metadata:
   namespace: homelab-pg
 spec:
   bootstrap:
-    recovery:
-      source: origin
-      recoveryTarget:
-        backupID: "20251124T000102"
-  externalClusters:
-    - name: origin
-      barmanObjectStore:
-        destinationPath: s3://db-backups/
-        endpointURL: http://minio.minio-homelab.svc.cluster.local:80
-        # IMPORTANT:
-        # If your backups live under a folder that is NOT the original cluster name,
-        # set serverName to that folder. Otherwise you can omit it.
-        serverName: homelab-cluster   # e.g. mydb
-        s3Credentials:
-          accessKeyId:
-            name: s3-creds
-            key: ACCESS_KEY_ID
-          secretAccessKey:
-            name: s3-creds
-            key: ACCESS_SECRET_KEY
+    initdb:
+      database: homelab
+      owner: homelab
+      secret:
+        name: homelabcluster-user-homelab
+      postInitApplicationSQLRefs:
+        configMapRefs:
+          - name: homelab-init-scripts
+            key: init-homelab.sql
+          # - name: homelab-init-clientes
+          #   key: init-clientes.sql
+          # - name: homelab-init-hypertables
+          #   key: init-hypertables.sql
 
-        wal:
-          maxParallel: 8
+  #   recovery:
+  #     source: origin
+  #     recoveryTarget:
+  #       backupID: "20251124T000102"
+  # externalClusters:
+  #   - name: origin
+  #     plugin:
+  #       name: barman-cloud.cloudnative-pg.io
+  #       parameters:
+  #         barmanObjectName: minio-store
+  #         serverName: homelabcluster
   plugins:
   - name: barman-cloud.cloudnative-pg.io
     isWALArchiver: true
@@ -49,20 +51,7 @@ spec:
       pg_stat_statements.track: all
     shared_preload_libraries: 
     - "timescaledb"
-  bootstrap:
-    initdb:
-      database: homelab
-      owner: homelab
-      secret:
-        name: homelabcluster-user-homelab
-      postInitApplicationSQLRefs:
-        configMapRefs:
-          - name: homelab-init-scripts
-            key: init-homelab.sql
-      #     # - name: homelab-init-clientes
-      #     #   key: init-clientes.sql
-      #     # - name: homelab-init-hypertables
-      #     #   key: init-hypertables.sql
+ 
   instances: 2
   resources:
     requests:
