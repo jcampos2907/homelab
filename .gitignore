@@ -357,7 +357,9 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
 
-*secret*
+*password-secret*
+*telegram-secret*
+
 minio/chart/*
 minio/docs/*
 cloudnativepg/cluster/postgres-containers

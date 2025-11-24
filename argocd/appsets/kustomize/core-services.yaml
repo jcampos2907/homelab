@@ -11,6 +11,11 @@ spec:
     - list:
         elements:
           # CloudNativePG cluster kustomize root
+          - name: keycloak
+            project: core
+            namespace: keycloak
+            path: keycloak
+
           - name: cnpg-cluster
             project: data-services
             namespace: cloudnativepg
