@@ -23,7 +23,9 @@ controller:
 
   persistence:
     enabled: true
-    existingClaim: jenkins-pvc
+    dataSource:
+      persistentVolumeClaim:
+        claimName: jenkins-pvc
   # persistence:
   #   enabled: false
 
