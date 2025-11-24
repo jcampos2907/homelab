@@ -23,8 +23,7 @@ controller:
 
   persistence:
     enabled: true
-    size: 10Gi
-    storageClass: longhorn
+    existingClaim: jenkins-pvc
 
   JCasC:
     defaultConfig: true   # <- recommended
