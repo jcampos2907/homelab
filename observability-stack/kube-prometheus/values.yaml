@@ -1,0 +1,123 @@
+alertmanager:
+  alertmanagerSpec:
+    alertmanagerConfigMatcherStrategy:
+      type: None
+    alertmanagerConfigSelector:
+      matchLabels:
+        alertmanagerConfig: alertmanager-telegram
+  templateFiles:
+    telegram.tmpl: |-
+        {{ define "telegram.default.message" }}
+        {{- if eq .Status "firing" -}}
+            {{- if eq .CommonLabels.severity "critical" -}}
+                🔴 Alert: {{ .CommonLabels.alertname }}
+            {{- else if eq .CommonLabels.severity "warning" -}}
+                🟠 Alert: {{ .CommonLabels.alertname }}
+            {{- else -}}
+                ⚪️ Alert: {{ .CommonLabels.alertname }}
+            {{- end }}
+        Status: 🔥 FIRING
+        Severity: {{ if eq .CommonLabels.severity "critical" }}🔴 {{ .CommonLabels.severity | title }}{{ else if eq .CommonLabels.severity "warning" }}🟠 {{ .CommonLabels.severity | title }}{{ else }}⚪️ {{ .CommonLabels.severity | title }}{{ end }}
+        {{- else if eq .Status "resolved" -}}
+            ⚪️ Alert: {{ .CommonLabels.alertname }}
+        Status: ✅ RESOLVED
+        Severity: {{ if eq .CommonLabels.severity "critical" }}🟢 {{ .CommonLabels.severity | title }}{{ else if eq .CommonLabels.severity "warning" }}🟢 {{ .CommonLabels.severity | title }}{{ else }}⚪️ {{ .CommonLabels.severity | title }}{{ end }}
+        {{- end }}
+
+        {{- range .Alerts -}}
+
+        {{- if .Labels.job }}
+        Job: `{{ .Labels.job }}`
+        {{- end }}
+
+        {{- if .Labels.namespace }}
+        Namespace: `{{ .Labels.namespace }}`
+        {{- end }}
+
+        {{- if .Labels.instance }}
+        Instance: `{{ .Labels.instance }}`
+        {{- end }}
+
+        {{- if .Annotations.runbook_url }}
+        [RunbookURL]({{ .Annotations.runbook_url }})
+
+        {{- end }}
+        {{- end }}
+        {{ end }}
+  # ingress:
+  #   enabled: true
+  #   ingressClassName: traefik
+  #   hosts:
+  #     - alertmanager.famcr.org
+  #   tls:
+  #     - secretName: alertmanager-certificate-secret
+  #       hosts:
+  #         - alertmanager.famcr.org
+defaultRules:
+  rules:
+    kubeControllerManager: false
+    kubeScheduler: false
+    kubeProxy: false
+kubeScheduler:
+  enabled: false   # also stops creating the Service/ServiceMonitor
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - prometheus.famcr.org
+    tls:
+      - secretName: prometheus-certificate-secret
+        hosts:
+          - prometheus.famcr.org
+
+grafana:
+  additionalDataSources:
+    - name: Loki
+      type: loki
+      access: proxy
+      url: http://loki-gateway.monitoring.svc.cluster.local
+      jsonData:
+        httpHeaderName1: X-Scope-OrgID
+      secureJsonData:
+        httpHeaderValue1: fake
+      isDefault: false
+  env:
+    GF_SERVER_ROOT_URL: https://grafana.famcr.org
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClassName: "longhorn"
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - grafana.famcr.org
+    tls:
+      - secretName: grafana-certificate-secret
+        hosts:
+          - grafana.famcr.org
+
+prometheus-node-exporter:
+  prometheus:
+    monitor:
+      # Add these:
+      relabelings:
+        # Set instance to the Kubernetes node name (hostname)
+        - sourceLabels: [__meta_kubernetes_pod_node_name]
+          targetLabel: instance
+          action: replace
+
+        # (nice-to-have) also keep a 'node' label
+        - sourceLabels: [__meta_kubernetes_pod_node_name]
+          targetLabel: node
+          action: replace
+#   extraArgs:
+#     - --collector.hwmon
+#     - --collector.thermal_zone
+#     - --collector.cpufreq
+#     - --collector.powersupplyclass
+#     - --collector.nvme
