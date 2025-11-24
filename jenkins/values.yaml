@@ -21,9 +21,11 @@ controller:
   ingress:
     enabled: false
 
+  # persistence:
+  #   enabled: true
+  #   existingClaim: jenkins-pvc
   persistence:
-    enabled: true
-    existingClaim: jenkins-pvc
+    enabled: false
 
   JCasC:
     defaultConfig: true   # <- recommended
