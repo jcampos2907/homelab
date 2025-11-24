@@ -27,13 +27,13 @@ controller:
     storageClass: longhorn
 
   JCasC:
-    defaultConfig: false   # <- recommended
+    defaultConfig: true   # <- recommended
     configScripts:
-      authorization: |-
-          jenkins:
-            authorizationStrategy:
-              loggedInUsersCanDoAnything:
-                allowAnonymousRead: false
+      # authorization: |-
+      #     jenkins:
+      #       authorizationStrategy:
+      #         loggedInUsersCanDoAnything:
+      #           allowAnonymousRead: false
 
       vault-runtime: |-
         unclassified:
