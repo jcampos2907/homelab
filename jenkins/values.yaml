@@ -5,9 +5,7 @@ agent:
     - "k8s-agent"
 persistence:
   enabled: true
-  dataSource:
-    kind: PersistentVolumeClaim
-    name: jenkins-pvc
+
 controller:
   statefulSetAnnotations:
     reloader.stakater.com/auto: "true"
