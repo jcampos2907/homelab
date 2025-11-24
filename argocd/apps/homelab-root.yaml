@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: homelab-root
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/jcampos2907/homelab.git
+      targetRevision: main
+      path: argocd/apps
+    - repoURL: https://github.com/jcampos2907/homelab.git
+      targetRevision: main
+      path: argocd/appsets
+      directory:
+        recurse: true
+    - repoURL: https://github.com/jcampos2907/homelab.git
+      targetRevision: main
+      path: argocd/projects
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
