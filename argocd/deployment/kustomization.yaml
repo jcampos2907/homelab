@@ -16,8 +16,8 @@ patches:
       version: v1
       namespace: argocd
     patch: |-
-      url: https://argocd.famcr.org
-      oidc.config: |
+      - url: https://argocd.famcr.org
+      - oidc.config: |
         name: Keycloak
         issuer: https://keycloak.famcr.org/realms/master
         clientID: argocd
