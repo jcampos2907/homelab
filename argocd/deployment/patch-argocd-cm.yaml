@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+data:
+  url: https://argocd.famcr.org
+  oidc.config: |
+    name: Keycloak
+    issuer: https://keycloak.famcr.org/realms/master
+    clientID: argocd
+    clientSecret: $argocd-secret-patch:oidc.keycloak.clientSecret
+    requestedScopes: ["openid", "profile", "email"]

@@ -9,5 +9,9 @@ resources:
   - vault-auth.yaml
   - vault-secrets.yaml
 
-# patchesStrategicMerge:
-# - argocd-namespace.yaml
+patches:
+  - path: patch-argocd-cm.yaml
+    target:
+      kind: ConfigMap
+      name: argocd-cm
+      namespace: argocd
