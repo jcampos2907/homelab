@@ -20,6 +20,9 @@ patchesJson6902:
       - op: add
         path: /data/url
         value: https://argocd.famcr.org
+      - op: replace
+        path: /data/admin.enabled
+        value: "false"
       - op: add
         path: /data/oidc.config
         value: |
