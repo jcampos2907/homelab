@@ -14,4 +14,5 @@ patches:
     target:
       kind: ConfigMap
       name: argocd-cm
+      version: v1
       namespace: argocd
