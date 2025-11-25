@@ -8,7 +8,7 @@ resources:
   - vault-auth.yaml
   - vault-secrets.yaml
 
-patches:
+patchesJson6902:
   # --- argocd-cm OIDC + URL ---
   - target:
       group: ""
