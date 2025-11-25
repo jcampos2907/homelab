@@ -11,6 +11,11 @@ spec:
     - list:
         elements:
           # CloudNativePG cluster kustomize root
+          - name: argocd
+            project: core
+            namespace: argocd
+            path: argocd
+
           - name: keycloak
             project: core
             namespace: keycloak
@@ -55,7 +60,7 @@ spec:
 
       syncPolicy:
         automated:
-          prune: true
+          prune: false
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
