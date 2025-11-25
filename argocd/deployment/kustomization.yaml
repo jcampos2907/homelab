@@ -9,13 +9,15 @@ resources:
   - vault-secrets.yaml
 
 patches:
+  # --- argocd-cm OIDC + URL ---
   - target:
       group: ""
       version: v1
       kind: ConfigMap
       name: argocd-cm
+      namespace: argocd
     patch: |-
-      - op: replace
+      - op: add
         path: /data/url
         value: https://argocd.famcr.org
       - op: add
@@ -26,13 +28,16 @@ patches:
           clientID: argocd
           clientSecret: $argocd-secret-patch:oidc.keycloak.clientSecret
           requestedScopes: ["openid", "profile", "email", "groups"]
+
+  # --- RBAC policy.csv ---
   - target:
       group: ""
       version: v1
       kind: ConfigMap
       name: argocd-rbac-cm
+      namespace: argocd
     patch: |-
-      - op: replace
+      - op: add
         path: /data/policy.csv
         value: |
           p, role:admin, applications, *, */*, allow
@@ -51,4 +56,5 @@ patches:
           p, role:jenkins, applications, sync, */*, allow
           p, role:jenkins, applications, action/*, */*, allow
           g, jenkins, role:jenkins
+
           g, ArgoCDAdmins, role:admin
