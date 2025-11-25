@@ -18,6 +18,9 @@ patchesJson6902:
       namespace: argocd
     patch: |-
       - op: add
+        path: /data/accounts.jenkins
+        value: apiKey
+      - op: add
         path: /data/url
         value: https://argocd.famcr.org
       - op: replace
