@@ -4,7 +4,10 @@ kind: Kustomization
 namespace: argocd
 
 resources:
-- https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  - sa.yaml
+  - vault-auth.yaml
+  - vault-secrets.yaml
 
 # patchesStrategicMerge:
 # - argocd-namespace.yaml
