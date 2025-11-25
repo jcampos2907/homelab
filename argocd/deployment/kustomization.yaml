@@ -10,9 +10,16 @@ resources:
   - vault-secrets.yaml
 
 patches:
-  - path: patch-argocd-cm.yaml
-    target:
+  - target:
       kind: ConfigMap
       name: argocd-cm
       version: v1
       namespace: argocd
+    patch: |-
+      url: https://argocd.famcr.org
+      oidc.config: |
+        name: Keycloak
+        issuer: https://keycloak.famcr.org/realms/master
+        clientID: argocd
+        clientSecret: $argocd-secret-patch:oidc.keycloak.clientSecret
+        requestedScopes: ["openid", "profile", "email"]
