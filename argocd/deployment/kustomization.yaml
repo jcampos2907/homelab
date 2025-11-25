@@ -27,29 +27,29 @@ patchesJson6902:
           clientSecret: $argocd-secret-patch:oidc.keycloak.clientSecret
           requestedScopes: ["openid", "profile", "email", "groups"]
 
-  - target:
-      version: v1
-      kind: ConfigMap
-      name: argocd-rbac-cm
-      namespace: argocd
-    patch: |-
-      - op: replace
-        path: /data/policy.csv
-        value: |
-          p, role:admin, applications, *, */*, allow
-          p, role:admin, projects, *, *, allow
-          p, role:admin, clusters, *, *, allow
-          p, role:admin, repositories, *, *, allow
-          p, role:admin, accounts, *, *, allow
-          p, role:admin, certificates, *, *, allow
-          p, role:admin, gpgkeys, *, *, allow
-          p, role:admin, logs, get, */*, allow
-          p, role:admin, exec, create, */*, allow
-          g, admin, role:admin
+  # - target:
+  #     version: v1
+  #     kind: ConfigMap
+  #     name: argocd-rbac-cm
+  #     namespace: argocd
+  #   patch: |-
+  #     - op: replace
+  #       path: /data/policy.csv
+  #       value: |
+  #         p, role:admin, applications, *, */*, allow
+  #         p, role:admin, projects, *, *, allow
+  #         p, role:admin, clusters, *, *, allow
+  #         p, role:admin, repositories, *, *, allow
+  #         p, role:admin, accounts, *, *, allow
+  #         p, role:admin, certificates, *, *, allow
+  #         p, role:admin, gpgkeys, *, *, allow
+  #         p, role:admin, logs, get, */*, allow
+  #         p, role:admin, exec, create, */*, allow
+  #         g, admin, role:admin
 
-          # --- Jenkins: ALL apps ---
-          p, role:jenkins, applications, get, */*, allow
-          p, role:jenkins, applications, sync, */*, allow
-          p, role:jenkins, applications, action/*, */*, allow
-          g, jenkins, role:jenkins
-          g, ArgoCDAdmins, role:admin
+  #         # --- Jenkins: ALL apps ---
+  #         p, role:jenkins, applications, get, */*, allow
+  #         p, role:jenkins, applications, sync, */*, allow
+  #         p, role:jenkins, applications, action/*, */*, allow
+  #         g, jenkins, role:jenkins
+  #         g, ArgoCDAdmins, role:admin
