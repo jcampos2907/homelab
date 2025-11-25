@@ -38,6 +38,9 @@ patchesJson6902:
       namespace: argocd
     patch: |-
       - op: add
+        path: /data
+        value: {}
+      - op: add
         path: /data/policy.csv
         value: |
           p, role:admin, applications, *, */*, allow
@@ -58,3 +61,7 @@ patchesJson6902:
           g, jenkins, role:jenkins
 
           g, ArgoCDAdmins, role:admin
+
+      - op: add
+        path: /data/policy.default
+        value: role:readonly
