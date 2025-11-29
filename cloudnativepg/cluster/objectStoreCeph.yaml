@@ -7,7 +7,7 @@ spec:
   retentionPolicy: "30d"
   configuration:
     destinationPath: s3://db-backups/
-    endpointURL: http://pve-egress.default.svc.cluster.local:7480
+    endpointURL: http://pve-egress.proxmox.svc.cluster.local:7480
     s3Credentials:
       accessKeyId:
         name: s3-creds

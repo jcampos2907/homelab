@@ -5,7 +5,7 @@
         tailscale.com/tailnet-ip: "100.110.67.76"
         tailscale.com/proxy-group: "egress-proxies"
       name: pve-egress
-      namespace: default
+      namespace: proxmox
     spec:
       externalName: placeholder # any value - will be overwritten by the operator
       type: ExternalName

@@ -3,7 +3,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: proxmox-ingressroute-certificate # <-- Replace with your certificate name
-  namespace: default  # <-- Replace with your namespace
+  namespace: proxmox  # <-- Replace with your namespace
 spec:
   secretName: proxmox-certificate-secret  # <-- Replace with your secret name
   issuerRef:
