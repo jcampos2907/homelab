@@ -2,4 +2,4 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: vault-sa
-  namespace: homelab-pg
+  namespace: jenkins
