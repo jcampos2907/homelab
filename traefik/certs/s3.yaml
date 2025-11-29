@@ -3,7 +3,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: s3-ingressroute-certificate # <-- Replace with your certificate name
-  namespace: proxmox  # <-- Replace with your namespace
+  namespace: keycloak  # <-- Replace with your namespace
 spec:
   secretName: s3-certificate-secret  # <-- Replace with your secret name
   issuerRef:
