@@ -4,7 +4,7 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: proxmox-ingressroute
-  namespace: proxmox
+  namespace: keycloak
 spec:
   entryPoints:
     - websecure            # <-- adjust if your HTTPS entrypoint is named differently
@@ -14,5 +14,5 @@ spec:
     - match: Host(`proxmox.famcr.org`) && PathPrefix(`/`)
       kind: Rule
       services:
-        - name: pve-egress
+        - name: keycloak
           port: 8080
