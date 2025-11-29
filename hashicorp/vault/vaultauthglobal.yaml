@@ -8,7 +8,7 @@ spec:
     - jenkins
     - cloudflare
     - argocd
-    
+    - homelab-pg
   # vaultConnectionRef: vault-connection
   defaultAuthMethod: kubernetes
   kubernetes:

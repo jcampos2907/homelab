@@ -6,6 +6,9 @@ namespace: homelab-pg
 resources:
 # - init-hyperatbles-configmap.yaml
 # - init-db-clientes-configmap.yaml
+- vault/sa.yaml
+- vault/vault-auth.yaml
+- vault/vault-secs.yaml
 - user-homelab.yaml
 - cluster.yaml
 - pooler-rw.yaml
@@ -13,3 +16,4 @@ resources:
 - init-db-configmap.yaml
 - objectStore.yaml
 - backup.yaml
+- objectStoreCeph.yaml
