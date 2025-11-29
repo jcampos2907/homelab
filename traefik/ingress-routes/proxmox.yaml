@@ -11,8 +11,8 @@ spec:
   tls:
     secretName: proxmox-certificate-secret
   routes:
-    - match: Host(`proxmox.famcr.org`) && PathPrefix(`/`)
+    - match: Host(`proxmox.famcr.org`) 
       kind: Rule
       services:
         - name: pve-egress
-          port: 8080
+          port: 8006

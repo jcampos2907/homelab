@@ -10,7 +10,7 @@
       externalName: placeholder # any value - will be overwritten by the operator
       type: ExternalName
       ports:
-      - port: 8080
+      - port: 8006
         protocol: TCP
         name: web # any value
       - port: 7480
