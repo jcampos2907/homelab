@@ -1,0 +1,18 @@
+
+
+apiVersion: traefik.io/v1alpha1 
+kind: IngressRoute
+metadata:
+  name: s3-ingressroute
+  namespace: proxmox
+spec:
+  entryPoints:
+    - websecure            # <-- adjust if your HTTPS entrypoint is named differently
+  tls:
+    secretName: s3-certificate-secret
+  routes:
+    - match: Host(`s3.famcr.org`) && PathPrefix(`/`)
+      kind: Rule
+      services:
+        - name: pve-egress
+          port: 7480

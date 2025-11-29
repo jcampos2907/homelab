@@ -1,0 +1,18 @@
+
+
+apiVersion: traefik.io/v1alpha1 
+kind: IngressRoute
+metadata:
+  name: proxmox-ingressroute
+  namespace: proxmox
+spec:
+  entryPoints:
+    - websecure            # <-- adjust if your HTTPS entrypoint is named differently
+  tls:
+    secretName: proxmox-certificate-secret
+  routes:
+    - match: Host(`proxmox.famcr.org`) && PathPrefix(`/`)
+      kind: Rule
+      services:
+        - name: pve-egress
+          port: 8080
