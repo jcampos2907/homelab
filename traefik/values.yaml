@@ -4,6 +4,7 @@ additionalArguments:
   - "--providers.kubernetesingress.ingressendpoint.publishedservice=traefik/traefik"
 providers:
   kubernetesCRD:
+    allowExternalNameServices: true
     allowCrossNamespace: true
   kubernetesIngress:
     enabled: true
