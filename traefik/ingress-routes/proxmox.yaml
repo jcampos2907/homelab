@@ -10,7 +10,7 @@ spec:
     - websecure            # <-- adjust if your HTTPS entrypoint is named differently
   tls:
     secretName: proxmox-certificate-secret
-    certResolver: default
+    # certResolver: default
   routes:
     - match: Host(`proxmox.famcr.org`) 
       kind: Rule
