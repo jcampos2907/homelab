@@ -1,7 +1,7 @@
 apiVersion: barmancloud.cnpg.io/v1
 kind: ObjectStore
 metadata:
-  name: minio-store
+  name: ceph-store
   namespace: homelab-pg
 spec:
   retentionPolicy: "30d"
@@ -11,9 +11,9 @@ spec:
     s3Credentials:
       accessKeyId:
         name: s3-creds
-        key: ACCESS_KEY_ID
+        key: ACCESS_KEY_ID_CEPH
       secretAccessKey:
         name: s3-creds
-        key: ACCESS_SECRET_KEY
+        key: ACCESS_SECRET_KEY_CEPH
     wal:
       compression: gzip
