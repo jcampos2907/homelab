@@ -7,7 +7,7 @@ spec:
   retentionPolicy: "30d"
   configuration:
     destinationPath: s3://db-backups/
-    endpointURL: http://minio.minio-homelab.svc.cluster.local:80
+    endpointURL: http://pve-egress.default.svc.cluster.local:7480
     s3Credentials:
       accessKeyId:
         name: s3-creds
