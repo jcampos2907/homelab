@@ -37,14 +37,14 @@ spec:
             chartVersion: 5.8.110
             valuesPath: jenkins/values.yaml
             extraPath: jenkins
-          - name: reloader
-            project: core
-            namespace: default
-            chartRepo: https://stakater.github.io/stakater-charts
-            chart: reloader
-            chartVersion: 2.2.5
-            valuesPath: reloader/values.yaml
-            extraPath: reloader
+          # - name: reloader
+          #   project: core
+          #   namespace: default
+          #   chartRepo: https://stakater.github.io/stakater-charts
+          #   chart: reloader
+          #   chartVersion: 2.2.5
+          #   valuesPath: reloader/values.yaml
+          #   extraPath: reloader
 
           - name: oauth2
             project: core

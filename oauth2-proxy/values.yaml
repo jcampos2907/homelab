@@ -14,9 +14,6 @@ proxyVarsAsSecrets: false
 #       hosts:
 #         - oauth2.famcr.org
 
-deploymentAnnotations: 
-  reloader.stakater.com/auto: "true"
-
 sessionStorage:
   type: redis
   redis:
