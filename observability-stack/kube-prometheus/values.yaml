@@ -78,7 +78,7 @@ grafana:
   extraConfigmapMounts:
     - name: oidc-config
       mountPath: /etc/grafana/oidc
-      subPath: oidc-grafana.ini
+      configMap: oidc-grafana.ini
   additionalDataSources:
     - name: Loki
       type: loki
