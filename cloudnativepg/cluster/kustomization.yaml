@@ -9,11 +9,9 @@ resources:
 - vault/sa.yaml
 - vault/vault-auth.yaml
 - vault/vault-secs.yaml
-- user-homelab.yaml
+- users.yaml
 - cluster.yaml
-- pooler-rw.yaml
-- pooler-ro.yaml
+- poolers.yaml
 - init-db-configmap.yaml
-- objectStore.yaml
 - backup.yaml
 - objectStoreCeph.yaml

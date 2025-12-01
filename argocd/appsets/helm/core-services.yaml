@@ -11,14 +11,14 @@ spec:
     - list:
         elements:
 
-          # - name: kube-stack
-          #   project: observability
-          #   namespace: monitoring
-          #   chartRepo: https://prometheus-community.github.io/helm-charts
-          #   chart: kube-prometheus-stack
-          #   chartVersion: 79.7.1
-          #   valuesPath: observability-stack/kube-prometheus/values.yaml
-          #   extraPath: observability-stack/kube-prometheus
+          - name: kube-stack
+            project: observability
+            namespace: monitoring
+            chartRepo: https://prometheus-community.github.io/helm-charts
+            chart: kube-prometheus-stack
+            chartVersion: 79.7.1
+            valuesPath: observability-stack/kube-prometheus/values.yaml
+            extraPath: observability-stack/kube-prometheus
 
           # - name: smartctl
           #   project: observability
