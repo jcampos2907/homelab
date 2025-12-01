@@ -71,6 +71,8 @@ controller:
               clientId: "jenkins"
               clientSecret: "${clientSecret}"
               userNameField: "preferred_username"
+              userIdStrategy: "caseSensitive"
+              groupIdStrategy: "caseSensitive"
               fullNameFieldName: "name"
               emailFieldName: "email"
               logoutFromOpenidProvider: false
