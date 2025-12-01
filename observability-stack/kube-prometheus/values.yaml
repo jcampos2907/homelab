@@ -75,6 +75,10 @@ prometheus:
           - prometheus.famcr.org
 
 grafana:
+  extraConfigmapMounts:
+    - name: oidc-config
+      mountPath: /etc/grafana/oidc
+      subPath: oidc-grafana.ini
   additionalDataSources:
     - name: Loki
       type: loki
