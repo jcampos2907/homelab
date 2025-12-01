@@ -6,6 +6,9 @@ metadata:
   name: vault-jenkins-secrets-static
 spec:
   vaultAuthRef: vault-auth
+  rolloutRestartTargets:
+    - kind: StatefulSet
+      name: jenkins
   mount: kv
   type: kv-v2
   path: apps/jenkinssources

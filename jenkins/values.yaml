@@ -7,9 +7,6 @@ persistence:
   enabled: true
 
 controller:
-  statefulSetAnnotations:
-    reloader.stakater.com/auto: "true"
-
   additionalPlugins:
     - github-branch-source:1917.v9ee8a_39b_3d0d
     - oic-auth:4.609.v9de140f63d01

@@ -1,6 +1,4 @@
 main:
-  deploymentAnnotations:
-    reloader.stakater.com/auto: "true"
   extraEnv:
     - name: N8N_PROXY_HOPS
       value: "1"

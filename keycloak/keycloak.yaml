@@ -32,8 +32,6 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: keycloak
-  annotations:
-    reloader.stakater.com/auto: "true"
   labels:
     app: keycloak
 spec:

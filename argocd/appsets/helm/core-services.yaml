@@ -46,6 +46,15 @@ spec:
             valuesPath: reloader/values.yaml
             extraPath: reloader
 
+          - name: oauth2
+            project: core
+            namespace: oauth2
+            chartRepo: https://oauth2-proxy.github.io/manifests 
+            chart: oauth2-proxy
+            chartVersion: 9.0.0
+            valuesPath: oauth2-proxy/values.yaml
+            extraPath: oauth2-proxy
+
           - name: cnpg
             project: data-services
             namespace: cnpg-system
