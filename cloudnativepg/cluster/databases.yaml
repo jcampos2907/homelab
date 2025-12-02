@@ -1,9 +1,9 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
-  name: grafana-db
+  name: grafana
 spec:
-  name: grafana-db
+  name: grafana
   owner: grafana
   schemas:
     - name: grafana
