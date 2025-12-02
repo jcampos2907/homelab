@@ -1,16 +1,16 @@
 
-# apiVersion: v1
-# stringData:
-# #  password: password-test --- REPLACE ---
-#   password: password-test
-#   username: homelab
-# kind: Secret
-# metadata:
-#   namespace: homelab-pg
-#   name: homelabcluster-user-homelab
-# type: kubernetes.io/basic-auth
+apiVersion: v1
+stringData:
+#  password: password-test --- REPLACE ---
+  password: password-test
+  username: homelab
+kind: Secret
+metadata:
+  namespace: homelab-pg
+  name: homelabcluster-user-homelab
+type: kubernetes.io/basic-auth
 
-# ---
+---
 
 apiVersion: v1
 stringData:
@@ -20,5 +20,5 @@ stringData:
 kind: Secret
 metadata:
   namespace: homelab-pg
-  name: homelabcluster-user-homelab
+  name: homelabcluster-user-grafana
 type: kubernetes.io/basic-auth

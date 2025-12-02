@@ -14,10 +14,6 @@ spec:
         configMapRefs:
           - name: homelab-init-scripts
             key: init-homelab.sql
-          # - name: homelab-init-clientes
-          #   key: init-clientes.sql
-          # - name: homelab-init-hypertables
-          #   key: init-hypertables.sql
 
   #   recovery:
   #     source: origin
