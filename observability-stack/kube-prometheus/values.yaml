@@ -75,6 +75,11 @@ prometheus:
           - prometheus.famcr.org
 
 grafana:
+  dashboards:
+    cloudnativepg:
+      enabled: true
+      label: grafana_dashboard=cloudnativepg
+      gnetId: 20417
   grafana.ini:
     server:
       root_url: https://grafana.famcr.org
