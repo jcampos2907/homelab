@@ -78,11 +78,6 @@ grafana:
   grafana.ini:
     server:
       root_url: https://grafana.famcr.org
-
-    auth:
-      disable_login_form: false
-      oauth_auto_login: false
-
     auth.generic_oauth:
       enabled: true
       name: Keycloak-OAuth
@@ -95,7 +90,18 @@ grafana:
       auth_url: https://keycloak.famcr.org/realms/master/protocol/openid-connect/auth
       token_url: https://keycloak.famcr.org/realms/master/protocol/openid-connect/token
       api_url: https://keycloak.famcr.org/realms/master/protocol/openid-connect/userinfo
-      role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
+      role_attribute_strict: true
+      role_attribute_path:  (contains(resource_access.grafana.roles[], 'grafanaAdmin') && 'GrafanaAdmin') || (contains(resource_access.grafana.roles[], 'admin') && 'Admin') || (contains(resource_access.grafana.roles[], 'editor') && 'Editor') || 'Viewer'
+      allow_assign_grafana_admin: true
+    auth: 
+      oauth_skip_org_role_update_sync: false  
+      skip_org_role_sync: false
+      disable_login_form: false
+      oauth_auto_login: false
+    users:
+      auto_assign_org: true
+      auto_assign_org_role: Viewer  #Admin
+      auto_assign_org_id: 1 
   additionalDataSources:
     - name: Loki
       type: loki
