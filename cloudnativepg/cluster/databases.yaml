@@ -5,5 +5,10 @@ metadata:
 spec:
   name: grafana-db
   owner: grafana
+  schemas:
+    - name: grafana
+      owner: grafana
+    - name: public
+      owner: grafana
   cluster:
     name: homelabcluster
