@@ -10,5 +10,6 @@ spec:
       owner: grafana
     - name: public
       owner: grafana
+  ensure: absent
   cluster:
     name: homelabcluster
