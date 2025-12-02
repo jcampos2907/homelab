@@ -96,8 +96,8 @@ grafana:
     auth: 
       oauth_skip_org_role_update_sync: false  
       skip_org_role_sync: false
-      disable_login_form: false
-      oauth_auto_login: false
+      disable_login_form: true
+      oauth_auto_login: true
     users:
       auto_assign_org: true
       auto_assign_org_role: Viewer  #Admin
