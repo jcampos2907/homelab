@@ -51,7 +51,7 @@ api:
 metrics:
 #   addInternals: false
   prometheus:
-    enabled: false
+    enabled: true
 #     entryPoint: metrics
 #     addEntryPointsLabels: true
 #     addRoutersLabels: true

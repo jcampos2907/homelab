@@ -1,5 +1,5 @@
 monitoring:
-  podMonitorEnabled: false
+  podMonitorEnabled: true
 
 resources:
   limits:

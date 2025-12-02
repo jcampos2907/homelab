@@ -21,9 +21,9 @@ serviceWeb:
 
 monitoring:
   podMonitor:
-    enabled: false
+    enabled: true
   sidecar:
-    enabled: false
+    enabled: true
 doh:
   enabled: true
   # monitoring:

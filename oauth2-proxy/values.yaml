@@ -44,6 +44,6 @@ redis:
     storageClass: "longhorn"
 
 metrics:
-  enabled: false
+  enabled: true
   serviceMonitor:
-    enabled: false
+    enabled: true
