@@ -107,8 +107,13 @@ grafana:
         httpHeaderValue1: fake
       isDefault: false
   env:
-    GF_SERVER_ROOT_URL: https://grafana.famcr.org
-    GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: REDACTED_SECRET
+    - name: GF_SERVER_ROOT_URL
+      value: https://grafana.famcr.org
+    - name: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: grafana-oidc
+          key: client_secret
   persistence:
     enabled: true
     size: 10Gi
