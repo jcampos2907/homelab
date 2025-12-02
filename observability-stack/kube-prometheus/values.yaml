@@ -76,10 +76,11 @@ prometheus:
 
 grafana:
   dashboards:
-    cloudnativepg:
-      enabled: true
-      label: grafana_dashboard=cloudnativepg
-      gnetId: 20417
+    default:
+      cloudnativepg:
+        gnetId: 20417
+        revision: 1
+        datasource: Prometheus
   grafana.ini:
     server:
       root_url: https://grafana.famcr.org
