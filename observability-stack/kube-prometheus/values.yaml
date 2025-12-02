@@ -88,7 +88,6 @@ grafana:
       name: Keycloak-OAuth
       allow_sign_up: true
       client_id: grafana
-      client_secret: REDACTED_SECRET
       scopes: openid email profile offline_access roles
       email_attribute_path: email
       login_attribute_path: username
@@ -109,6 +108,7 @@ grafana:
       isDefault: false
   env:
     GF_SERVER_ROOT_URL: https://grafana.famcr.org
+    GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: REDACTED_SECRET
   persistence:
     enabled: true
     size: 10Gi
