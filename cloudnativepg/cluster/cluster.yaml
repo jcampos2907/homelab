@@ -4,6 +4,12 @@ metadata:
   name: homelabcluster
   namespace: homelab-pg
 spec:
+  managed:
+    roles:
+      - name: grafana
+        login: true
+        passwordSecret:
+          name: homelabcluster-user-grafana
   bootstrap:
     initdb:
       database: homelab
