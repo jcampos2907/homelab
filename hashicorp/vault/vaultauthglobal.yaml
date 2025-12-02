@@ -9,6 +9,7 @@ spec:
     - cloudflare
     - argocd
     - homelab-pg
+    - monitoring
   # vaultConnectionRef: vault-connection
   defaultAuthMethod: kubernetes
   kubernetes:
