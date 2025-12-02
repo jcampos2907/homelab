@@ -10,6 +10,6 @@ spec:
       owner: grafana
     - name: public
       owner: grafana
-  ensure: absent
+  databaseReclaimPolicy: delete
   cluster:
     name: homelabcluster
