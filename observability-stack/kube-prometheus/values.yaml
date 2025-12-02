@@ -99,6 +99,11 @@ grafana:
         revision: 4
         datasource: Prometheus
   grafana.ini:
+    database:
+      type: postgres
+      host: homelabcluster-rw.homelab-pg.svc.cluster.local:5432
+      name: grafana
+      ssl_mode: disable
     server:
       root_url: https://grafana.famcr.org
     auth.generic_oauth:
@@ -138,6 +143,14 @@ grafana:
   env:
     GF_SERVER_ROOT_URL: https://grafana.famcr.org
   envValueFrom:
+    GF_DATABASE_USER:
+      secretKeyRef:
+        name: grafana-db
+        key: db_user
+    GF_DATABASE_PASSWORD:
+      secretKeyRef:
+        name: grafana-db
+        key: db_password
     GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET:
       secretKeyRef:
         name: grafana-oidc
