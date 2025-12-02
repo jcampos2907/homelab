@@ -75,11 +75,28 @@ prometheus:
           - prometheus.famcr.org
 
 grafana:
-  extraConfigmapMounts:
-    - name: oidc-config
-      mountPath: /etc/grafana/oidc
-      configMap: oidc-config
-      subPath: oidc-grafana.ini
+  grafana.ini:
+    server:
+      root_url: https://grafana.famcr.org
+
+    auth:
+      disable_login_form: false
+      oauth_auto_login: false
+
+    auth.generic_oauth:
+      enabled: true
+      name: Keycloak-OAuth
+      allow_sign_up: true
+      client_id: grafana
+      client_secret: REDACTED_SECRET
+      scopes: openid email profile offline_access roles
+      email_attribute_path: email
+      login_attribute_path: username
+      name_attribute_path: full_name
+      auth_url: https://keycloak.famcr.org/realms/master/protocol/openid-connect/auth
+      token_url: https://keycloak.famcr.org/realms/master/protocol/openid-connect/token
+      api_url: https://keycloak.famcr.org/realms/master/protocol/openid-connect/userinfo
+      role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
   additionalDataSources:
     - name: Loki
       type: loki
