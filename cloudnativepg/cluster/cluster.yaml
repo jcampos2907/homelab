@@ -9,8 +9,8 @@ spec:
       - name: grafana
         createrole: true
         login: true
-        passwordSecret:
-          name: homelabcluster-user-grafana
+        # passwordSecret:
+        #   name: homelabcluster-user-grafana
   bootstrap:
     initdb:
       database: homelab
