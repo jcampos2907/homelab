@@ -10,6 +10,7 @@ spec:
     - argocd
     - homelab-pg
     - monitoring
+    - tailscale
   # vaultConnectionRef: vault-connection
   defaultAuthMethod: kubernetes
   kubernetes:
