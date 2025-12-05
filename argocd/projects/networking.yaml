@@ -8,6 +8,7 @@ spec:
 
   # Only allow trusted repos
   sourceRepos:
+    - https://pkgs.tailscale.com/helmcharts
     - https://github.com/jcampos2907/homelab.git
     - https://traefik.github.io/charts
     - https://helm.tailcale.com           # if you use a helm repo
