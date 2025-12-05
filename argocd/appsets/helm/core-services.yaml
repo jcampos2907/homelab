@@ -97,6 +97,15 @@ spec:
             chartVersion: 37.3.0
             valuesPath: traefik/values.yaml
             extraPath: traefik
+          - name: openbao
+            project: core
+            namespace: openbao
+            chartRepo: https://openbao.github.io/openbao-helm
+            chart: openbao
+            chartVersion: 0.5.0
+            valuesPath: openbao/values.yaml
+            extraPath: openbao
+  
 
           - name: vault
             project: data-services
