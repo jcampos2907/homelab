@@ -1,4 +1,6 @@
 server:
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
   extraSecretEnvironmentVars:
       - envName: VAULT_TOKEN              # used by the seal "transit"
         secretName: transit-autounseal
