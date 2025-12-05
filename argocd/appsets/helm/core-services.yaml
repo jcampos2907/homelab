@@ -36,7 +36,7 @@ spec:
           #   valuesPath: observability-stack/smartctl/values.yaml
             # extraPath: observability-stack/smartctl
           - name: cert-manager
-            project: core
+            project: data-services
             namespace: cert-manager
             chartRepo: https://charts.jetstack.io
             chart: cert-manager
