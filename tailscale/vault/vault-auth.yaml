@@ -2,7 +2,7 @@
 apiVersion: secrets.hashicorp.com/v1beta1
 kind: VaultAuth
 metadata:
-  namespace: monitoring
+  namespace: tailscale
   name: vault-auth
 spec:
   # kubernetes:
