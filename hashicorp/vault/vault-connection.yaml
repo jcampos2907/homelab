@@ -7,7 +7,7 @@ metadata:
 spec:
   # required configuration
   # address to the Vault server.
-  address: http://vault-internal.hashicorp.svc.cluster.local:8200
+  address: http://openbao-internal.openbao.svc.cluster.local:8200
   skipTLSVerify: true
   # optional configuration
   # HTTP headers to be included in all Vault requests.

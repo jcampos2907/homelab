@@ -359,6 +359,7 @@ vite.config.ts.timestamp-*
 
 *password-secret*
 *telegram-secret*
+openbao/secret.yaml
 
 minio/chart/*
 minio/docs/*
