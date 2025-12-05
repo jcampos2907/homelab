@@ -103,8 +103,8 @@ spec:
             chartRepo: https://openbao.github.io/openbao-helm
             chart: openbao
             chartVersion: 0.5.0
-            valuesPath: openbao/values.yaml
-            extraPath: openbao
+            valuesPath: openbao/vault/values.yaml
+            extraPath: openbao/vault
   
 
           - name: vault
