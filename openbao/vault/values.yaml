@@ -58,13 +58,13 @@ server:
     enabled: true
     ingressClassName: traefik
     hosts:
-      - host: openbao.famcr.org
+      - host: vault.famcr.org
         paths:
           - /
     tls:
-      - secretName: openbao-certificate-secret
+      - secretName: vault-certificate-secret
         hosts:
-          - openbao.famcr.org
+          - vault.famcr.org
 
 serverTelemetry:
   prometheusRules:
