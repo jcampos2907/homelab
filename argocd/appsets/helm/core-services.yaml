@@ -104,17 +104,17 @@ spec:
             chart: openbao
             chartVersion: 0.5.0
             valuesPath: openbao/vault/values.yaml
-            extraPath: openbao/vault
+            extraPath: openbao
   
 
-          - name: vault
-            project: data-services
-            namespace: hashicorp
-            chartRepo: https://helm.releases.hashicorp.com
-            chart: vault
-            chartVersion: 0.30.0
-            valuesPath: hashicorp/vault/values.yaml
-            extraPath: hashicorp
+          # - name: vault
+          #   project: data-services
+          #   namespace: hashicorp
+          #   chartRepo: https://helm.releases.hashicorp.com
+          #   chart: vault
+          #   chartVersion: 0.30.0
+          #   valuesPath: hashicorp/vault/values.yaml
+          #   extraPath: hashicorp
 
   template:
     metadata:
