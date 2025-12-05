@@ -3,6 +3,7 @@ server:
       - envName: VAULT_TOKEN              # used by the seal "transit"
         secretName: transit-autounseal
         secretKey: VAULT_TOKEN
+      
   ha:
     enabled: true
     replicas: 2
@@ -44,7 +45,7 @@ server:
           # Transit auto-unseal (PROVIDER = vault.specialized.co.cr)
           seal "transit" {
             address          = "https://vault.specialized.co.cr"
-            key_name         = "autounseal"
+            key_name         = "autounsealopenbao"
             mount_path       = "transit/"
             disable_renewal  = "false"
             tls_skip_verify  = "true"   # see step 3 for CA

@@ -1,0 +1,13 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vault-ingressroute-certificate # <-- Replace with your certificate name
+  namespace: openbao  # <-- Replace with your namespace
+spec:
+  secretName: vault-certificate-secret  # <-- Replace with your secret name
+  issuerRef:
+    name: cloudflare-clusterissuer  # <-- Replace with your issuer name
+    kind: ClusterIssuer
+  dnsNames:
+    - vault2.famcr.org  # <-- Replace with your hostname
