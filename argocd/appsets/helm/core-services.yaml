@@ -28,6 +28,14 @@ spec:
           #   chartVersion: 0.16.0
           #   valuesPath: observability-stack/smartctl/values.yaml
             # extraPath: observability-stack/smartctl
+          - name: cert-manager
+            project: core
+            namespace: cert-manager
+            chartRepo: https://charts.jetstack.io
+            chart: cert-manager
+            chartVersion: 1.19.1
+            valuesPath: cert-manager/values.yaml
+            extraPath: cert-manager
 
           - name: jenkins
             project: apps
