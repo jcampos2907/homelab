@@ -11,6 +11,7 @@ spec:
     - homelab-pg
     - monitoring
     - tailscale
+    - n8n
   # vaultConnectionRef: vault-connection
   defaultAuthMethod: kubernetes
   kubernetes:

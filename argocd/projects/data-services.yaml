@@ -12,6 +12,7 @@ spec:
     - https://helm.releases.hashicorp.com
     - https://charts.jetstack.io
     - https://cloudnative-pg.github.io/charts
+    - oci://8gears.container-registry.com/library/n8n
 
   destinations:
     - server: https://kubernetes.default.svc

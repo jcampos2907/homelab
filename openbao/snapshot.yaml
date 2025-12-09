@@ -1,0 +1,15 @@
+{
+  "storage_type": "aws-s3",
+  "file_prefix": "paris",
+  "interval": "8h",
+  "retain": 30,
+  "autoload_enabled": true,
+  "local_max_space": 2621440000,
+  "path_prefix": "primary",
+  "aws_s3_bucket": "vault-snapshots",
+  "aws_s3_region": "eu-west-3",
+  "aws_access_key_id": "ASI...COFFEE",
+  "aws_secret_access_key": "wJalr...COFFEEKEY",
+  "aws_session_token": "IQoJb3JpZ2luX2IQ...COFFEE",
+  "aws_s3_server_side_encryption": "true"
+}
