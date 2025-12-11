@@ -5,9 +5,6 @@ metadata:
   namespace: traefik          # <-- adjust to your Traefik namespace
   annotations:
     tailscale.com/proxy-group: ingress-proxies
-    tailscale.com/hostname: traefik       # => traefik.<tailnet>.ts.net
-    # optional per-service ACL tag:
-    # tailscale.com/tags: 'tag:ingress-web'
 spec:
   type: LoadBalancer
   loadBalancerClass: tailscale
