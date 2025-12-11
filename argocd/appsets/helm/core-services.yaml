@@ -10,14 +10,14 @@ spec:
   generators:
     - list:
         elements:
-          - name: tailscale-operator
-            project: networking
-            namespace: tailscale
-            chartRepo: https://pkgs.tailscale.com/helmcharts
-            chart: tailscale-operator
-            chartVersion: 1.90.9
-            valuesPath: tailscale/values.yaml
-            extraPath: tailscale
+          # - name: tailscale-operator
+          #   project: networking
+          #   namespace: tailscale
+          #   chartRepo: https://pkgs.tailscale.com/helmcharts
+          #   chart: tailscale-operator
+          #   chartVersion: 1.90.9
+          #   valuesPath: tailscale/values.yaml
+          #   extraPath: tailscale
           - name: kube-stack
             project: observability
             namespace: monitoring
