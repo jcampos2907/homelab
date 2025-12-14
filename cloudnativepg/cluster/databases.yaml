@@ -6,9 +6,11 @@ spec:
   name: grafana
   owner: grafana
   schemas:
-    - name: grafana
+    - ensure: present
+      name: grafana
       owner: grafana
-    - name: public
+    - ensure: present
+      name: public
       owner: grafana
   databaseReclaimPolicy: delete
   cluster:
