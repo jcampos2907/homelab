@@ -112,7 +112,7 @@ controller:
       valueFrom:
         secretKeyRef:
           name: jenkins-oidc
-          key: 
+          key: github_user
     - name: github_pat
       valueFrom:
         secretKeyRef:
