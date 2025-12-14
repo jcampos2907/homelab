@@ -101,3 +101,9 @@ controller:
         secretKeyRef:
           name: jenkins-oidc
           key: CASC_VAULT_KUBERNETES_ROLE
+
+    - name: clientSecret
+      valueFrom:
+        secretKeyRef:
+          name: jenkins-oidc
+          key: clientSecret
