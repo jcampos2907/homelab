@@ -7,14 +7,20 @@ spec:
   managed:
     roles:
       - name: grafana
+        ensure: present
+        comment: User for Grafana
         superuser: true
         createrole: true
         login: true
       - name: n8n
+        ensure: present
+        comment: User for n8n
         superuser: true
         createrole: true
         login: true
       - name: keycloak
+        ensure: present
+        comment: User for Keycloak
         superuser: true
         createrole: true
         login: true
