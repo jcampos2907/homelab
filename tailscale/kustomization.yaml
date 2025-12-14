@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources: 
+  - egress-proxies.yaml
+  - ingress-proxies.yaml
+  - api-proxygroup.yaml
+  - vault/sa.yaml
+  - vault/vault-auth.yaml
+  - vault/secrets.yaml
+
+# commonLabels:
+#   app: tailscale
+
+# namespace: tailscale
+
+# images:
+#   - name: tailscale/tailscale
+#     newTag: latest

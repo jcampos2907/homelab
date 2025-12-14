@@ -32,11 +32,11 @@ spec:
   #       parameters:
   #         barmanObjectName: minio-store
   #         serverName: homelabcluster
-  plugins:
-  - name: barman-cloud.cloudnative-pg.io
-    isWALArchiver: true
-    parameters:
-      barmanObjectName: ceph-store
+  # plugins:
+  # - name: barman-cloud.cloudnative-pg.io
+  #   isWALArchiver: true
+  #   parameters:
+  #     barmanObjectName: ceph-store
   monitoring:
     enablePodMonitor: true
   imageName: jicamposr/postgres:17.0
