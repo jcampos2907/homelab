@@ -54,7 +54,7 @@ spec:
     shared_preload_libraries: 
     - "timescaledb"
  
-  instances: 2
+  instances: 1
   resources:
     requests:
       cpu: 500m
