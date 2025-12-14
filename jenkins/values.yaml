@@ -107,3 +107,14 @@ controller:
         secretKeyRef:
           name: jenkins-oidc
           key: clientSecret
+
+    - name: github_user
+      valueFrom:
+        secretKeyRef:
+          name: jenkins-oidc
+          key: 
+    - name: github_pat
+      valueFrom:
+        secretKeyRef:
+          name: jenkins-oidc
+          key: github_pat
