@@ -10,6 +10,14 @@ spec:
         superuser: true
         createrole: true
         login: true
+      - name: n8n
+        superuser: true
+        createrole: true
+        login: true
+      - name: keycloak
+        superuser: true
+        createrole: true
+        login: true
   bootstrap:
     initdb:
       database: homelab
