@@ -13,3 +13,36 @@ spec:
   databaseReclaimPolicy: delete
   cluster:
     name: homelabcluster
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: n8n
+spec:
+  name: n8n
+  owner: n8n
+  schemas:
+    - name: n8n
+      owner: n8n
+    - name: public
+      owner: n8n
+  databaseReclaimPolicy: delete
+  cluster:
+    name: homelabcluster
+
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: keycloak
+spec:
+  name: keycloak
+  owner: keycloak
+  schemas:
+    - name: keycloak
+      owner: keycloak
+    - name: public
+      owner: keycloak
+  databaseReclaimPolicy: delete
+  cluster:
+    name: homelabcluster

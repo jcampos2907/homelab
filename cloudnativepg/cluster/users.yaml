@@ -22,3 +22,29 @@ metadata:
   namespace: homelab-pg
   name: homelabcluster-user-grafana
 type: kubernetes.io/basic-auth
+
+---
+
+apiVersion: v1
+stringData:
+#  password: password-test --- REPLACE ---
+  password: password-test
+  username: n8n
+kind: Secret
+metadata:
+  namespace: homelab-pg
+  name: homelabcluster-user-n8n
+type: kubernetes.io/basic-auth
+
+---
+
+apiVersion: v1
+stringData:
+#  password: password-test --- REPLACE ---
+  password: password-test
+  username: keycloak
+kind: Secret
+metadata:
+  namespace: homelab-pg
+  name: homelabcluster-user-keycloak
+type: kubernetes.io/basic-auth
