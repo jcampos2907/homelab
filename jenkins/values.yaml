@@ -67,7 +67,6 @@ controller:
               serverConfiguration:
                 wellKnown:
                   wellKnownOpenIDConfigurationUrl: "http://keycloak.keycloak.svc.cluster.local/realms/master/.well-known/openid-configuration"
-                  # wellKnownOpenIDConfigurationUrl: "https://keycloak.famcr.org/realms/master/.well-known/openid-configuration"
                   scopesOverride: "openid profile email"
               clientId: "jenkins"
               clientSecret: "${clientSecret}"
