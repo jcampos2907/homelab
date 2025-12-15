@@ -83,7 +83,7 @@ spec:
             project: networking
             namespace: pihole
             chartRepo: https://jcampos2907.github.io/charts
-            chartVersion: 0.1.0
+            chartVersion: 0.2.0
             chart: pihole
             valuesPath: pihole/values.yaml
             extraPath: pihole
