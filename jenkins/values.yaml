@@ -7,6 +7,10 @@ persistence:
   enabled: true
 
 controller:
+  dnsConfig:
+    options:
+      - name: ndots
+        value: "1"
   additionalPlugins:
     - github-branch-source:1917.v9ee8a_39b_3d0d
     - oic-auth:4.609.v9de140f63d01
