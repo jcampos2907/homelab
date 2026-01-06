@@ -18,7 +18,6 @@ spec:
   kubernetes:
     audiences:
     - vault
-    - kubernetes
     mount: kubernetes
     role: vault-apps
     serviceAccount: vault-sa
