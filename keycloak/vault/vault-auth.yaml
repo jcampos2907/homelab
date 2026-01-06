@@ -9,4 +9,6 @@ spec:
     namespace: hashicorp
     allowDefault: true
   kubernetes:
+    audiences:
+      - vault
     role: keycloak
