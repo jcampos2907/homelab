@@ -5,7 +5,6 @@ namespace: keycloak
 
 resources:
 - vault/sa.yaml
-- vault/vault-connection.yaml
 - vault/vault-auth.yaml
 - vault/vault-dynamic-secret.yaml
 - keycloak.yaml
