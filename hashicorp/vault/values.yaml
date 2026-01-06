@@ -42,14 +42,14 @@ server:
           }
 
           # Transit auto-unseal (PROVIDER = vault.specialized.co.cr)
-          # seal "transit" {
-          #   address          = "https://vault.specialized.co.cr"
-          #   key_name         = "autounseal"
-          #   mount_path       = "transit/"
-          #   disable_renewal  = "false"
-          #   tls_skip_verify  = "true"   # see step 3 for CA
-          #   # token is read from VAULT_TOKEN env
-          # }
+          seal "transit" {
+            address          = "https://vault.specialized.co.cr"
+            key_name         = "autounseal"
+            mount_path       = "transit/"
+            disable_renewal  = "false"
+            tls_skip_verify  = "true"   # see step 3 for CA
+            # token is read from VAULT_TOKEN env
+          }
           service_registration "kubernetes" {}
   ingress:
     enabled: true
