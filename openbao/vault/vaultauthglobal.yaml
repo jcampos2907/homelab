@@ -12,6 +12,7 @@ spec:
     - monitoring
     - tailscale
     - n8n
+    - keycloak
   # vaultConnectionRef: vault-connection
   defaultAuthMethod: kubernetes
   kubernetes:
