@@ -53,7 +53,7 @@ server:
             mount_path       = "transit/"
             disable_renewal  = "false"
             tls_skip_verify  = "true"   # see step 3 for CA
-            disabled          = true
+            disabled          = "true"
             # token is read from VAULT_TOKEN env
           }
           service_registration "kubernetes" {}
