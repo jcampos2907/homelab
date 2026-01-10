@@ -8,7 +8,7 @@ server:
       
   ha:
     enabled: true
-    replicas: 0
+    replicas: 3
     # config: |
     #   ui = true
 
