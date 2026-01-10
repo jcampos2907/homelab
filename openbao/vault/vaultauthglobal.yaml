@@ -17,7 +17,7 @@ spec:
   defaultAuthMethod: kubernetes
   kubernetes:
     audiences:
-    - vault
+    - https://kubernetes.default.svc
     mount: kubernetes
     role: vault-apps
     serviceAccount: vault-sa

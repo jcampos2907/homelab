@@ -10,5 +10,5 @@ spec:
     allowDefault: true
   kubernetes:
     audiences:
-      - vault
+      - https://kubernetes.default.svc
     role: keycloak
