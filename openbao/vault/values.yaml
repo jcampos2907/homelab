@@ -1,14 +1,18 @@
 server:
+  tolerations:
+    - key: "postgres-db"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
   annotations:
     argocd.argoproj.io/sync-options: Replace=true
   extraSecretEnvironmentVars:
       - envName: VAULT_TOKEN              # used by the seal "transit"
         secretName: transit-autounseal
         secretKey: VAULT_TOKEN
-      
   ha:
     enabled: true
-    replicas: 1
+    replicas: 3
     # config: |
     #   ui = true
 
