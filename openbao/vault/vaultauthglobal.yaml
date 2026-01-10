@@ -5,6 +5,7 @@ metadata:
   name: default
 spec:
   allowedNamespaces:
+    - oauth2
     - jenkins
     - cloudflare
     - argocd
