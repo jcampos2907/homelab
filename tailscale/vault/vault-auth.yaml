@@ -12,4 +12,6 @@ spec:
     namespace: hashicorp
     allowDefault: true
   kubernetes:
+    audiences:
+      - https://kubernetes.default.svc
     role: tailscale
