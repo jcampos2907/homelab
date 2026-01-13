@@ -7,6 +7,10 @@ persistence:
   enabled: true
 
 controller:
+  hostAliases:
+  - ip: "100.91.10.38"
+    hostnames:
+    - "keycloak.famcr.org"
   dnsConfig:
     options:
       - name: ndots
