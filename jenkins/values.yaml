@@ -19,7 +19,7 @@ controller:
     - github-branch-source:1917.v9ee8a_39b_3d0d
     - oic-auth:4.609.v9de140f63d01
     - hashicorp-vault-plugin:371.v884a_4dd60fb_6
-    - kubernetes-credentials-provider:1.303.vdfcf47fb_b_fef
+    # - kubernetes-credentials-provider:1.303.vdfcf47fb_b_fef
 
   jenkinsUrl: "https://jenkins.famcr.org"
 
@@ -67,6 +67,20 @@ controller:
                       username: "${github_user}"
                       password: "${github_pat}"
 
+      ssh-creds-1: |-
+        credentials:
+          system:
+            domainCredentials:
+              - credentials:
+                  - basicSSHUserPrivateKey:
+                      scope: GLOBAL
+                      id: "ccm-ssh"
+                      description: "Key to deploy in CCM Bot"
+                      username: "${CCM_SSH_USER}"
+                      privateKeySource:
+                        directEntry:
+                          privateKey: "${CCM_SSH_PRIVATE_KEY}"
+
       security-realm: |-
         jenkins:
           securityRealm:
@@ -109,7 +123,17 @@ controller:
         secretKeyRef:
           name: jenkins-oidc
           key: CASC_VAULT_KUBERNETES_ROLE
+    - name: CCM_SSH_PRIVATE_KEY
+      valueFrom:
+        secretKeyRef:
+          name: jenkins-oidc
+          key: CCM_SSH_PRIVATE_KEY
 
+    - name: CCM_SSH_USER
+      valueFrom:
+        secretKeyRef:
+          name: jenkins-oidc
+          key: CCM_SSH_USER
     - name: clientSecret
       valueFrom:
         secretKeyRef:
