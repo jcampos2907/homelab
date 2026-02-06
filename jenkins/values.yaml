@@ -19,6 +19,7 @@ controller:
     - github-branch-source:1917.v9ee8a_39b_3d0d
     - oic-auth:4.609.v9de140f63d01
     - hashicorp-vault-plugin:371.v884a_4dd60fb_6
+    - kubernetes-credentials-provider:1.303.vdfcf47fb_b_fef
 
   jenkinsUrl: "https://jenkins.famcr.org"
 
@@ -28,10 +29,8 @@ controller:
   ingress:
     enabled: false
 
-
-
   JCasC:
-    defaultConfig: true   # <- recommended
+    defaultConfig: true # <- recommended
     configScripts:
       # authorization: |-
       #     jenkins:
