@@ -65,10 +65,10 @@ spec:
       pgaudit.log_relation: "on"
       pg_stat_statements.max: "10000"
       pg_stat_statements.track: all
-    shared_preload_libraries: 
-    - "timescaledb"
- 
-  instances: 1
+    shared_preload_libraries:
+      - "timescaledb"
+
+  instances: 3
   resources:
     requests:
       cpu: 500m
@@ -99,8 +99,7 @@ spec:
     #                   - redis
     #           topologyKey: kubernetes.io/hostname
     tolerations:
-    - key: "postgres-db"
-      operator: "Equal"
-      value: "true"
-      effect: "NoSchedule"
-
+      - key: "postgres-db"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
