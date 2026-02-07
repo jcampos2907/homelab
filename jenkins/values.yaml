@@ -16,6 +16,7 @@ controller:
       - name: ndots
         value: "1"
   additionalPlugins:
+    - ssh-agent:386.v36cc0c7582f0
     - github-branch-source:1917.v9ee8a_39b_3d0d
     - oic-auth:4.609.v9de140f63d01
     - hashicorp-vault-plugin:379.v080d932e61e4
