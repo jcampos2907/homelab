@@ -25,7 +25,7 @@ spec:
             project: data-services
             namespace: cloudnativepg
             path: cloudnativepg/cluster
-          
+
           # BarmanCloudPlugin kustomize root
           - name: barmancloudplugin
             project: data-services
@@ -36,6 +36,11 @@ spec:
             project: networking
             namespace: cloudflare
             path: cloudflare/tunnel
+
+          - name: cordensConfig
+            project: networking
+            namespace: kube-system
+            path: infra/coredns-custom
           # Add more kustomize roots like this:
           # - name: some-app
           #   project: apps
@@ -44,19 +49,19 @@ spec:
 
   template:
     metadata:
-      name: '{{name}}'
+      name: "{{name}}"
       namespace: argocd
     spec:
-      project: '{{project}}'
+      project: "{{project}}"
 
       source:
         repoURL: https://github.com/jcampos2907/homelab.git
         targetRevision: main
-        path: '{{path}}'          # folder containing kustomization.yaml
+        path: "{{path}}" # folder containing kustomization.yaml
 
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{namespace}}'
+        namespace: "{{namespace}}"
 
       syncPolicy:
         automated:
