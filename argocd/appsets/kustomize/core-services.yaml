@@ -37,7 +37,7 @@ spec:
             namespace: cloudflare
             path: cloudflare/tunnel
 
-          - name: cordensConfig
+          - name: corednsconfig
             project: networking
             namespace: kube-system
             path: infra/coredns-custom
