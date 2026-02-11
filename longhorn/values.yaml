@@ -2,7 +2,7 @@ longhornUI:
   replicas: 1
 persistence:
   defaultClassReplicaCount: 2
-  defaultDataLocality: 'best-effort'
+  defaultDataLocality: "best-effort"
   reclaimPolicy: Retain
   migratable: true
 
