@@ -17,4 +17,4 @@ kind: Kustomization
 namespace: kube-system
 
 resources:
-  - coredns-configmap-patch.yaml
+  - ccustom/oredns-configmap-patch.yaml
