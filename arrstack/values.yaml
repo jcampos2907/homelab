@@ -33,7 +33,7 @@ lidarr:
       - host: lidarr.famcr.org
         paths:
           - path: /
-        #     pathType: ImplementationSpecific
+            pathType: ImplementationSpecific
     tls:
       - secretName: lidarr-certificate-secret
         hosts:
