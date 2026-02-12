@@ -31,8 +31,8 @@ lidarr:
     enabled: true
     hosts:
       - host: lidarr.famcr.org
-        # paths:
-        #   - path: /
+        paths:
+          - path: /
         #     pathType: ImplementationSpecific
     tls:
       - secretName: lidarr-certificate-secret
