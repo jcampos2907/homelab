@@ -24,6 +24,9 @@ data:
         loop
         reload
         loadbalance
+        template IN AAAA {
+          rcode NOERROR
+        }
         import /etc/coredns/custom/*.override
     }
     import /etc/coredns/custom/*.server
