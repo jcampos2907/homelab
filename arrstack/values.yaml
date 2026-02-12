@@ -27,3 +27,7 @@ cleanuparr:
 
 lidarr:
   enabled: true
+  ingress:
+    enabled: true
+    hosts:
+      - hosts: ["lidarr.famcr.org"]
