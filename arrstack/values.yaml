@@ -1,0 +1,29 @@
+jellyfin:
+  enabled: false
+
+sonarr:
+  enabled: false
+
+radarr:
+  enabled: false
+
+prowlarr:
+  enabled: false
+
+qbittorrent:
+  enabled: false
+
+flaresolverr:
+  enabled: false
+
+jellyseerr:
+  enabled: false
+
+bazarr:
+  enabled: false
+
+cleanuparr:
+  enabled: false
+
+lidarr:
+  enabled: true
