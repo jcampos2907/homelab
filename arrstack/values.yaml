@@ -30,6 +30,11 @@ lidarr:
   ingress:
     enabled: true
     hosts:
-      - "lidarr.famcr.org"
+      - host: lidarr.famcr.org
+        # paths:
+        #   - path: /
+        #     pathType: ImplementationSpecific
     tls:
       - secretName: lidarr-certificate-secret
+        hosts:
+          - lidarr.famcr.org
