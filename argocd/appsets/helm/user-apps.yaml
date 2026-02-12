@@ -17,6 +17,7 @@ spec:
             chart: kubitodev/servarr
             chartVersion: 1.2.3
             valuesPath: arrstack/values.yaml
+            extraPath: ""
 
   template:
     metadata:
