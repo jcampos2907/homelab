@@ -38,14 +38,14 @@ cleanuparr:
 
 lidarr:
   enabled: true
-  ingress:
-    enabled: true
-    hosts:
-      - host: lidarr.famcr.org
-        paths:
-          - path: /
-            pathType: ImplementationSpecific
-    tls:
-      - secretName: lidarr-certificate-secret
-        hosts:
-          - lidarr.famcr.org
+  # ingress:
+  #   enabled: true
+  #   hosts:
+  #     - host: lidarr.famcr.org
+  #       paths:
+  #         - path: /
+  #           pathType: ImplementationSpecific
+  #   tls:
+  #     - secretName: lidarr-certificate-secret
+  #       hosts:
+  #         - lidarr.famcr.org

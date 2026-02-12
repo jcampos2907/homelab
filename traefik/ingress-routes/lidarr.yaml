@@ -1,0 +1,19 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: lidarr-auth
+  namespace: arrstack
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`lidarr.famcr.org`) && PathPrefix(`/`)
+      middlewares:
+        - name: oauth-auth-redirect
+          namespace: traefik
+      services:
+        - name: arrstack-lidarr
+          port: 8686
+  tls:
+    secretName: lidarr-certificate-secret
