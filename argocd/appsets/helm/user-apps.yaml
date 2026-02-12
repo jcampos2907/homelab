@@ -14,10 +14,10 @@ spec:
             project: apps
             namespace: arrstack
             chartRepo: https://charts.kubito.dev
-            chart: kubitodev/servarr
+            chart: servarr
             chartVersion: 1.2.3
             valuesPath: arrstack/values.yaml
-            extraPath: ""
+            extraPath: "arrstack"
 
   template:
     metadata:
