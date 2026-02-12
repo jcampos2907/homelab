@@ -1,0 +1,13 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: lidarr-ingressroute-certificate # <-- Replace with your certificate name
+  namespace: arrstack # <-- Replace with your namespace
+spec:
+  secretName: lidarr-certificate-secret # <-- Replace with your secret name
+  issuerRef:
+    name: cloudflare-clusterissuer # <-- Replace with your issuer name
+    kind: ClusterIssuer
+  dnsNames:
+    - lidarr.famcr.org # <-- Replace with your hostname

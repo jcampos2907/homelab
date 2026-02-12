@@ -30,4 +30,6 @@ lidarr:
   ingress:
     enabled: true
     hosts:
-      - hosts: ["lidarr.famcr.org"]
+      - "lidarr.famcr.org"
+    tls:
+      - secretName: lidarr-certificate-secret
