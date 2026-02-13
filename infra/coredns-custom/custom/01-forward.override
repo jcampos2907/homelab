@@ -1,0 +1,5 @@
+famcr.org:53 {
+    errors
+    cache 30
+    forward . 100.100.100.100
+}
