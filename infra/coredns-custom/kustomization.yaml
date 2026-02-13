@@ -19,4 +19,4 @@ generatorOptions:
 configMapGenerator:
   - name: coredns-custom
     files:
-      - custom/01-forward.override
+      - custom/01-forward.server
