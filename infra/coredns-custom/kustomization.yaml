@@ -9,7 +9,7 @@ kind: Kustomization
 namespace: kube-system
 
 resources:
-  - custom/coredns-configmap-patch.yaml
+  # - custom/coredns-configmap-patch.yaml
   - coredns-restart-rbac.yaml
   - coredns-restart-job.yaml
 
