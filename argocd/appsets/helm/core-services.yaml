@@ -10,14 +10,14 @@ spec:
   generators:
     - list:
         elements:
-          - name: technitium
-            project: networking
-            namespace: technitium
-            chartRepo: https://charts.obeone.cloud
-            chart: technitium-dnsserver
-            chartVersion: 1.8.0
-            valuesPath: technitium/values.yaml
-            extraPath: technitium
+          # - name: technitium
+          #   project: networking
+          #   namespace: technitium
+          #   chartRepo: https://charts.obeone.cloud
+          #   chart: technitium-dnsserver
+          #   chartVersion: 1.8.0
+          #   valuesPath: technitium/values.yaml
+          #   extraPath: technitium
           - name: tailscale-operator
             project: networking
             namespace: tailscale
