@@ -10,6 +10,14 @@ spec:
   generators:
     - list:
         elements:
+          - name: technitium
+            project: networking
+            namespace: technitium
+            chartRepo: https://charts.obeone.cloud
+            chart: technitium-dnsserver
+            chartVersion: 1.8.0
+            valuesPath: technitium/values.yaml
+            extraPath: technitium
           - name: tailscale-operator
             project: networking
             namespace: tailscale
@@ -34,7 +42,7 @@ spec:
           #   chart: prometheus-smartctl-exporter
           #   chartVersion: 0.16.0
           #   valuesPath: observability-stack/smartctl/values.yaml
-            # extraPath: observability-stack/smartctl
+          # extraPath: observability-stack/smartctl
           - name: cert-manager
             project: data-services
             namespace: cert-manager
@@ -64,7 +72,7 @@ spec:
           - name: oauth2
             project: core
             namespace: oauth2
-            chartRepo: https://oauth2-proxy.github.io/manifests 
+            chartRepo: https://oauth2-proxy.github.io/manifests
             chart: oauth2-proxy
             chartVersion: 9.0.0
             valuesPath: oauth2-proxy/values.yaml
@@ -114,7 +122,6 @@ spec:
             chartVersion: 0.21.0
             valuesPath: openbao/vault/values.yaml
             extraPath: openbao
-  
 
           # - name: vault
           #   project: data-services
@@ -127,14 +134,14 @@ spec:
 
   template:
     metadata:
-      name: '{{name}}'
+      name: "{{name}}"
       namespace: argocd
     spec:
-      project: '{{project}}'
+      project: "{{project}}"
 
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{namespace}}'
+        namespace: "{{namespace}}"
 
       # MULTI-SOURCE, just like your current apps
       sources:
@@ -142,15 +149,15 @@ spec:
         - repoURL: https://github.com/jcampos2907/homelab.git
           targetRevision: main
           ref: values
-          path: '{{extraPath}}'
+          path: "{{extraPath}}"
           directory:
             recurse: true
-            exclude: '{excluded/**}'
+            exclude: "{excluded/**}"
 
         # 2) Helm chart from remote repo
-        - repoURL: '{{chartRepo}}'
-          chart: '{{chart}}'
-          targetRevision: '{{chartVersion}}'
+        - repoURL: "{{chartRepo}}"
+          chart: "{{chart}}"
+          targetRevision: "{{chartVersion}}"
           helm:
             valueFiles:
               - $values/{{valuesPath}}
@@ -162,7 +169,6 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
-
 
       # Safe to leave here: it only affects a resource that exists in vault installs
       ignoreDifferences:
