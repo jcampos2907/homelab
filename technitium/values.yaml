@@ -1,12 +1,11 @@
 ingress:
-  main:
-    enabled: true
-    hosts:
-      - host: technitium.famcr.org
-        paths:
-          - path: /
-            pathType: Prefix
-    tls:
-      - hosts:
-          - technitium.famcr.org
-        secretName: technitium-certificate-secret
+  enabled: true
+  hosts:
+    - host: technitium.famcr.org
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - hosts:
+        - technitium.famcr.org
+      secretName: technitium-certificate-secret
