@@ -37,10 +37,10 @@ spec:
             namespace: cloudflare
             path: cloudflare/tunnel
 
-          - name: corednsconfig
-            project: networking
-            namespace: kube-system
-            path: infra/coredns-custom
+          # - name: corednsconfig
+          #   project: networking
+          #   namespace: kube-system
+          #   path: infra/coredns-custom
           # Add more kustomize roots like this:
           # - name: some-app
           #   project: apps
