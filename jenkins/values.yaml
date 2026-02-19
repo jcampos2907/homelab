@@ -31,10 +31,7 @@ controller:
   ingress:
     enabled: true
     ingressClassName: traefik
-    hosts:
-      - host: jenkins.famcr.org
-        paths:
-          - /
+    hostName: jenkins.famcr.org
     tls:
       - secretName: jenkins-certificate-secret
         hosts:
