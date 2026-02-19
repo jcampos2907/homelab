@@ -29,7 +29,16 @@ controller:
     password: "adminpassword123"
 
   ingress:
-    enabled: false
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - host: jenkins.famcr.org
+        paths:
+          - /
+    tls:
+      - secretName: jenkins-certificate-secret
+        hosts:
+          - jenkins.famcr.org
 
   JCasC:
     defaultConfig: true # <- recommended
