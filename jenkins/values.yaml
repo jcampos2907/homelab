@@ -22,8 +22,8 @@ controller:
     - hashicorp-vault-plugin:379.v080d932e61e4
     # - kubernetes-credentials-provider:1.303.vdfcf47fb_b_fef
 
-  # jenkinsUrl: "https://jenkins.famcr.org"
-  jenkinsUrl: "http://localhost:8080"
+  jenkinsUrl: "https://jenkins.famcr.org"
+  # jenkinsUrl: "http://localhost:8080"
 
   admin:
     password: "adminpassword123"
