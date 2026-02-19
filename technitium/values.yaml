@@ -1,5 +1,8 @@
 ingress:
   enabled: true
+  className: traefik
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
   hosts:
     - host: technitium.famcr.org
       paths:
@@ -9,7 +12,6 @@ ingress:
     - hosts:
         - technitium.famcr.org
       secretName: technitium-certificate-secret
-
 serviceDns:
   type: LoadBalancer
   loadBalancerClass: tailscale
