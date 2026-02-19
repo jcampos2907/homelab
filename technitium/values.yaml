@@ -10,6 +10,18 @@ ingress:
         - technitium.famcr.org
       secretName: technitium-certificate-secret
 
+serviceDns:
+  type: LoadBalancer
+  loadBalancerClass: tailscale
+  annotations:
+    tailscale.com/proxy-group: ingress-proxies
+
+serviceDoh:
+  type: LoadBalancer
+  loadBalancerClass: tailscale
+  annotations:
+    tailscale.com/proxy-group: ingress-proxies
+
 replicaCount: 3
 clustering:
   # -- Enable clustering support (automatically configures per-pod domain names,
