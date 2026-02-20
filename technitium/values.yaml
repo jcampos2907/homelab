@@ -27,4 +27,4 @@ serviceDoh:
 replicaCount: 2
 clustering:
   enabled: true
-  hostNetwork: true
+  hostNetwork: false
