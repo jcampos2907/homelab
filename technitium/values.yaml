@@ -26,7 +26,5 @@ serviceDoh:
 
 replicaCount: 3
 clustering:
-  # -- Enable clustering support (automatically configures per-pod domain names,
-  # HTTPS with self-signed certs, and pod anti-affinity)
   enabled: true
-  # -- Use pod anti-af
+  hostNetwork: true
