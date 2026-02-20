@@ -24,7 +24,7 @@ serviceDoh:
   annotations:
     tailscale.com/proxy-group: ingress-proxies
 
-replicaCount: 3
+replicaCount: 2
 clustering:
   enabled: true
   hostNetwork: true
