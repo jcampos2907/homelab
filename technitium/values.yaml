@@ -24,7 +24,7 @@ serviceDoh:
   annotations:
     tailscale.com/proxy-group: ingress-proxies
 
-replicaCount: 3
+replicaCount: 1
 clustering:
   # -- Enable clustering support (automatically configures per-pod domain names,
   # HTTPS with self-signed certs, and pod anti-affinity)
