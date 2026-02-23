@@ -45,7 +45,7 @@ main:
   persistence:
     enabled: true
     size: 10Gi
-  #   storageClass: "longhorn"
+    storageClass: "longhorn"
   # extraEnv:
   #   - name: VUE_APP_URL_BASE_API
   #     value: "n8n.famcr.org"
