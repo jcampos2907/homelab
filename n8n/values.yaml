@@ -39,7 +39,7 @@ main:
     db:
       type: "postgresdb"
       postgresdb:
-        host: 'homelabcluster-rw.homelab-pg.svc.cluster.local'
+        host: "homelabcluster-rw.homelab-pg.svc.cluster.local"
         port: 5432
         database: "n8n"
   persistence:
@@ -49,16 +49,16 @@ main:
   # extraEnv:
   #   - name: VUE_APP_URL_BASE_API
   #     value: "n8n.famcr.org"
-# ingress:
-#   enabled: true
-#   className: "traefik"
-#   annotations:
-#     kubernetes.io/ingress.class: "traefik"
-#   hosts:
-#     - host: n8n.famcr.org
-#       paths:
-#         - /
-#   tls:
-#     - secretName: n8n-certificate-secret
-#       hosts:
-#         - n8n.famcr.org
+ingress:
+  enabled: true
+  className: "traefik"
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+  hosts:
+    - host: n8n.famcr.org
+      paths:
+        - /
+  tls:
+    - secretName: n8n-certificate-secret
+      hosts:
+        - n8n.famcr.org
