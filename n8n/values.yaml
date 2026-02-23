@@ -52,13 +52,13 @@ main:
 ingress:
   enabled: true
   className: "traefik"
-  annotations:
-    kubernetes.io/ingress.class: "traefik"
+
   hosts:
     - host: n8n.famcr.org
       paths:
-        - /
+        - path: /
+          pathType: Prefix
   tls:
-    - secretName: n8n-certificate-secret
-      hosts:
+    - hosts:
         - n8n.famcr.org
+      secretName: n8n-certificate-secret
