@@ -17,14 +17,21 @@ serviceDns:
   loadBalancerClass: tailscale
   annotations:
     tailscale.com/proxy-group: ingress-proxies
+    tailscale.com/hostname: technitium-dns
 
 serviceDoh:
   type: LoadBalancer
   loadBalancerClass: tailscale
   annotations:
     tailscale.com/proxy-group: ingress-proxies
+    tailscale.com/hostname: technitium-doh
 
-replicaCount: 2
+replicaCount: 1
 clustering:
-  enabled: true
+  enabled: false
   hostNetwork: false
+
+# Pin pods to nodes labeled with technitium-dns=true
+# Label 3 nodes: kubectl label node <name> technitium-dns=true
+nodeSelector:
+  technitium-dns: "true"

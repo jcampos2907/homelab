@@ -10,6 +10,14 @@ spec:
   generators:
     - list:
         elements:
+          # - name: openwebui
+          #   project: apps
+          #   namespace: openwebui
+          #   chartRepo: https://open-webui.github.io/helm-charts
+          #   chart: open-webui
+          #   chartVersion: 12.3.0
+          #   valuesPath: openwebui/values.yaml
+          #   extraPath: openwebui
           - name: arrstack
             project: apps
             namespace: arrstack

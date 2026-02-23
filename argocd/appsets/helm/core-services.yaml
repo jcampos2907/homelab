@@ -10,14 +10,14 @@ spec:
   generators:
     - list:
         elements:
-          # - name: technitium
-          #   project: networking
-          #   namespace: technitium
-          #   chartRepo: https://jcampos2907.github.io/charts
-          #   chart: technitium-dns
-          #   chartVersion: 0.4.0
-          #   valuesPath: technitium/values.yaml
-          #   extraPath: technitium
+          - name: technitium
+            project: networking
+            namespace: technitium
+            chartRepo: https://jcampos2907.github.io/charts
+            chart: technitium-dns
+            chartVersion: 0.4.0
+            valuesPath: technitium/values.yaml
+            extraPath: technitium
           - name: tailscale-operator
             project: networking
             namespace: tailscale
