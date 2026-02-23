@@ -96,14 +96,14 @@ spec:
           #   valuesPath: pihole/values.yaml
           #   extraPath: pihole
 
-          - name: n8n
-            project: data-services
-            namespace: n8n
-            chartRepo: oci://8gears.container-registry.com/library/n8n
-            chart: n8n
-            chartVersion: 2.0.1
-            valuesPath: n8n/values.yaml
-            extraPath: n8n
+          # - name: n8n
+          #   project: data-services
+          #   namespace: n8n
+          #   chartRepo: oci://8gears.container-registry.com/library/n8n
+          #   chart: n8n
+          #   chartVersion: 2.0.1
+          #   valuesPath: n8n/values.yaml
+          #   extraPath: n8n
 
           - name: traefik
             project: networking

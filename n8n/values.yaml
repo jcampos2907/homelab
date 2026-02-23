@@ -6,8 +6,8 @@ main:
     #   value: "n8n.famcr.org"
     - name: N8N_EDITOR_BASE_URL
       value: "https://n8n.famcr.org/"
-    # - name: N8N_PORT
-    #   value: "5678"
+    - name: N8N_PORT
+      value: "5678"
     # - name: N8N_PROTOCOL
     #   value: "https"
     - name: N8N_ENDPOINT_REST
