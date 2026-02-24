@@ -9,4 +9,4 @@ resources:
   - vault-secs.yaml
   - deployment.yaml
   - service.yaml
-# - ingress-route.yaml
+  - ingress-route.yaml
