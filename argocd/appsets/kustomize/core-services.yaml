@@ -41,6 +41,11 @@ spec:
             project: networking
             namespace: kube-system
             path: infra/coredns-custom
+
+          - name: onvo-mcp
+            project: apps
+            namespace: onvo-mcp
+            path: onvo-mcp
           # Add more kustomize roots like this:
           # - name: some-app
           #   project: apps

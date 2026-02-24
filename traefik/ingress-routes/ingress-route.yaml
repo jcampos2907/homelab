@@ -1,0 +1,29 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: onvo-mcp-sse
+  namespace: onvo-mcp
+spec:
+  headers:
+    customResponseHeaders:
+      X-Accel-Buffering: "no"
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: onvo-mcp
+  namespace: onvo-mcp
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`onvo-mcp.famcr.org`)
+      kind: Rule
+      middlewares:
+        - name: onvo-mcp-sse
+      services:
+        - name: onvo-mcp
+          port: 80
+  tls:
+    secretName: onvo-mcp-certificate-secret

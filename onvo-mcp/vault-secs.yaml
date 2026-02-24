@@ -1,0 +1,15 @@
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  namespace: onvo-mcp
+  name: vault-onvo-keys
+spec:
+  vaultAuthRef: vault-auth
+  mount: kv
+  type: kv-v2
+  path: apps/onvo-mcp
+  refreshAfter: 60s
+  destination:
+    create: true
+    name: onvo-keys
