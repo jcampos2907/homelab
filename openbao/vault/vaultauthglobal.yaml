@@ -14,11 +14,12 @@ spec:
     - tailscale
     - n8n
     - keycloak
+    - onvo-mcp
   # vaultConnectionRef: vault-connection
   defaultAuthMethod: kubernetes
   kubernetes:
     audiences:
-    - https://kubernetes.default.svc
+      - https://kubernetes.default.svc
     mount: kubernetes
     role: vault-apps
     serviceAccount: vault-sa
