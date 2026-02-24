@@ -8,5 +8,5 @@ resources:
   - vault/vault-auth.yaml
   - vault/vault-dynamic-secret.yaml
   - operator/
-  - keycloak-initial-admin-secret.yaml
+  # - keycloak-initial-admin-secret.yaml
   - keycloak-cr.yaml
