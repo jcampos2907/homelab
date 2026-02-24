@@ -14,23 +14,9 @@ spec:
         app: onvo-mcp
     spec:
       serviceAccountName: vault-sa
-      initContainers:
-        - name: copy-mcp
-          image: jicamposr/onvo-mcp:latest
-          command: ["sh", "-c", "cp /usr/local/bin/onvo-mcp /shared/onvo-mcp && chmod +x /shared/onvo-mcp"]
-          volumeMounts:
-            - name: mcp-binary
-              mountPath: /shared
       containers:
-        - name: supergateway
-          image: supercorp/supergateway:latest
-          args:
-            - --stdio
-            - /shared/onvo-mcp
-            - --port
-            - "8080"
-            - --host
-            - "0.0.0.0"
+        - name: onvo-mcp
+          image: jicamposr/onvo-mcp:latest
           ports:
             - containerPort: 8080
           env:
@@ -51,9 +37,3 @@ spec:
             limits:
               memory: "256Mi"
               cpu: "300m"
-          volumeMounts:
-            - name: mcp-binary
-              mountPath: /shared
-      volumes:
-        - name: mcp-binary
-          emptyDir: {}
