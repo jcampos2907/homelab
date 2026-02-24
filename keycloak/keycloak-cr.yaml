@@ -1,0 +1,37 @@
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
+metadata:
+  name: keycloak
+spec:
+  instances: 2
+  image: quay.io/keycloak/keycloak:26.4.0
+  bootstrapAdminSecret:
+    name: keycloak-initial-admin
+  db:
+    vendor: postgres
+    host: homelabcluster-rw.homelab-pg.svc.cluster.local
+    database: keycloak
+    usernameSecret:
+      name: keycloak-user
+      key: username
+    passwordSecret:
+      name: keycloak-user
+      key: password
+  http:
+    httpEnabled: true
+  proxy:
+    headers: xforwarded
+  hostname:
+    strict: false
+  resources:
+    requests:
+      cpu: 250m
+      memory: 1700Mi
+    limits:
+      cpu: 250m
+      memory: 2000Mi
+  additionalOptions:
+    - name: health-enabled
+      value: "true"
+    - name: cache
+      value: ispn
