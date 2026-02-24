@@ -5,8 +5,8 @@ metadata:
 spec:
   instances: 2
   image: quay.io/keycloak/keycloak:26.4.0
-  bootstrapAdminSecret:
-    name: keycloak-initial-admin
+  # bootstrapAdminSecret:
+  #   name: keycloak-initial-admin
   db:
     vendor: postgres
     host: homelabcluster-rw.homelab-pg.svc.cluster.local
