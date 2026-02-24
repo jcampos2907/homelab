@@ -7,6 +7,19 @@ spec:
   headers:
     customResponseHeaders:
       X-Accel-Buffering: "no"
+      Connection: "keep-alive"
+      Cache-Control: "no-cache"
+---
+apiVersion: traefik.io/v1alpha1
+kind: ServersTransport
+metadata:
+  name: onvo-mcp-transport
+  namespace: onvo-mcp
+spec:
+  forwardingTimeouts:
+    dialTimeout: 30s
+    responseHeaderTimeout: 0s
+    idleConnTimeout: 3600s
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
@@ -25,5 +38,8 @@ spec:
       services:
         - name: onvo-mcp
           port: 80
+          responseForwarding:
+            flushInterval: 1ms
+          serversTransport: onvo-mcp-transport
   tls:
     secretName: onvo-mcp-certificate-secret
