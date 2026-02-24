@@ -4,9 +4,9 @@ kind: Kustomization
 namespace: onvo-mcp
 
 resources:
-- sa.yaml
-- vault-auth.yaml
-- vault-secs.yaml
-- deployment.yaml
-- service.yaml
-- ingress-route.yaml
+  - sa.yaml
+  - vault-auth.yaml
+  - vault-secs.yaml
+  - deployment.yaml
+  - service.yaml
+# - ingress-route.yaml
