@@ -81,3 +81,6 @@ worker:
   enabled: true
   replicaCount: 1
   concurrency: 5
+  extraEnv:
+    - name: N8N_PORT
+      value: "5678"

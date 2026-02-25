@@ -29,6 +29,10 @@ sessionStorage:
 redis:
   enabled: false
 
+initContainers:
+  waitForRedis:
+    enabled: false
+
 metrics:
   enabled: true
   serviceMonitor:
