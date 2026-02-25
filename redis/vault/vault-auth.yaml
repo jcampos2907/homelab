@@ -1,0 +1,14 @@
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultAuth
+metadata:
+  namespace: redis
+  name: vault-auth
+spec:
+  vaultAuthGlobalRef:
+    namespace: hashicorp
+    allowDefault: true
+  kubernetes:
+    audiences:
+      - https://kubernetes.default.svc
+    role: redis

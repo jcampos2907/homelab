@@ -16,6 +16,7 @@ spec:
     - keycloak
     - onvo-mcp
     - bike-mcp
+    - redis
   # vaultConnectionRef: vault-connection
   defaultAuthMethod: kubernetes
   kubernetes:

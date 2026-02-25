@@ -35,7 +35,20 @@ main:
         secretKeyRef:
           name: n8n-user
           key: password
+    - name: QUEUE_BULL_REDIS_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: n8n-redis-auth
+          key: redis-password
   config:
+    executions:
+      mode: "queue"
+    queue:
+      bull:
+        redis:
+          host: "redis.redis.svc.cluster.local"
+          port: 26379
+          sentinelName: "homelabredis"
     db:
       type: "postgresdb"
       postgresdb:
@@ -63,3 +76,8 @@ ingress:
     - hosts:
         - n8n.famcr.org
       secretName: n8n-certificate-secret
+
+worker:
+  enabled: true
+  replicaCount: 1
+  concurrency: 5

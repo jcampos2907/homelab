@@ -13,6 +13,7 @@ spec:
     - https://charts.jetstack.io
     - https://cloudnative-pg.github.io/charts
     - oci://8gears.container-registry.com/library/n8n
+    - https://charts.bitnami.com/bitnami
 
   destinations:
     - server: https://kubernetes.default.svc

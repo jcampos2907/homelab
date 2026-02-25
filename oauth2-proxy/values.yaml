@@ -18,28 +18,16 @@ sessionStorage:
   type: redis
   redis:
     sentinel:
-      existingSecret: oauth2-redis-secret
-      passwordKey: "sentinel-password"
+      existingSecret: oauth2-redis-auth
+      passwordKey: "redis-password"
       masterName: "homelabredis"
       connectionUrls:
-        - "redis://oauth2-redis-announce-0.oauth2.svc.cluster.local:26379"
-        - "redis://oauth2-redis-announce-1.oauth2.svc.cluster.local:26379"
+        - "redis://redis-node-0.redis-headless.redis.svc.cluster.local:26379"
+        - "redis://redis-node-1.redis-headless.redis.svc.cluster.local:26379"
+        - "redis://redis-node-2.redis-headless.redis.svc.cluster.local:26379"
     clientType: sentinel
 redis:
-  redis:
-    masterGroupName: "homelabredis"
-  existingSecret: oauth2-redis-secret
-  enabled: true
-  # architecture: standalone
-  # usePassword: false
-  sentinel:
-    auth: true
-    existingSecret: oauth2-redis-secret
-
-  replicas: 3
-  persistentVolume:
-    enabled: true
-    storageClass: "longhorn"
+  enabled: false
 
 metrics:
   enabled: true
