@@ -35,19 +35,21 @@ main:
         secretKeyRef:
           name: n8n-user
           key: password
-    - name: QUEUE_BULL_REDIS_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: n8n-redis-auth
-          key: redis-password
+    # QUEUE_BULL_REDIS_PASSWORD: uncomment when worker is re-enabled
+    # - name: QUEUE_BULL_REDIS_PASSWORD
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: n8n-redis-auth
+    #       key: redis-password
   config:
-    executions:
-      mode: "queue"
-    queue:
-      bull:
-        redis:
-          host: "redis.redis.svc.cluster.local"
-          port: 6379
+    # queue mode disabled: chart PVC limitation prevents running worker pod
+    # executions:
+    #   mode: "queue"
+    # queue:
+    #   bull:
+    #     redis:
+    #       host: "redis.redis.svc.cluster.local"
+    #       port: 6379
     db:
       type: "postgresdb"
       postgresdb:
@@ -76,34 +78,7 @@ ingress:
         - n8n.famcr.org
       secretName: n8n-certificate-secret
 
+# Worker disabled: chart hardcodes same PVC for main and worker (n8n.pvc helper),
+# causing Multi-Attach errors with Longhorn RWO. Revisit with RWX or chart fix.
 worker:
-  enabled: true
-  replicaCount: 1
-  concurrency: 5
-  persistence:
-    enabled: false
-    type: emptyDir
-    # existingClaim: n8n-worker
-  extraEnv:
-    - name: N8N_PORT
-      value: "5678"
-    - name: QUEUE_BULL_REDIS_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: n8n-redis-auth
-          key: redis-password
-    - name: DB_POSTGRESDB_USER
-      valueFrom:
-        secretKeyRef:
-          name: n8n-user
-          key: username
-    - name: DB_POSTGRESDB_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: n8n-user
-          key: password
-    - name: N8N_ENCRYPTION_KEY
-      valueFrom:
-        secretKeyRef:
-          name: n8n-encryption-key
-          key: encryption_key
+  enabled: false
