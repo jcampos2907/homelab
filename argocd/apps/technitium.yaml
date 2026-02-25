@@ -27,6 +27,12 @@ spec:
         valueFiles:
           - $values/technitium/values.yaml
 
+  ignoreDifferences:
+    - group: apps
+      kind: StatefulSet
+      jsonPointers:
+        - /spec/volumeClaimTemplates
+
   syncPolicy:
     automated:
       prune: true
