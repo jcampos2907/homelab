@@ -17,6 +17,8 @@ proxyVarsAsSecrets: false
 sessionStorage:
   type: redis
   redis:
+    existingSecret: oauth2-redis-auth
+    passwordKey: "redis-password"
     sentinel:
       existingSecret: oauth2-redis-auth
       passwordKey: "redis-password"
