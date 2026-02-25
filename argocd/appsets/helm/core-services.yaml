@@ -20,14 +20,6 @@ spec:
           #   chartVersion: 0.4.0
           #   valuesPath: technitium/values.yaml
           #   extraPath: technitium
-          - name: tailscale-operator
-            project: networking
-            namespace: tailscale
-            chartRepo: https://pkgs.tailscale.com/helmcharts
-            chart: tailscale-operator
-            chartVersion: 1.90.9
-            valuesPath: tailscale/values.yaml
-            extraPath: tailscale
           - name: kube-stack
             project: observability
             namespace: monitoring
