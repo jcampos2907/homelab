@@ -87,3 +87,23 @@ worker:
   extraEnv:
     - name: N8N_PORT
       value: "5678"
+    - name: QUEUE_BULL_REDIS_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: n8n-redis-auth
+          key: redis-password
+    - name: DB_POSTGRESDB_USER
+      valueFrom:
+        secretKeyRef:
+          name: n8n-user
+          key: username
+    - name: DB_POSTGRESDB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: n8n-user
+          key: password
+    - name: N8N_ENCRYPTION_KEY
+      valueFrom:
+        secretKeyRef:
+          name: n8n-encryption-key
+          key: encryption_key
