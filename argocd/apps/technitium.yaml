@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: technitium
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  project: networking
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: technitium
+
+  sources:
+    - repoURL: https://github.com/jcampos2907/homelab.git
+      targetRevision: main
+      ref: values
+      path: technitium
+      directory:
+        recurse: true
+        exclude: "{excluded/**}"
+    - repoURL: https://jcampos2907.github.io/charts
+      chart: technitium-dns
+      targetRevision: 0.5.0
+      helm:
+        valueFiles:
+          - $values/technitium/values.yaml
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

@@ -26,6 +26,8 @@ serviceDoh:
     tailscale.com/proxy-group: ingress-proxies
     tailscale.com/hostname: technitium-doh
 
+priorityClassName: dns-critical
+
 replicaCount: 1
 clustering:
   enabled: false

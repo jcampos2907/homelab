@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: core-services-kustomize
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: false

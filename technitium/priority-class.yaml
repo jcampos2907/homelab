@@ -1,0 +1,8 @@
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: dns-critical
+value: 1000000
+globalDefault: false
+preemptionPolicy: PreemptWithinQueue
+description: "Ensures Technitium DNS pods are scheduled before all other workloads on cluster restart."

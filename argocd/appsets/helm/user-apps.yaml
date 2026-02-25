@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: user-apps
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   # When an app is removed from this list, also delete its resources
   syncPolicy:
