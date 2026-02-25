@@ -6,5 +6,5 @@ metadata:
     argocd.argoproj.io/sync-wave: "-1"
 value: 1000000
 globalDefault: false
-preemptionPolicy: PreemptWithinQueue
+preemptionPolicy: PreemptLowerPriority
 description: "Ensures Technitium DNS pods are scheduled before all other workloads on cluster restart."
