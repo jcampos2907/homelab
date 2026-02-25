@@ -27,12 +27,11 @@ replica:
     enabled: true
     storageClass: longhorn
     size: 5Gi
+  pdb:
+    create: true
+    minAvailable: 2
 
 metrics:
   enabled: true
   serviceMonitor:
     enabled: true
-
-pdb:
-  create: true
-  minAvailable: 2
