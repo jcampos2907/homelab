@@ -81,9 +81,9 @@ worker:
   replicaCount: 1
   concurrency: 5
   persistence:
-    enabled: true
-    type: existing
-    existingClaim: n8n-worker
+    enabled: false
+    type: emptyDir
+    # existingClaim: n8n-worker
   extraEnv:
     - name: N8N_PORT
       value: "5678"
