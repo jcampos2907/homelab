@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cnpg-cluster
+  namespace: argocd
+spec:
+  project: data-services
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: homelab-pg
+
+  source:
+    repoURL: https://github.com/jcampos2907/homelab.git
+    targetRevision: main
+    path: cloudnativepg/cluster
+
+  ignoreDifferences:
+    - group: postgresql.cnpg.io
+      kind: Cluster
+      jqPathExpressions:
+        - .spec.managed.roles[]?.connectionLimit
+        - .spec.managed.roles[]?.inherit
+        - .spec.resources.limits.cpu
+
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+      - RespectIgnoreDifferences=true

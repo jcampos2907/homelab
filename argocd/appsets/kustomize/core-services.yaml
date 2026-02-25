@@ -23,11 +23,6 @@ spec:
             namespace: keycloak
             path: keycloak
 
-          - name: cnpg-cluster
-            project: data-services
-            namespace: cloudnativepg
-            path: cloudnativepg/cluster
-
           # BarmanCloudPlugin kustomize root
           - name: barmancloudplugin
             project: data-services
