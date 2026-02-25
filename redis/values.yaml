@@ -6,6 +6,8 @@ auth:
   existingSecretPasswordKey: redis-password
 
 sentinel:
+  service:
+    createMaster: true
   enabled: true
   masterSet: homelabredis
   resources:
@@ -14,8 +16,8 @@ sentinel:
       memory: 64Mi
     limits:
       memory: 128Mi
-  masterService:
-    enabled: true
+  # masterService:
+  #   enabled: true
 replica:
   replicaCount: 3
   resources:
