@@ -47,8 +47,7 @@ main:
       bull:
         redis:
           host: "redis.redis.svc.cluster.local"
-          port: 26379
-          sentinelName: "homelabredis"
+          port: 6379
     db:
       type: "postgresdb"
       postgresdb:
@@ -81,6 +80,8 @@ worker:
   enabled: true
   replicaCount: 1
   concurrency: 5
+  persistence:
+    enabled: false
   extraEnv:
     - name: N8N_PORT
       value: "5678"
