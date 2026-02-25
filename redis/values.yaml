@@ -6,8 +6,8 @@ auth:
   existingSecretPasswordKey: redis-password
 
 sentinel:
-  # service:
-  #   createMaster: true
+  service:
+    createMaster: true
   enabled: true
   masterSet: homelabredis
   resources:
