@@ -1,0 +1,15 @@
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  namespace: bike-mcp
+  name: vault-bike-mcp
+spec:
+  vaultAuthRef: vault-auth
+  mount: kv
+  type: kv-v2
+  path: apps/bike-mcp
+  refreshAfter: 60s
+  destination:
+    create: true
+    name: bike-mcp-secrets

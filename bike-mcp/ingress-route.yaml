@@ -1,0 +1,45 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: bike-mcp-sse
+  namespace: bike-mcp
+spec:
+  headers:
+    customResponseHeaders:
+      X-Accel-Buffering: "no"
+      Connection: "keep-alive"
+      Cache-Control: "no-cache"
+---
+apiVersion: traefik.io/v1alpha1
+kind: ServersTransport
+metadata:
+  name: bike-mcp-transport
+  namespace: bike-mcp
+spec:
+  forwardingTimeouts:
+    dialTimeout: 30s
+    responseHeaderTimeout: 0s
+    idleConnTimeout: 3600s
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: bike-mcp
+  namespace: bike-mcp
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`bike-mcp.famcr.org`)
+      kind: Rule
+      middlewares:
+        - name: bike-mcp-sse
+      services:
+        - name: bike-mcp
+          port: 80
+          responseForwarding:
+            flushInterval: 1ms
+          serversTransport: bike-mcp-transport
+  tls:
+    secretName: bike-mcp-certificate-secret

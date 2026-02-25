@@ -46,6 +46,11 @@ spec:
             project: apps
             namespace: onvo-mcp
             path: onvo-mcp
+
+          - name: bike-mcp
+            project: apps
+            namespace: bike-mcp
+            path: bike-mcp
           # Add more kustomize roots like this:
           # - name: some-app
           #   project: apps

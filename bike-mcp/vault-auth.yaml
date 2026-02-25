@@ -1,0 +1,14 @@
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultAuth
+metadata:
+  namespace: bike-mcp
+  name: vault-auth
+spec:
+  kubernetes:
+    role: bike-mcp
+    audiences:
+      - https://kubernetes.default.svc
+  vaultAuthGlobalRef:
+    namespace: hashicorp
+    allowDefault: true

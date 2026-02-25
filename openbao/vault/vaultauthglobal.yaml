@@ -15,6 +15,7 @@ spec:
     - n8n
     - keycloak
     - onvo-mcp
+    - bike-mcp
   # vaultConnectionRef: vault-connection
   defaultAuthMethod: kubernetes
   kubernetes:

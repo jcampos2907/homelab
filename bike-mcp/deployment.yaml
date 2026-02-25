@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bike-mcp
+  namespace: bike-mcp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bike-mcp
+  template:
+    metadata:
+      labels:
+        app: bike-mcp
+    spec:
+      serviceAccountName: vault-sa
+      containers:
+        - name: bike-mcp
+          image: jicamposr/bike-mcp:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PG_CONNECTION
+              valueFrom:
+                secretKeyRef:
+                  name: bike-mcp-secrets
+                  key: pg-connection
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
