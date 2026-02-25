@@ -1,43 +1,42 @@
-s
-d# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: tailscale-operator
-#   namespace: argocd
-# spec:
-#   project: networking
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tailscale-operator
+  namespace: argocd
+spec:
+  project: networking
 
-#   destination:
-#     server: https://kubernetes.default.svc
-#     namespace: tailscale
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tailscale
 
-#   sources:
-#     - repoURL: https://github.com/jcampos2907/homelab.git
-#       targetRevision: main
-#       ref: values
-#       path: tailscale
-#       directory:
-#         recurse: true
-#         exclude: "{excluded/**}"
-#     - repoURL: https://pkgs.tailscale.com/helmcharts
-#       chart: tailscale-operator
-#       targetRevision: 1.90.9
-#       helm:
-#         valueFiles:
-#           - $values/tailscale/values.yaml
+  sources:
+    - repoURL: https://github.com/jcampos2907/homelab.git
+      targetRevision: main
+      ref: values
+      path: tailscale
+      directory:
+        recurse: true
+        exclude: "{excluded/**}"
+    - repoURL: https://pkgs.tailscale.com/helmcharts
+      chart: tailscale-operator
+      targetRevision: 1.90.9
+      helm:
+        valueFiles:
+          - $values/tailscale/values.yaml
 
-#   ignoreDifferences:
-#     - kind: Service
-#       name: pve-egress
-#       namespace: proxmox
-#       jqPathExpressions:
-#         - .spec.externalName
+  ignoreDifferences:
+    - kind: Service
+      name: pve-egress
+      namespace: proxmox
+      jqPathExpressions:
+        - .spec.externalName
 
-#   syncPolicy:
-#     automated:
-#       prune: true
-#       selfHeal: true
-#     syncOptions:
-#       - CreateNamespace=true
-#       - ServerSideApply=true
-#       - RespectIgnoreDifferences=true
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+      - RespectIgnoreDifferences=true
