@@ -14,7 +14,8 @@ sentinel:
       memory: 64Mi
     limits:
       memory: 128Mi
-
+  masterService:
+    enabled: true
 replica:
   replicaCount: 3
   resources:
