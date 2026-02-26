@@ -6,8 +6,8 @@ auth:
   existingSecretPasswordKey: redis-password
 
 sentinel:
-  # service:
-  #   createMaster: true
+  service:
+    createMaster: true
   enabled: true
   masterSet: homelabredis
   resources:
@@ -31,6 +31,9 @@ replica:
   pdb:
     create: true
     minAvailable: 2
+
+rbac:
+  create: true
 
 metrics:
   enabled: true
