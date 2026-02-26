@@ -17,6 +17,7 @@ sentinel:
     limits:
       memory: 128Mi
 replica:
+  automountServiceAccountToken: true
   replicaCount: 3
   resources:
     requests:
@@ -31,6 +32,9 @@ replica:
   pdb:
     create: true
     minAvailable: 2
+
+serviceAccount:
+  create: true
 
 rbac:
   create: true
