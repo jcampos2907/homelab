@@ -72,7 +72,7 @@ patchesJson6902:
         path: /data/policy.default
         value: role:readonly
 
-  # --- argocd-server service: tailscale HA VIP ---
+  # --- argocd-server service: tailscale HA VIP + LoadBalancer ---
   - target:
       group: ""
       version: v1
@@ -83,3 +83,6 @@ patchesJson6902:
       - op: add
         path: /metadata/annotations/tailscale.com~1proxy-group
         value: ingress-proxies
+      - op: replace
+        path: /spec/type
+        value: LoadBalancer
