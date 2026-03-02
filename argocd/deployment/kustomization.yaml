@@ -32,7 +32,7 @@ patchesJson6902:
           name: Keycloak
           issuer: https://keycloak.famcr.org/realms/master
           clientID: argocd
-          clientSecret: $argocd-secret-patch:oidc.keycloak.clientSecret
+          enablePKCEAuthentication: true
           requestedScopes: ["openid", "profile", "email", "groups"]
 
   # --- RBAC policy.csv ---
