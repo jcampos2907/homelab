@@ -33,6 +33,7 @@ patchesJson6902:
           issuer: https://keycloak.famcr.org/realms/master
           clientID: argocd
           enablePKCEAuthentication: true
+          refreshTokenThreshold: 23h
           requestedScopes: ["openid", "profile", "email", "groups"]
 
   # --- RBAC policy.csv ---
