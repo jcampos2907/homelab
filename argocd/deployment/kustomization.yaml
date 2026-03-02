@@ -83,6 +83,9 @@ patchesJson6902:
       - op: add
         path: /metadata/annotations/tailscale.com~1proxy-group
         value: ingress-proxies
+      - op: add
+        path: /metadata/annotations/tailscale.com~1hostname
+        value: argocd
       - op: replace
         path: /spec/type
         value: LoadBalancer
