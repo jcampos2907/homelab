@@ -1,4 +1,8 @@
 main:
+  image:
+    repository: jicamposr/n8n
+    tag: "1.76.4"
+    pullPolicy: IfNotPresent
   extraEnv:
     - name: N8N_PROXY_HOPS
       value: "1"
