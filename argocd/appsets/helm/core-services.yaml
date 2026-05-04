@@ -176,3 +176,11 @@ spec:
           name: vault-agent-injector-cfg
           jsonPointers:
             - /webhooks/0/clientConfig/caBundle
+        # transit-autounseal token data is rotated out-of-band by the
+        # openbao-token-refresher CronJob (AppRole login → fresh hvs token).
+        # Argo must ignore drift on /data so it doesn't revert the rotation.
+        - group: ""
+          kind: Secret
+          name: transit-autounseal
+          jsonPointers:
+            - /data

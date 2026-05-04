@@ -1,0 +1,107 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: openbao-token-refresher
+  namespace: openbao
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: openbao-token-refresher
+  namespace: openbao
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: ["transit-autounseal"]
+    verbs: ["get", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: ["openbao-approle"]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: openbao-token-refresher
+  namespace: openbao
+subjects:
+  - kind: ServiceAccount
+    name: openbao-token-refresher
+    namespace: openbao
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: openbao-token-refresher
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openbao-token-refresher
+  namespace: openbao
+data:
+  refresh.sh: |
+    #!/bin/sh
+    set -eu
+    : "${VAULT_ADDR:?required}"
+    ROLE_ID="$(cat /approle/role_id)"
+    SECRET_ID="$(cat /approle/secret_id)"
+
+    echo "Logging into upstream Vault via AppRole..."
+    TOKEN="$(curl -fsS -k \
+      -X POST \
+      -H 'Content-Type: application/json' \
+      --data "$(jq -nc --arg r "$ROLE_ID" --arg s "$SECRET_ID" '{role_id:$r, secret_id:$s}')" \
+      "$VAULT_ADDR/v1/auth/approle/login" \
+      | jq -r '.auth.client_token')"
+
+    if [ -z "$TOKEN" ] || [ "$TOKEN" = "null" ]; then
+      echo "Failed to obtain client_token"; exit 1
+    fi
+
+    echo "Patching Secret transit-autounseal..."
+    PATCH="$(jq -nc --arg t "$(printf %s "$TOKEN" | base64 | tr -d '\n')" \
+      '{data:{VAULT_TOKEN:$t}}')"
+    kubectl -n openbao patch secret transit-autounseal --type=merge -p "$PATCH"
+
+    echo "Done."
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: openbao-token-refresher
+  namespace: openbao
+spec:
+  schedule: "17 3 * * 0"          # weekly, Sun 03:17 UTC
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 3
+      template:
+        spec:
+          serviceAccountName: openbao-token-refresher
+          restartPolicy: OnFailure
+          containers:
+            - name: refresh
+              image: alpine/k8s:1.30.0
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: VAULT_ADDR
+                  value: https://vault.specialized.co.cr
+              command: ["/bin/sh", "/scripts/refresh.sh"]
+              volumeMounts:
+                - name: scripts
+                  mountPath: /scripts
+                - name: approle
+                  mountPath: /approle
+                  readOnly: true
+          volumes:
+            - name: scripts
+              configMap:
+                name: openbao-token-refresher
+                defaultMode: 0555
+            - name: approle
+              secret:
+                secretName: openbao-approle
+                defaultMode: 0400
