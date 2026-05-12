@@ -25,8 +25,11 @@ spec:
           command: ["sh", "-c"]
           args:
             - |
-              export DATABASE_URL="postgres://${DB_USER}:${DB_PASSWORD}@homelabcluster-rw.homelab-pg.svc.cluster.local:5432/paperclip"
-              exec node --import ./server/node_modules/tsx/dist/loader.mjs server/dist/index.js
+              chown -R node:node /paperclip
+              exec /usr/local/bin/docker-entrypoint.sh sh -c '
+                export DATABASE_URL="postgres://${DB_USER}:${DB_PASSWORD}@homelabcluster-rw.homelab-pg.svc.cluster.local:5432/paperclip"
+                exec node --import ./server/node_modules/tsx/dist/loader.mjs server/dist/index.js
+              '
           env:
             - name: PORT
               value: "3100"
