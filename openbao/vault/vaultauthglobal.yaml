@@ -15,7 +15,6 @@ spec:
     - n8n
     - keycloak
     - onvo-mcp
-    - bike-mcp
     - redis
     - paperclip
   # vaultConnectionRef: vault-connection

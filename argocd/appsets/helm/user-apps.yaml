@@ -20,14 +20,6 @@ spec:
           #   chartVersion: 12.3.0
           #   valuesPath: openwebui/values.yaml
           #   extraPath: openwebui
-          - name: arrstack
-            project: apps
-            namespace: arrstack
-            chartRepo: https://charts.kubito.dev
-            chart: servarr
-            chartVersion: 1.2.3
-            valuesPath: arrstack/values.yaml
-            extraPath: "arrstack"
 
   template:
     metadata:
