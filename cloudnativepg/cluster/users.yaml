@@ -48,3 +48,16 @@ metadata:
   namespace: homelab-pg
   name: homelabcluster-user-keycloak
 type: kubernetes.io/basic-auth
+
+---
+
+apiVersion: v1
+stringData:
+#  password: password-test --- REPLACE ---
+  password: password-test
+  username: paperclip
+kind: Secret
+metadata:
+  namespace: homelab-pg
+  name: homelabcluster-user-paperclip
+type: kubernetes.io/basic-auth

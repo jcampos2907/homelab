@@ -1,0 +1,13 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: paperclip-ingressroute-certificate
+  namespace: paperclip
+spec:
+  secretName: paperclip-certificate-secret
+  issuerRef:
+    name: cloudflare-clusterissuer
+    kind: ClusterIssuer
+  dnsNames:
+    - paperclip.famcr.org

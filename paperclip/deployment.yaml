@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paperclip
+  namespace: paperclip
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: paperclip
+  template:
+    metadata:
+      labels:
+        app: paperclip
+    spec:
+      serviceAccountName: vault-sa
+      containers:
+        - name: paperclip
+          image: ghcr.io/paperclipai/paperclip:v2026.512.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3100
+          command: ["sh", "-c"]
+          args:
+            - |
+              export DATABASE_URL="postgres://${DB_USER}:${DB_PASSWORD}@homelabcluster-rw.homelab-pg.svc.cluster.local:5432/paperclip"
+              exec node --import ./server/node_modules/tsx/dist/loader.mjs server/dist/index.js
+          env:
+            - name: PORT
+              value: "3100"
+            - name: HOST
+              value: "0.0.0.0"
+            - name: SERVE_UI
+              value: "true"
+            - name: PAPERCLIP_HOME
+              value: /paperclip
+            - name: PAPERCLIP_INSTANCE_ID
+              value: default
+            - name: PAPERCLIP_DEPLOYMENT_MODE
+              value: authenticated
+            - name: PAPERCLIP_DEPLOYMENT_EXPOSURE
+              value: private
+            - name: PAPERCLIP_BIND
+              value: custom
+            - name: PAPERCLIP_BIND_HOST
+              value: "0.0.0.0"
+            - name: PAPERCLIP_PUBLIC_URL
+              value: "https://paperclip.famcr.org"
+            - name: PAPERCLIP_API_URL
+              value: "https://paperclip.famcr.org"
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: paperclip-user
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: paperclip-user
+                  key: password
+            - name: BETTER_AUTH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: paperclip-keys
+                  key: better-auth-secret
+            - name: PAPERCLIP_SECRETS_MASTER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: paperclip-keys
+                  key: secrets-master-key
+          volumeMounts:
+            - name: data
+              mountPath: /paperclip
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3100
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3100
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            failureThreshold: 5
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "200m"
+            limits:
+              memory: "2Gi"
+              cpu: "1500m"
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: paperclip-data

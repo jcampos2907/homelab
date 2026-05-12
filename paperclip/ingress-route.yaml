@@ -1,0 +1,18 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: paperclip
+  namespace: paperclip
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`paperclip.famcr.org`)
+      kind: Rule
+      services:
+        - name: paperclip
+          port: 80
+  tls:
+    secretName: paperclip-certificate-secret

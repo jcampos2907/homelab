@@ -24,6 +24,12 @@ spec:
         superuser: true
         createrole: true
         login: true
+      - name: paperclip
+        ensure: present
+        comment: User for Paperclip
+        superuser: true
+        createrole: true
+        login: true
   bootstrap:
     initdb:
       database: homelab

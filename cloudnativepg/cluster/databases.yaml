@@ -52,3 +52,22 @@ spec:
   databaseReclaimPolicy: delete
   cluster:
     name: homelabcluster
+
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: paperclip
+spec:
+  name: paperclip
+  owner: paperclip
+  schemas:
+    - ensure: present
+      name: paperclip
+      owner: paperclip
+    - ensure: present
+      name: public
+      owner: paperclip
+  databaseReclaimPolicy: delete
+  cluster:
+    name: homelabcluster

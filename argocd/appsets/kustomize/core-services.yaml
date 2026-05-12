@@ -48,6 +48,11 @@ spec:
             project: apps
             namespace: bike-mcp
             path: bike-mcp
+
+          - name: paperclip
+            project: apps
+            namespace: paperclip
+            path: paperclip
           # Add more kustomize roots like this:
           # - name: some-app
           #   project: apps
