@@ -1,8 +1,9 @@
+image:
+  repository: n8nio/n8n
+  tag: "2.21.0"
+  pullPolicy: IfNotPresent
+
 main:
-  image:
-    repository: n8nio/n8n
-    tag: "2.21.0"
-    pullPolicy: IfNotPresent
   extraEnv:
     - name: N8N_PROXY_HOPS
       value: "1"
