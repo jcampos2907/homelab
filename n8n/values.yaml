@@ -1,7 +1,7 @@
 main:
   image:
-    repository: jicamposr/n8n
-    tag: "1.76.4"
+    repository: n8nio/n8n
+    tag: "2.21.0"
     pullPolicy: IfNotPresent
   extraEnv:
     - name: N8N_PROXY_HOPS
