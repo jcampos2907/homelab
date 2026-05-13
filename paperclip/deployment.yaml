@@ -26,7 +26,19 @@ spec:
           args:
             - |
               chown -R node:node /paperclip
+              mkdir -p /paperclip/bin
+              cat > /paperclip/.n8n-mcp.json <<JSON
+              {"mcpServers":{"n8n-mcp":{"type":"http","url":"${N8N_MCP_URL}","headers":{"Authorization":"Bearer ${N8N_MCP_BEARER}"}}}}
+              JSON
+              cat > /paperclip/bin/claude <<'SH'
+              #!/bin/sh
+              exec /usr/local/bin/claude --mcp-config /paperclip/.n8n-mcp.json "$@"
+              SH
+              chmod 755 /paperclip/bin/claude
+              chmod 600 /paperclip/.n8n-mcp.json
+              chown -R node:node /paperclip/bin /paperclip/.n8n-mcp.json
               exec /usr/local/bin/docker-entrypoint.sh sh -c '
+                export PATH=/paperclip/bin:$PATH
                 export DATABASE_URL="postgres://${DB_USER}:${DB_PASSWORD}@homelabcluster-rw.homelab-pg.svc.cluster.local:5432/paperclip"
                 exec node --import ./server/node_modules/tsx/dist/loader.mjs server/dist/index.js
               '
@@ -83,6 +95,16 @@ spec:
                 secretKeyRef:
                   name: paperclip-keys
                   key: openai-api-key
+            - name: N8N_MCP_URL
+              valueFrom:
+                secretKeyRef:
+                  name: paperclip-keys
+                  key: n8n-mcp-url
+            - name: N8N_MCP_BEARER
+              valueFrom:
+                secretKeyRef:
+                  name: paperclip-keys
+                  key: n8n-mcp-bearer
           volumeMounts:
             - name: data
               mountPath: /paperclip
