@@ -57,8 +57,6 @@ spec:
   #   isWALArchiver: true
   #   parameters:
   #     barmanObjectName: ceph-store
-  monitoring:
-    enablePodMonitor: true
   imageName: jicamposr/postgres:17.0
   imagePullPolicy: Always
   imagePullSecrets:
