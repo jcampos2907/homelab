@@ -28,7 +28,7 @@ spec:
               chown -R node:node /paperclip
               mkdir -p /paperclip/bin
               cat > /paperclip/.n8n-mcp.json <<JSON
-              {"mcpServers":{"n8n-mcp":{"type":"http","url":"${N8N_MCP_URL}","headers":{"Authorization":"Bearer ${N8N_MCP_BEARER}"}}}}
+              {"mcpServers":{"n8n-local:{"type":"http","url":"${N8N_MCP_URL}","headers":{"Authorization":"Bearer ${N8N_MCP_BEARER}"}},"n8n-ey":{"type":"stdio","command":"npx","args":["-y","n8n-mcp"],"env":{"N8N_API_KEY":"${N8N_API_KEY}","N8N_API_URL":"${N8N_API_URL}"}}}}
               JSON
               cat > /paperclip/bin/claude <<'SH'
               #!/bin/sh
@@ -105,6 +105,16 @@ spec:
                 secretKeyRef:
                   name: paperclip-keys
                   key: n8n-mcp-bearer
+            - name: N8N_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: paperclip-keys
+                  key: n8n-api-key
+            - name: N8N_API_URL
+              valueFrom:
+                secretKeyRef:
+                  name: paperclip-keys
+                  key: n8n-api-url
           volumeMounts:
             - name: data
               mountPath: /paperclip
