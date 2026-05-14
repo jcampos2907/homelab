@@ -28,7 +28,7 @@ spec:
               chown -R node:node /paperclip
               mkdir -p /paperclip/bin
               cat > /paperclip/.n8n-mcp.json <<JSON
-              {"mcpServers":{"n8n-local:{"type":"http","url":"${N8N_MCP_URL}","headers":{"Authorization":"Bearer ${N8N_MCP_BEARER}"}},"n8n-ey":{"type":"stdio","command":"npx","args":["-y","n8n-mcp"],"env":{"N8N_API_KEY":"${N8N_API_KEY}","N8N_API_URL":"${N8N_API_URL}"}}}}
+              {"mcpServers":{"n8n-local":{"type":"http","url":"${N8N_MCP_URL}","headers":{"Authorization":"Bearer ${N8N_MCP_BEARER}"}},"n8n-ey":{"type":"stdio","command":"npx","args":["-y","n8n-mcp"],"env":{"MCP_MODE":"stdio","LOG_LEVEL":"error","DISABLE_CONSOLE_OUTPUT":"true","N8N_API_URL":"${N8N_API_URL}","N8N_API_KEY":"${N8N_API_KEY}"}}}}
               JSON
               cat > /paperclip/bin/claude <<'SH'
               #!/bin/sh
