@@ -143,7 +143,7 @@ spec:
               memory: "512Mi"
               cpu: "200m"
             limits:
-              memory: "15Gi"
+              memory: "5Gi"
               cpu: "1500m"
       volumes:
         - name: data
