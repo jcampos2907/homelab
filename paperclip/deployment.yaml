@@ -147,6 +147,11 @@ spec:
               cpu: "1500m"
       nodeSelector:
         kubernetes.io/hostname: homelab2
+      tolerations:
+        - key: "postgres-db"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
       volumes:
         - name: data
           persistentVolumeClaim:

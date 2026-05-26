@@ -9,15 +9,40 @@ persistence:
 metrics:
   serviceMonitor:
     enabled: true
-# longhornManager:
-#   tolerations:
-#   - key: "postgres-db"
-#     operator: "Equal"
-#     value: "true"
-#     effect: "NoSchedule"
-# longhornDriver:
-#   tolerations:
-#   - key: "postgres-db"
-#     operator: "Equal"
-#     value: "true"
-#     effect: "NoSchedule"
+
+defaultSettings:
+  taintToleration: "postgres-db=true:NoSchedule"
+
+longhornManager:
+  tolerations:
+    - key: "postgres-db"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
+longhornDriver:
+  tolerations:
+    - key: "postgres-db"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
+csi:
+  attacherTolerations:
+    - key: "postgres-db"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
+  provisionerTolerations:
+    - key: "postgres-db"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
+  resizerTolerations:
+    - key: "postgres-db"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
+  snapshotterTolerations:
+    - key: "postgres-db"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
