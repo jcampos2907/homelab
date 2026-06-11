@@ -143,6 +143,25 @@ spec:
             # env-overrides would override any value set on the container.
             # To allow more packages: add them to that image's launcher config
             # AND `uv pip install` them, then rebuild the image.
+            #
+            # OpenAI creds for Python Code nodes (read via os.environ). Sourced
+            # from Vault (kv apps/n8n -> n8n-encryption-key secret) and passed
+            # through to the python runner via the launcher's allowed-env.
+            # optional:true so the pod starts before the keys exist in Vault.
+            # Leave openai_base_url unset for api.openai.com, or set it to an
+            # Azure OpenAI endpoint to switch providers.
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: n8n-encryption-key
+                  key: openai_api_key
+                  optional: true
+            - name: OPENAI_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: n8n-encryption-key
+                  key: openai_base_url
+                  optional: true
           resources:
             requests:
               memory: "256Mi"
