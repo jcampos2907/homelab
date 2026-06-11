@@ -5,6 +5,7 @@ namespace: n8n
 
 resources:
   - sa.yaml
+  - vault/sa.yaml
   - vault/vault-auth.yaml
   - vault/secrets.yaml
   - pvc.yaml
