@@ -121,7 +121,9 @@ spec:
         # ----------------------------------------------------------------
         - name: task-runner
           image: jicamposr/n8n-runners:2.21.0
-          imagePullPolicy: IfNotPresent
+          # Always: the :2.21.0 tag is rebuilt in place when packages/allowlist
+          # change, so re-pull on every rollout to pick up the latest.
+          imagePullPolicy: Always
           env:
             - name: N8N_RUNNERS_TASK_BROKER_URI
               value: "http://127.0.0.1:5679"
