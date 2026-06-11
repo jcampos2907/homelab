@@ -48,6 +48,11 @@ spec:
             project: apps
             namespace: paperclip
             path: paperclip
+
+          - name: n8n
+            project: data-services
+            namespace: n8n
+            path: n8n
           # Add more kustomize roots like this:
           # - name: some-app
           #   project: apps

@@ -1,0 +1,14 @@
+# Adopts the existing longhorn volume created by the Helm chart (same name,
+# size and class) so the migration is in-place and no data is lost.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: n8n
+  namespace: n8n
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 10Gi

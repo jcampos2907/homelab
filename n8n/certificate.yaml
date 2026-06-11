@@ -1,0 +1,14 @@
+# Adopts the existing cert-manager Certificate (same name/secret) that backs
+# the IngressRoute TLS. Cloudflare DNS-01 via the shared ClusterIssuer.
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: n8n-ingressroute-certificate
+  namespace: n8n
+spec:
+  secretName: n8n-certificate-secret
+  dnsNames:
+    - n8n.famcr.org
+  issuerRef:
+    kind: ClusterIssuer
+    name: cloudflare-clusterissuer
