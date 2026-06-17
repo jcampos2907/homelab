@@ -94,6 +94,11 @@ spec:
                 secretKeyRef:
                   name: n8n-runner-auth
                   key: token
+            # Per-task timeout for the external runners (default 60s). Raised so
+            # large multi-page documents can be OCR'd/extracted in one Code task
+            # (e.g. an 80-page PDF vision-OCR + chunked table extraction).
+            - name: N8N_RUNNERS_TASK_TIMEOUT
+              value: "600"
           livenessProbe:
             httpGet:
               path: /healthz
@@ -120,9 +125,11 @@ spec:
         # bundles markitdown + openai in the python runner venv.
         # ----------------------------------------------------------------
         - name: task-runner
-          image: jicamposr/n8n-runners:2.21.0
-          # Always: the :2.21.0 tag is rebuilt in place when packages/allowlist
-          # change, so re-pull on every rollout to pick up the latest.
+          image: jicamposr/n8n-runners:2.21.8
+          # Always: the tag is rebuilt in place when packages/allowlist change, so
+          # re-pull on every rollout to pick up the latest. 2.21.8 is the distroless
+          # (glibc) base — required for markitdown 0.1.x + markitdown-ocr, whose
+          # onnxruntime/magika dep has no musl wheel (see images/n8n-runners/Dockerfile).
           imagePullPolicy: Always
           env:
             - name: N8N_RUNNERS_TASK_BROKER_URI
@@ -162,6 +169,10 @@ spec:
                   name: n8n-encryption-key
                   key: openai_base_url
                   optional: true
+            # Match the broker's raised per-task timeout (launcher allowlists this
+            # var, so it is passed through to the python runner).
+            - name: N8N_RUNNERS_TASK_TIMEOUT
+              value: "600"
           resources:
             requests:
               memory: "256Mi"
