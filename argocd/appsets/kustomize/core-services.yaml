@@ -44,10 +44,10 @@ spec:
             namespace: onvo-mcp
             path: onvo-mcp
 
-          - name: paperclip
-            project: apps
-            namespace: paperclip
-            path: paperclip
+          # - name: paperclip
+          #   project: apps
+          #   namespace: paperclip
+          #   path: paperclip
 
           - name: n8n
             project: data-services
