@@ -39,20 +39,20 @@ spec:
             namespace: kube-system
             path: infra/coredns-custom
 
-          - name: onvo-mcp
-            project: apps
-            namespace: onvo-mcp
-            path: onvo-mcp
+          # - name: onvo-mcp
+          #   project: apps
+          #   namespace: onvo-mcp
+          #   path: onvo-mcp
 
           # - name: paperclip
           #   project: apps
           #   namespace: paperclip
           #   path: paperclip
 
-          - name: n8n
-            project: data-services
-            namespace: n8n
-            path: n8n
+          # - name: n8n
+          #   project: data-services
+          #   namespace: n8n
+          #   path: n8n
           # Add more kustomize roots like this:
           # - name: some-app
           #   project: apps
