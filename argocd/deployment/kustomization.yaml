@@ -8,10 +8,54 @@ resources:
   - vault-auth.yaml
   - vault-secrets.yaml
 
+# Stamp a single stack label onto every Argo pod so the topology spread
+# constraint below has something to select on. The upstream manifests only
+# carry a per-component app.kubernetes.io/name, which cannot express
+# "spread the Argo control plane across nodes".
+# includeSelectors: false is load-bearing - StatefulSet .spec.selector is
+# immutable, so adding this to selectors would break argocd-application-controller
+# and argocd-redis-ha-server on apply.
+labels:
+  - pairs:
+      homelab.famcr.org/stack: argocd
+    includeSelectors: false
+    includeTemplates: true
+
 # --- Allow Argo CD workloads onto the CriticalAddonsOnly-tainted node (fcr) ---
 # fcr is reserved for essential workloads via CriticalAddonsOnly=true:NoSchedule,
 # the same taint key the k3s system addons (coredns, metrics-server) tolerate.
+#
+# The spread constraint is the counterweight: each Argo component is its own
+# single-replica Deployment, so the scheduler's default (soft, per-label-set)
+# spreading has nothing to compare them against. Any freshly emptied node wins
+# the least-allocated score for all of them at once, which is exactly how the
+# whole Argo control plane landed on one node. ScheduleAnyway keeps this a
+# preference - a pod still schedules when only one node is available.
 patches:
+  - target:
+      kind: Deployment
+    patch: |-
+      - op: add
+        path: /spec/template/spec/topologySpreadConstraints
+        value:
+          - maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: ScheduleAnyway
+            labelSelector:
+              matchLabels:
+                homelab.famcr.org/stack: argocd
+  - target:
+      kind: StatefulSet
+    patch: |-
+      - op: add
+        path: /spec/template/spec/topologySpreadConstraints
+        value:
+          - maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: ScheduleAnyway
+            labelSelector:
+              matchLabels:
+                homelab.famcr.org/stack: argocd
   - target:
       kind: Deployment
     patch: |-
