@@ -8,6 +8,27 @@ resources:
   - vault-auth.yaml
   - vault-secrets.yaml
 
+# --- Allow Argo CD workloads onto the CriticalAddonsOnly-tainted node (fcr) ---
+# fcr is reserved for essential workloads via CriticalAddonsOnly=true:NoSchedule,
+# the same taint key the k3s system addons (coredns, metrics-server) tolerate.
+patches:
+  - target:
+      kind: Deployment
+    patch: |-
+      - op: add
+        path: /spec/template/spec/tolerations
+        value:
+          - key: "CriticalAddonsOnly"
+            operator: "Exists"
+  - target:
+      kind: StatefulSet
+    patch: |-
+      - op: add
+        path: /spec/template/spec/tolerations
+        value:
+          - key: "CriticalAddonsOnly"
+            operator: "Exists"
+
 patchesJson6902:
   # --- argocd-cm OIDC + URL ---
   - target:

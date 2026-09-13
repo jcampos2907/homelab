@@ -1,9 +1,16 @@
+injector:
+  tolerations:
+    - key: "CriticalAddonsOnly"
+      operator: "Exists"
+
 server:
   tolerations:
     - key: "postgres-db"
       operator: "Equal"
       value: "true"
       effect: "NoSchedule"
+    - key: "CriticalAddonsOnly"
+      operator: "Exists"
   annotations:
     argocd.argoproj.io/sync-options: Replace=true
   extraSecretEnvironmentVars:

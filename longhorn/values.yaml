@@ -11,7 +11,7 @@ metrics:
     enabled: true
 
 defaultSettings:
-  taintToleration: "postgres-db=true:NoSchedule"
+  taintToleration: "postgres-db=true:NoSchedule;CriticalAddonsOnly=true:NoSchedule"
 
 longhornManager:
   tolerations:
@@ -19,30 +19,42 @@ longhornManager:
       operator: "Equal"
       value: "true"
       effect: "NoSchedule"
+    - key: "CriticalAddonsOnly"
+      operator: "Exists"
 longhornDriver:
   tolerations:
     - key: "postgres-db"
       operator: "Equal"
       value: "true"
       effect: "NoSchedule"
+    - key: "CriticalAddonsOnly"
+      operator: "Exists"
 csi:
   attacherTolerations:
     - key: "postgres-db"
       operator: "Equal"
       value: "true"
       effect: "NoSchedule"
+    - key: "CriticalAddonsOnly"
+      operator: "Exists"
   provisionerTolerations:
     - key: "postgres-db"
       operator: "Equal"
       value: "true"
       effect: "NoSchedule"
+    - key: "CriticalAddonsOnly"
+      operator: "Exists"
   resizerTolerations:
     - key: "postgres-db"
       operator: "Equal"
       value: "true"
       effect: "NoSchedule"
+    - key: "CriticalAddonsOnly"
+      operator: "Exists"
   snapshotterTolerations:
     - key: "postgres-db"
       operator: "Equal"
       value: "true"
       effect: "NoSchedule"
+    - key: "CriticalAddonsOnly"
+      operator: "Exists"
