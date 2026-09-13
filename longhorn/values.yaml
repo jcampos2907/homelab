@@ -8,7 +8,10 @@ persistence:
 
 metrics:
   serviceMonitor:
-    enabled: true
+    # Re-enable once kube-prometheus is back in the cluster. The
+    # monitoring.coreos.com CRDs are currently absent, and leaving this on
+    # makes every `helm upgrade` fail on "no matches for kind ServiceMonitor".
+    enabled: false
 
 defaultSettings:
   taintToleration: "postgres-db=true:NoSchedule;CriticalAddonsOnly=true:NoSchedule"
