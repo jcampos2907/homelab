@@ -15,6 +15,13 @@ metrics:
 
 defaultSettings:
   taintToleration: "postgres-db=true:NoSchedule;CriticalAddonsOnly=true:NoSchedule"
+  # Longhorn leaves replica directories behind when a replica is rebuilt
+  # elsewhere, and never reclaims them unless this is set. 87 orphans had
+  # accumulated by 2026-09-13, holding 218G on homelab4 (every byte of its
+  # disk, with zero live replicas) and 155G on homelab3 - enough to push
+  # homelab4 under the 25% free-space floor and out of the schedulable pool
+  # since August.
+  orphanResourceAutoDeletion: "replica-data"
 
 longhornManager:
   tolerations:
