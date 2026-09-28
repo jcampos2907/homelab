@@ -56,6 +56,19 @@ patches:
             labelSelector:
               matchLabels:
                 homelab.famcr.org/stack: argocd
+  # haproxy runs 3 replicas with required hostname anti-affinity, and exactly
+  # 3 nodes can host it (fcr, homelab3, homelab4 - homelab2 is postgres-only).
+  # The default RollingUpdate surges a 4th pod first, which can never schedule,
+  # so every template change deadlocked the rollout. Replace-in-place instead.
+  - target:
+      kind: Deployment
+      name: argocd-redis-ha-haproxy
+    patch: |-
+      - op: add
+        path: /spec/strategy/rollingUpdate
+        value:
+          maxSurge: 0
+          maxUnavailable: 1
   - target:
       kind: Deployment
     patch: |-
