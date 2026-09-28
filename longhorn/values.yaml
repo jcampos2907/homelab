@@ -1,7 +1,10 @@
 longhornUI:
   replicas: 1
 persistence:
-  defaultClassReplicaCount: 2
+  # Single copy, kept on the node running the pod (best-effort locality).
+  # No redundancy by choice: every extra copy was another synchronous write,
+  # and copies on fcr's 5400rpm disk dragged every volume down with it.
+  defaultClassReplicaCount: 1
   defaultDataLocality: "best-effort"
   reclaimPolicy: Retain
   migratable: true
