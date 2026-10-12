@@ -1,8 +1,16 @@
+# Internal zone goes straight to Technitium's ClusterIP, not via the tailnet.
+# Technitium is only published to the tailnet through a Tailscale
+# LoadBalancer, which needs the operator + proxy pods, which need DNS to pull
+# their images. Routing famcr.org through 100.100.100.100 closed that loop and
+# took the cluster down for 12 days in Oct 2026. CoreDNS can't forward to a
+# name, so this is the ClusterIP of technitium/technitium-technitium-dns-dns -
+# update it if that Service is ever recreated.
 famcr.org {
     errors
     cache 30
-    forward . 100.100.100.100
+    forward . 10.43.12.228
 }
+# MagicDNS names are answered by tailscaled itself, no Technitium involved.
 ts.net:53 {
     errors
     cache 30
