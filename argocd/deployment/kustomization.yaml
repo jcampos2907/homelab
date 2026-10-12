@@ -2,8 +2,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: argocd
 
+# Non-HA install, pinned. The HA flavour (3x redis-ha + 3x haproxy, 2x
+# server/repo-server) bought nothing on a 4-node homelab: Argo idles at
+# ~300Mi, and the redis-ha quorum churned on every node crash. Pinned so a
+# re-apply never silently jumps versions - bump deliberately.
 resources:
-  - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/ha/install.yaml
+  - https://raw.githubusercontent.com/argoproj/argo-cd/v3.6.2/manifests/install.yaml
   - sa.yaml
   - vault-auth.yaml
   - vault-secrets.yaml
@@ -56,19 +60,6 @@ patches:
             labelSelector:
               matchLabels:
                 homelab.famcr.org/stack: argocd
-  # haproxy runs 3 replicas with required hostname anti-affinity, and exactly
-  # 3 nodes can host it (fcr, homelab3, homelab4 - homelab2 is postgres-only).
-  # The default RollingUpdate surges a 4th pod first, which can never schedule,
-  # so every template change deadlocked the rollout. Replace-in-place instead.
-  - target:
-      kind: Deployment
-      name: argocd-redis-ha-haproxy
-    patch: |-
-      - op: add
-        path: /spec/strategy/rollingUpdate
-        value:
-          maxSurge: 0
-          maxUnavailable: 1
   - target:
       kind: Deployment
     patch: |-
