@@ -59,3 +59,9 @@ dnsConfig:
 # Label 3 nodes: kubectl label node <name> technitium-dns=true
 nodeSelector:
   technitium-dns: "true"
+
+# Technitium 15.x. Not supported mixed with 14.x inside a cluster: the
+# StatefulSet rolls all pods back to back, DNS keeps answering, config sync
+# resumes once every node is on 15. Bump the chart appVersion later instead.
+image:
+  tag: "15.6.2"
