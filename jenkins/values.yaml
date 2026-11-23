@@ -16,15 +16,15 @@ controller:
       - name: ndots
         value: "1"
   installPlugins:
-    - kubernetes:4398.vb_b_33d9e7fe23
+    - kubernetes:4560.vc25b_83890c34
     - workflow-aggregator:608.v67378e9d3db_1
-    - git:5.8.1
-    - configuration-as-code:2036.v0b_c2de701dcb_
+    - git:5.11.0
+    - configuration-as-code:2147.v8a_8d38668c72
   additionalPlugins:
-    - ssh-agent:386.v36cc0c7582f0
-    - github-branch-source:1917.v9ee8a_39b_3d0d
-    - oic-auth:4.609.v9de140f63d01
-    - hashicorp-vault-plugin:379.v080d932e61e4
+    - ssh-agent:433.v9e73d67c3f74
+    - github-branch-source:1988.v87ea_66346560
+    - oic-auth:4.737.vb_3d1a_0e7cf0b_  # gitleaks:allow (plugin version, not a key)
+    - hashicorp-vault-plugin:384.vda_86ec66c537
     # - kubernetes-credentials-provider:1.303.vdfcf47fb_b_fef
 
   jenkinsUrl: "https://jenkins.famcr.org"

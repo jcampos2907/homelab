@@ -34,7 +34,7 @@ spec:
             namespace: jenkins
             chartRepo: https://charts.jenkins.io
             chart: jenkins
-            chartVersion: 5.8.116
+            chartVersion: 5.13.3
             valuesPath: jenkins/values.yaml
             extraPath: jenkins
           # - name: reloader
