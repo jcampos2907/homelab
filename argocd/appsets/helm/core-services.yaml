@@ -82,7 +82,7 @@ spec:
             namespace: traefik
             chartRepo: https://traefik.github.io/charts
             chart: traefik
-            chartVersion: 37.3.0
+            chartVersion: 42.4.2
             valuesPath: traefik/values.yaml
             extraPath: traefik
 

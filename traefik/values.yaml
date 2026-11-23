@@ -1,13 +1,13 @@
 deployment:
   replicas: 2
-additionalArguments:
-  - "--providers.kubernetesingress.ingressendpoint.publishedservice=traefik/traefik"
 providers:
   kubernetesCRD:
     allowExternalNameServices: true
     allowCrossNamespace: true
   kubernetesIngress:
     enabled: true
+    # Chart 42 renders --providers.kubernetesingress.ingressendpoint.publishedservice
+    # from this, so the old additionalArguments copy of that flag was dropped.
     publishedService:
       enabled: true
       # namespace/name of the Traefik Service that’s exposed via Tailscale LB
@@ -25,11 +25,13 @@ ports:
   #   exposedPort: 9100
   #   protocol: TCP
   web:
-    redirections:
-      entryPoint:
-        to: websecure
-        scheme: https
-        permanent: true
+    # Chart 39+ validates values: per-port HTTP options live under `http:`.
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
 
 experimental:
   plugins:
