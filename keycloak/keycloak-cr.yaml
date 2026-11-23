@@ -5,7 +5,10 @@ metadata:
 spec:
   startOptimized: false
   instances: 2
-  image: quay.io/keycloak/keycloak:26.4.0
+  # 26.6+ DB migrations must not run alongside older pods: stop all, then start.
+  update:
+    strategy: Recreate
+  image: quay.io/keycloak/keycloak:26.8.2  # keep equal to the operator version
   # bootstrapAdminSecret:
   #   name: keycloak-initial-admin
   db:
@@ -29,7 +32,8 @@ spec:
       cpu: 250m
       memory: 1700Mi
     limits:
-      cpu: 250m
+      # 1 core so the one-off 26.x schema migrations finish within the startup probe
+      cpu: "1"
       memory: 2000Mi
   additionalOptions:
     - name: health-enabled
