@@ -28,6 +28,14 @@ serviceDoh:
 
 priorityClassName: dns-critical
 
+# Admin password comes from a hand-made Secret (not in git):
+#   kubectl -n technitium get secret technitium-admin -o jsonpath='{.data.password}' | base64 -d
+# Technitium only reads it when it creates the admin user (fresh pod, or after
+# auth.config is removed), so new cluster replicas start with the same password.
+admin:
+  enabled: true
+  existingSecret: technitium-admin
+
 replicaCount: 1
 clustering:
   enabled: false
