@@ -25,6 +25,9 @@ defaultSettings:
   # homelab4 under the 25% free-space floor and out of the schedulable pool
   # since August.
   orphanResourceAutoDeletion: "replica-data"
+  # Upgrade volume engines automatically after a Longhorn upgrade (live for
+  # attached healthy volumes, offline for detached ones), one per node at a time.
+  concurrentAutomaticEngineUpgradePerNodeLimit: 1
 
 longhornManager:
   tolerations:
@@ -42,32 +45,5 @@ longhornDriver:
       effect: "NoSchedule"
     - key: "CriticalAddonsOnly"
       operator: "Exists"
-csi:
-  attacherTolerations:
-    - key: "postgres-db"
-      operator: "Equal"
-      value: "true"
-      effect: "NoSchedule"
-    - key: "CriticalAddonsOnly"
-      operator: "Exists"
-  provisionerTolerations:
-    - key: "postgres-db"
-      operator: "Equal"
-      value: "true"
-      effect: "NoSchedule"
-    - key: "CriticalAddonsOnly"
-      operator: "Exists"
-  resizerTolerations:
-    - key: "postgres-db"
-      operator: "Equal"
-      value: "true"
-      effect: "NoSchedule"
-    - key: "CriticalAddonsOnly"
-      operator: "Exists"
-  snapshotterTolerations:
-    - key: "postgres-db"
-      operator: "Equal"
-      value: "true"
-      effect: "NoSchedule"
-    - key: "CriticalAddonsOnly"
-      operator: "Exists"
+# (csi.*Tolerations removed 2026-11-23: those keys never existed in the chart.
+#  CSI sidecars take their tolerations from defaultSettings.taintToleration.)
