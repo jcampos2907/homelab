@@ -36,10 +36,22 @@ admin:
   enabled: true
   existingSecret: technitium-admin
 
-replicaCount: 1
+# Technitium native clustering (v14+): pod-0 is the primary, the others are
+# secondaries that sync settings, allowed/blocked lists, apps and users from it.
+# Zones sync through the cluster catalog zone (famcr.org is a member).
+# Nodes are registered by the ClusterIP of their per-pod Service
+# (technitium-technitium-dns-node-N), because pod IPs change on restart.
+# The cluster itself was initialized/joined through the API on 2026-11-23;
+# see the Technitium note in the Obsidian vault.
+replicaCount: 3
 clustering:
-  enabled: false
+  enabled: true
   hostNetwork: false
+
+# Only applied when a pod creates its config for the first time (new replicas),
+# so they answer like pod-0 before they join the cluster and sync settings.
+dnsConfig:
+  recursion: Allow
 
 # Pin pods to nodes labeled with technitium-dns=true
 # Label 3 nodes: kubectl label node <name> technitium-dns=true
