@@ -39,10 +39,12 @@ admin:
 # Technitium native clustering (v14+): pod-0 is the primary, the others are
 # secondaries that sync settings, allowed/blocked lists, apps and users from it.
 # Zones sync through the cluster catalog zone (famcr.org is a member).
-# Nodes are registered by the ClusterIP of their per-pod Service
-# (technitium-technitium-dns-node-N), because pod IPs change on restart.
-# The cluster itself was initialized/joined through the API on 2026-11-23;
-# see the Technitium note in the Obsidian vault.
+# Each node is registered as "<ClusterIP of its per-pod Service
+# technitium-technitium-dns-node-N>,<pod IP>": others reach it on the stable
+# ClusterIP, and its own traffic (NOTIFY, zone transfers) comes from the pod
+# IP. The chart's cluster-ip-sync sidecar (0.6.0+) re-registers the pod IP
+# after every restart. The cluster was initialized/joined through the API on
+# 2026-11-23; see the Technitium note in the Obsidian vault.
 replicaCount: 3
 clustering:
   enabled: true
