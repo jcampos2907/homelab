@@ -1,0 +1,12 @@
+# Pins the kube-apiserver proxy image to the operator's version. Tailscale only
+# supports proxies at or below the operator version; the chart default
+# (k8s-proxy:latest) floats ahead. Bump together with the operator chart.
+apiVersion: tailscale.com/v1alpha1
+kind: ProxyClass
+metadata:
+  name: k8s-proxy-pinned
+spec:
+  statefulSet:
+    pod:
+      tailscaleContainer:
+        image: tailscale/k8s-proxy:v1.104.7

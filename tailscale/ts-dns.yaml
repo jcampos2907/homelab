@@ -7,4 +7,4 @@ spec:
   nameserver:
     image:
       repo: tailscale/k8s-nameserver
-      tag: unstable
+      tag: v1.104.7  # keep in step with the operator chart version

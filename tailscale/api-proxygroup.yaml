@@ -6,5 +6,8 @@ spec:
   type: kube-apiserver
   replicas: 2
   tags: ["tag:k8s"]
+  # Pin the k8s-proxy image (the chart defaults kube-apiserver ProxyGroups to
+  # k8s-proxy:latest, which ran ahead of the operator: unsupported).
+  proxyClass: k8s-proxy-pinned
   kubeAPIServer:
     mode: auth   # <- or previously noauth
