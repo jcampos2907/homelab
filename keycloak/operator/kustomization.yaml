@@ -6,4 +6,7 @@ namespace: keycloak
 resources:
   - keycloaks-crd.yaml
   - keycloakrealmimports-crd.yaml
+  # New in 26.8 (preview). The operator crashes at startup if these CRDs are missing.
+  - keycloakoidcclients-crd.yaml
+  - keycloaksamlclients-crd.yaml
   - operator.yaml
