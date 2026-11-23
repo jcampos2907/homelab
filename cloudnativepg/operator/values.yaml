@@ -1,4 +1,9 @@
 
 resources:
+  # Without explicit requests Kubernetes copies the limit, so the operator
+  # reserved a full core while using ~3m CPU / ~40Mi.
+  requests:
+    cpu: 50m
+    memory: 128Mi
   limits:
     cpu: 1
