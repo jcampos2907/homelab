@@ -25,4 +25,8 @@ spec:
     mount: kubernetes
     role: vault-apps
     serviceAccount: vault-sa
-    tokenExpirationSeconds: 600
+    # OpenBao 2.7.1+ re-validates the login JWT on every token renewal
+    # (GHSA-gf3j-hm38-jhh5). With 600s JWTs, renewals failed after 10 min and
+    # forced new DB creds (and Keycloak/n8n/paperclip restarts). 24h matches the
+    # database roles' max_ttl, so rotation stays daily.
+    tokenExpirationSeconds: 86400
