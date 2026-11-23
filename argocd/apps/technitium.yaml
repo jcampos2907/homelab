@@ -22,7 +22,7 @@ spec:
         exclude: "{excluded/**}"
     - repoURL: https://jcampos2907.github.io/charts
       chart: technitium-dns
-      targetRevision: 0.6.0
+      targetRevision: 0.6.1
       helm:
         valueFiles:
           - $values/technitium/values.yaml
