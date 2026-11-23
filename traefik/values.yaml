@@ -33,11 +33,9 @@ ports:
           scheme: https
           permanent: true
 
-experimental:
-  plugins:
-    redirecterrors:
-      moduleName: "github.com/packruler/redirect-errors"
-      version: "v0.3.2"   # or latest
+# experimental.plugins.redirecterrors (github.com/packruler/redirect-errors) was
+# removed 2026-11-23: the plugin catalog returns 404 "Unknown plugin" for it, which
+# disables all plugins, and no Middleware referenced it.
 # entryPoints:
 #   web:
 #     forwardedHeaders:
