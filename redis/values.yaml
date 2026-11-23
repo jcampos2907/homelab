@@ -42,4 +42,6 @@ rbac:
 metrics:
   enabled: true
   serviceMonitor:
-    enabled: true
+    # Off while kube-prometheus is not installed: without the monitoring.coreos.com
+    # CRDs the ServiceMonitor makes every Argo sync of this app fail.
+    enabled: false

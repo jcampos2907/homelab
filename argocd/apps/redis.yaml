@@ -22,7 +22,7 @@ spec:
         exclude: "{excluded/**}"
     - repoURL: https://charts.bitnami.com/bitnami
       chart: redis
-      targetRevision: 25.3.2
+      targetRevision: 28.3.16
       helm:
         valueFiles:
           - $values/redis/values.yaml
