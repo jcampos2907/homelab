@@ -25,7 +25,7 @@ spec:
             namespace: cert-manager
             chartRepo: https://charts.jetstack.io
             chart: cert-manager
-            chartVersion: v1.20.5
+            chartVersion: v1.21.3
             valuesPath: cert-manager/values.yaml
             extraPath: cert-manager
 
