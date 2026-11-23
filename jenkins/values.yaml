@@ -25,6 +25,7 @@ controller:
     - github-branch-source:1988.v87ea_66346560
     - oic-auth:4.737.vb_3d1a_0e7cf0b_  # gitleaks:allow (plugin version, not a key)
     - hashicorp-vault-plugin:384.vda_86ec66c537
+    - ssh-slaves:3.1097.v868116049892  # gitleaks:allow (plugin version, not a key) - SSH build agent on nacho-3
     # - kubernetes-credentials-provider:1.303.vdfcf47fb_b_fef
 
   jenkinsUrl: "https://jenkins.famcr.org"
@@ -94,6 +95,44 @@ controller:
                         directEntry:
                           privateKey: "${CCM_SSH_PRIVATE_KEY}"
 
+      nacho3-agent: |-
+        # nacho-3: Hetzner amd64 VM on the tailnet, used as the build agent for the
+        # image-builder and helmcharts-pipeline jobs (they request label 'nacho-3').
+        # EXCLUSIVE: only jobs that ask for its labels run there.
+        credentials:
+          system:
+            domainCredentials:
+              - credentials:
+                  - basicSSHUserPrivateKey:
+                      scope: SYSTEM
+                      id: "nacho3-ssh"
+                      description: "SSH key for the jenkins user on nacho-3 (Secret jenkins-nacho3-ssh)"
+                      username: "jenkins"
+                      privateKeySource:
+                        directEntry:
+                          privateKey: "${NACHO3_SSH_KEY}"
+        jenkins:
+          nodes:
+            - permanent:
+                name: "nacho-3"
+                labelString: "nacho-3 docker amd64"
+                numExecutors: 1
+                mode: EXCLUSIVE
+                remoteFS: "/home/jenkins/agent"
+                launcher:
+                  ssh:
+                    host: "100.65.51.70"
+                    port: 2222
+                    credentialsId: "nacho3-ssh"
+                    javaPath: "/usr/bin/java"
+                    launchTimeoutSeconds: 120
+                    maxNumRetries: 10
+                    retryWaitTime: 15
+                    sshHostKeyVerificationStrategy:
+                      manuallyProvidedKeyVerificationStrategy:
+                        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIZLBCPA508zw0FOuvfDw1iOEfv1w09smi/0kyc5zjt3"
+                retentionStrategy: "always"
+
       security-realm: |-
         jenkins:
           securityRealm:
@@ -113,6 +152,11 @@ controller:
               logoutFromOpenidProvider: false
 
   containerEnv:
+    - name: NACHO3_SSH_KEY
+      valueFrom:
+        secretKeyRef:
+          name: jenkins-nacho3-ssh
+          key: privateKey
     - name: CASC_VAULT_URL
       valueFrom:
         secretKeyRef:
