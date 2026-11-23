@@ -12,6 +12,7 @@ spec:
     - https://charts.bitnami.com/bitnami
     - https://charts.jenkins.io
     - https://charts.kubito.dev
+    - https://jcampos2907.github.io/charts
 
   destinations:
     - server: https://kubernetes.default.svc

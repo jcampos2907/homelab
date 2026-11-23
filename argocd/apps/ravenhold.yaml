@@ -1,0 +1,37 @@
+# The chart. Its migration Job is a PreSync hook, so it needs ravenhold-infra (Postgres, Secrets) first;
+# the retry below covers the first sync while that app is still coming up.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ravenhold
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: apps
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ravenhold
+  sources:
+    - repoURL: https://github.com/jcampos2907/homelab.git
+      targetRevision: main
+      ref: values
+    - repoURL: https://jcampos2907.github.io/charts
+      chart: ravenhold
+      targetRevision: 0.2.0
+      helm:
+        releaseName: ravenhold
+        valueFiles:
+          - $values/ravenhold/values.yaml
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 10
+      backoff:
+        duration: 30s
+        factor: 2
+        maxDuration: 5m

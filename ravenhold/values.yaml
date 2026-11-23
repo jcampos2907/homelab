@@ -1,0 +1,79 @@
+# Values for the `ravenhold` chart (https://jcampos2907.github.io/charts), Argo app `ravenhold`.
+# Image tags are the app-repo commits they were built from. The Jenkins `master` pipelines of the four app repos
+# rewrite the `tag:` lines below (marked `# ci:<component>`) and push, and Argo rolls the pods.
+imagePullSecrets:
+  - name: ravenhold-registry
+
+registry: nacho-3.tail4f4c7b.ts.net/ravenhold
+
+# ravenhold-pg (ravenhold/infra/postgres.yaml): CNPG creates the -app Secret and the -rw Service.
+database:
+  existingSecret: ravenhold-pg-app
+  host: ravenhold-pg-rw
+  name: ravenhold
+
+api:
+  image:
+    tag: c6a1a2c # ci:api
+  existingSecret: ravenhold-api
+  env:
+    Auth__Authority: https://keycloak.famcr.org/realms/master
+    Auth__Audience: ravenhold
+  resources:
+    requests: {cpu: 50m, memory: 192Mi}
+    limits: {memory: 768Mi}
+
+frontend:
+  image:
+    tag: eff90cd # ci:frontend
+  existingSecret: ravenhold-frontend
+  env:
+    OIDC_ISSUER: https://keycloak.famcr.org/realms/master
+    OIDC_CLIENT_ID: ravenhold
+    OIDC_REDIRECT_URI: https://ravenhold.famcr.org/auth/callback
+    OIDC_SCOPE: openid profile email
+  resources:
+    requests: {cpu: 25m, memory: 128Mi}
+    limits: {memory: 512Mi}
+
+docs:
+  image:
+    tag: d9edc6a # ci:docs
+  resources:
+    requests: {cpu: 5m, memory: 16Mi}
+    limits: {memory: 64Mi}
+
+analytics:
+  image:
+    tag: ae0b069 # ci:analytics
+  existingSecret: ravenhold-analytics
+  env:
+    TZ: America/New_York
+    TRADING_ENABLED: "false"
+    TRADING_MODE: propose
+  resources:
+    requests: {cpu: 50m, memory: 256Mi}
+    limits: {memory: 1536Mi}
+
+migrations:
+  resources:
+    requests: {cpu: 50m, memory: 128Mi}
+    limits: {memory: 512Mi}
+
+rsshub:
+  enabled: true
+  existingSecret: ravenhold-rsshub
+  resources:
+    requests: {cpu: 25m, memory: 128Mi}
+    limits: {memory: 512Mi}
+
+ingress:
+  enabled: true
+  className: traefik
+  host: ravenhold.famcr.org
+  docsHost: docs.ravenhold.famcr.org
+  tls:
+    - secretName: ravenhold-tls
+      hosts:
+        - ravenhold.famcr.org
+        - docs.ravenhold.famcr.org
