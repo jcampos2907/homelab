@@ -25,7 +25,7 @@ spec:
             namespace: cert-manager
             chartRepo: https://charts.jetstack.io
             chart: cert-manager
-            chartVersion: 1.19.1
+            chartVersion: v1.20.5
             valuesPath: cert-manager/values.yaml
             extraPath: cert-manager
 
@@ -51,7 +51,7 @@ spec:
             namespace: oauth2
             chartRepo: https://oauth2-proxy.github.io/manifests
             chart: oauth2-proxy
-            chartVersion: 9.0.0
+            chartVersion: 10.7.4
             valuesPath: oauth2-proxy/values.yaml
             extraPath: oauth2-proxy
 

@@ -28,7 +28,9 @@ sessionStorage:
         - "redis://redis-node-1.redis-headless.redis.svc.cluster.local:26379"
         - "redis://redis-node-2.redis-headless.redis.svc.cluster.local:26379"
     clientType: sentinel
-redis:
+# Chart 10.x renamed the bundled Redis subchart alias from `redis` to `redis-ha`.
+# Sessions use the separate redis app (sentinel) configured above.
+redis-ha:
   enabled: false
 
 initContainers:
