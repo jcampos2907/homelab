@@ -6,10 +6,11 @@ imagePullSecrets:
 
 registry: nacho-3.tail4f4c7b.ts.net/ravenhold
 
-# ravenhold-pg (ravenhold/infra/postgres.yaml): CNPG creates the -app Secret and the -rw Service.
+# Database `ravenhold` in the shared homelabcluster (role + Database in cloudnativepg/cluster). Direct to the -rw
+# Service, not the PgBouncer pooler: EF migrations and the app's advisory locks need session semantics.
 database:
-  existingSecret: ravenhold-pg-app
-  host: ravenhold-pg-rw
+  existingSecret: ravenhold-db
+  host: homelabcluster-rw.homelab-pg.svc.cluster.local
   name: ravenhold
 
 api:

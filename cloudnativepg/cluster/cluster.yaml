@@ -30,6 +30,14 @@ spec:
         superuser: true
         createrole: true
         login: true
+      # Ravenhold: not superuser (it owns only its database; CNPG creates its extensions). The password comes
+      # from OpenBao kv apps/ravenhold/db via ravenhold-db.yaml.
+      - name: ravenhold
+        ensure: present
+        comment: User for Ravenhold
+        login: true
+        passwordSecret:
+          name: homelabcluster-user-ravenhold
   bootstrap:
     initdb:
       database: homelab

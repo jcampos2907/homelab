@@ -9,6 +9,7 @@ resources:
 - vault/sa.yaml
 - vault/vault-auth.yaml
 - vault/vault-secs.yaml
+- vault/ravenhold-db.yaml
 - users.yaml
 - cluster.yaml
 - poolers.yaml

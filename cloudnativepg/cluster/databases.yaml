@@ -68,3 +68,24 @@ spec:
   databaseReclaimPolicy: delete
   cluster:
     name: homelabcluster
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: ravenhold
+spec:
+  name: ravenhold
+  owner: ravenhold
+  schemas:
+    - ensure: present
+      name: public
+      owner: ravenhold
+  # Created as superuser by CNPG: the app role can't (migration 20261025010443_Research only runs IF NOT EXISTS).
+  extensions:
+    - name: vector
+      ensure: present
+    - name: pg_trgm
+      ensure: present
+  databaseReclaimPolicy: retain
+  cluster:
+    name: homelabcluster

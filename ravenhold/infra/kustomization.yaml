@@ -1,13 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-# Everything Ravenhold needs before the chart (Argo app `ravenhold`) can sync: its own small Postgres, the Secrets
-# synced from OpenBao (kv apps/ravenhold/*), and the TLS certificate. Argo app: `ravenhold-infra`.
+# Everything Ravenhold needs before the chart (Argo app `ravenhold`) can sync: the Secrets synced from OpenBao
+# (kv apps/ravenhold/*) and the TLS certificate. The database lives in the shared homelabcluster
+# (cloudnativepg/cluster: role + Database `ravenhold`). Argo app: `ravenhold-infra`.
 namespace: ravenhold
 
 resources:
   - sa.yaml
   - vault-auth.yaml
   - vault-secrets.yaml
-  - postgres.yaml
   - certificate.yaml

@@ -1,0 +1,36 @@
+# Password of the managed role `ravenhold` (cluster.yaml), from OpenBao kv apps/ravenhold/db (keys username, password).
+# Uses the OpenBao k8s role `ravenhold`, which binds vault-sa in both homelab-pg and ravenhold.
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultAuth
+metadata:
+  namespace: homelab-pg
+  name: ravenhold-vault-auth
+spec:
+  vaultAuthGlobalRef:
+    namespace: hashicorp
+    allowDefault: true
+  kubernetes:
+    audiences:
+      - https://kubernetes.default.svc
+    role: ravenhold
+    serviceAccount: vault-sa
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  namespace: homelab-pg
+  name: homelabcluster-user-ravenhold
+spec:
+  vaultAuthRef: ravenhold-vault-auth
+  mount: kv
+  type: kv-v2
+  path: apps/ravenhold/db
+  refreshAfter: 300s
+  destination:
+    create: true
+    name: homelabcluster-user-ravenhold
+    type: kubernetes.io/basic-auth
+    overwrite: true
+    labels:
+      cnpg.io/reload: "true"
