@@ -1,0 +1,9 @@
+# Identity for Claude Code sessions to log in to OpenBao (Kubernetes auth role `claude-ops`).
+# No secret: a short-lived token is minted on demand with
+#   kubectl -n openbao create token claude-ops --duration 10m
+# Role and policy are created by openbao/claude-ops-setup.sh. Revoke: delete this SA or the role.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: claude-ops
+  namespace: openbao
