@@ -1,0 +1,16 @@
+# Identities for AI coding agents to log in to OpenBao (Kubernetes auth roles `<agent>-ops`).
+# No secrets: a short-lived token is minted on demand (see openbao/agent-login.sh).
+# Roles and the shared `agent-ops` policy are created by openbao/agent-ops-setup.sh.
+# Add an agent: add a ServiceAccount here and its name to AGENTS in the setup script.
+# Revoke one: delete its ServiceAccount or its role.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: claude-ops
+  namespace: openbao
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: codex-ops
+  namespace: openbao
