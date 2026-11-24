@@ -15,7 +15,7 @@ database:
 
 api:
   image:
-    tag: c6a1a2c # ci:api
+    tag: fcbc76f # ci:api
   existingSecret: ravenhold-api
   env:
     Auth__Authority: https://keycloak.famcr.org/realms/master
