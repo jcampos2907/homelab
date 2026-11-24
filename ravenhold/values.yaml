@@ -48,6 +48,14 @@ analytics:
   image:
     tag: "8f0f057" # ci:analytics
   existingSecret: ravenhold-analytics
+  # Claude via workload identity federation (projected SA token, inline JWKS in the Anthropic Console).
+  # IDs are not secrets. An ANTHROPIC_API_KEY in the analytics Secret would override this: keep it out of OpenBao.
+  anthropicFederation:
+    enabled: true
+    ruleId: fdrl_01NZFBbFPvNEJ6AtDsk47wYf
+    organizationId: 445d1aa5-d622-489c-8b27-8a0ce453f93e
+    serviceAccountId: svac_01BYxccxa5XsiGwviEx3KtuJ
+    workspaceId: wrkspc_01A9j5RXeG61DQXL29XsRjLu
   env:
     TZ: America/New_York
     TRADING_ENABLED: "false"
