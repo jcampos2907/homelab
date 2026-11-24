@@ -46,7 +46,7 @@ docs:
 
 analytics:
   image:
-    tag: "f8113e1" # ci:analytics
+    tag: "8f0f057" # ci:analytics
   existingSecret: ravenhold-analytics
   env:
     TZ: America/New_York
