@@ -86,3 +86,11 @@ ingress:
       hosts:
         - ravenhold.famcr.org
         - docs.ravenhold.famcr.org
+
+# IB Gateways (logins from OpenBao kv/apps/ravenhold/ib-gateway and ib-gateway-paper: TWS_USERID, TWS_PASSWORD).
+# The live gateway stays READ_ONLY_API=yes (chart default): IB itself rejects any order on it.
+ibGateway:
+  live:
+    enabled: true
+  paper:
+    enabled: true
