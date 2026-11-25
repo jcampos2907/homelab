@@ -26,7 +26,7 @@ api:
 
 frontend:
   image:
-    tag: "6647a51" # ci:frontend
+    tag: "f9aeaf1" # ci:frontend
   existingSecret: ravenhold-frontend
   env:
     OIDC_ISSUER: https://keycloak.famcr.org/realms/master
