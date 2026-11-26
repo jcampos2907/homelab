@@ -39,7 +39,7 @@ frontend:
 
 docs:
   image:
-    tag: "7fdc51f" # ci:docs
+    tag: "36c26f8" # ci:docs
   resources:
     requests: {cpu: 5m, memory: 16Mi}
     limits: {memory: 64Mi}
