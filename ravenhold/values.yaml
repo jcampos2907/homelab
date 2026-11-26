@@ -14,12 +14,11 @@ database:
   name: ravenhold
 
 api:
-  replicaCount: 0 # realm cut-over 2026-11-26: writers stopped for the subject remap
   image:
     tag: "531619f" # ci:api
   existingSecret: ravenhold-api
   env:
-    Auth__Authority: https://keycloak.famcr.org/realms/master
+    Auth__Authority: https://keycloak.famcr.org/realms/ravenhold
     Auth__Audience: ravenhold
   resources:
     requests: {cpu: 50m, memory: 192Mi}
@@ -35,7 +34,7 @@ frontend:
     tag: "e98f76c" # ci:frontend
   existingSecret: ravenhold-frontend
   env:
-    OIDC_ISSUER: https://keycloak.famcr.org/realms/master
+    OIDC_ISSUER: https://keycloak.famcr.org/realms/ravenhold
     OIDC_CLIENT_ID: ravenhold
     OIDC_REDIRECT_URI: https://ravenhold.famcr.org/auth/callback
     OIDC_SCOPE: openid profile email
