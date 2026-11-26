@@ -23,6 +23,11 @@ api:
   resources:
     requests: {cpu: 50m, memory: 192Mi}
     limits: {memory: 768Mi}
+  # Mimir's live chat calls Claude from the api (chart >= 0.6.0): the api pod runs as the ravenhold-analytics
+  # ServiceAccount with the same projected token and IDs as analytics.anthropicFederation below. The chart pins
+  # ANTHROPIC_API_KEY and Anthropic__ApiKey empty in the pod; keep them out of OpenBao kv/apps/ravenhold/api anyway.
+  anthropicFederation:
+    enabled: true
 
 frontend:
   image:

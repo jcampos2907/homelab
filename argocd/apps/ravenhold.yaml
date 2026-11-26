@@ -18,7 +18,7 @@ spec:
       ref: values
     - repoURL: https://jcampos2907.github.io/charts
       chart: ravenhold
-      targetRevision: 0.4.0
+      targetRevision: 0.6.0
       helm:
         releaseName: ravenhold
         valueFiles:
