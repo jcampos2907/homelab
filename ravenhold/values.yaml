@@ -66,7 +66,7 @@ analytics:
     TRADING_ENABLED: "false"
     TRADING_MODE: propose
   resources:
-    requests: {cpu: 50m, memory: 256Mi}
+    requests: {cpu: 50m, memory: 400Mi}
     limits: {memory: 1536Mi}
 
 migrations:
