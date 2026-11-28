@@ -9,6 +9,11 @@ spec:
   update:
     strategy: RecreateOnImageChange
   image: quay.io/keycloak/keycloak:26.8.2  # keep equal to the operator version
+  # Pull secret for the init image below. Chosen: the CR's own spec.imagePullSecrets (typed field the
+  # operator copies onto the pod spec), not unsupported.podTemplate's, so the unsupported block carries
+  # only what cannot be expressed otherwise (init container, emptyDir, mount).
+  imagePullSecrets:
+    - name: keycloak-registry
   # bootstrapAdminSecret:
   #   name: keycloak-initial-admin
   db:
@@ -40,3 +45,29 @@ spec:
       value: "true"
     - name: cache
       value: ispn
+  # Login theme (keycloak-theme repo): the stock image stays unchanged; an init container from the theme-only
+  # busybox image copies the Keycloakify JAR into an emptyDir that the Keycloak container mounts as its
+  # providers dir. startOptimized: false, so Keycloak's auto-build at start picks the provider up. Passkeys
+  # need no --features in 26.8.2 (Profile.java@26.8.2: PASSKEYS and WEB_AUTHN are Type.DEFAULT).
+  # The operator merges this template into its pod spec; the container is named `keycloak` so only
+  # volumeMounts is added (no image, command or args).
+  unsupported:
+    podTemplate:
+      spec:
+        initContainers:
+          - name: theme
+            # Tag is pinned by hand (the Jenkinsfile never touches this repo): dev-<sha> from the dev build of
+            # keycloak-theme c03473a; bump to the master <sha> once Jenkins has built it.
+            image: nacho-3.tail4f4c7b.ts.net/keycloak/keycloak-tron-theme:dev-c03473a
+            command: ["cp", "/theme/keycloak-theme.jar", "/providers/keycloak-theme.jar"]
+            volumeMounts:
+              - name: theme-providers
+                mountPath: /providers
+        containers:
+          - name: keycloak
+            volumeMounts:
+              - name: theme-providers
+                mountPath: /opt/keycloak/providers
+        volumes:
+          - name: theme-providers
+            emptyDir: {}
