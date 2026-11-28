@@ -30,6 +30,8 @@ controller:
     # 49.vf37bf92d2bc8 (latest) requiring core 2.222.4 and credentials 2.4.1, display-url-api 2.3.4,
     # github-api 1.123, github-branch-source 2.0.8; every minimum is below the pinned/resolved versions.
     - pipeline-githubnotify-step:49.vf37bf92d2bc8
+    # org.kohsuke.github (GitHub API for Java) used by jenkins-library's ravenholdPromotionCheck comes from the github-api plugin,
+    # installed as a dependency of github-branch-source above; no separate pin.
     # - kubernetes-credentials-provider:1.303.vdfcf47fb_b_fef
 
   jenkinsUrl: "https://jenkins.famcr.org"
