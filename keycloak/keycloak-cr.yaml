@@ -58,7 +58,7 @@ spec:
           - name: theme
             # Tag is pinned by hand (the Jenkinsfile never touches this repo): dev-<sha> from the dev build of
             # keycloak-theme c03473a; bump to the master <sha> once Jenkins has built it.
-            image: nacho-3.tail4f4c7b.ts.net/keycloak/keycloak-tron-theme:dev-c03473a
+            image: nacho-3.tail4f4c7b.ts.net/keycloak/keycloak-tron-theme:dev-68555cc
             command: ["cp", "/theme/keycloak-theme.jar", "/providers/keycloak-theme.jar"]
             volumeMounts:
               - name: theme-providers
